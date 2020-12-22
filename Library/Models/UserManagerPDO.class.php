@@ -9,12 +9,13 @@ class UserManagerPDO extends UserManager
 
     public function login($login, $Password)
     {
-        $requete = $this->dao->prepare("SELECT *  FROM users WHERE login=:login AND password=:password");
+        $requete = $this->dao->prepare("SELECT *  FROM tbleusers INNER JOIN tblestatut ON tblestatut.RefStatut=tbleusers.RefStatut WHERE login=:login");
         $requete->bindValue(':login', $login, \PDO::PARAM_STR);
-        $requete->bindValue(':password', $Password, \PDO::PARAM_STR);
         $requete->execute();
         $resultat = $requete->fetch();
-        return $resultat;
+        if (password_verify($_POST['password'], $resultat['password'])) {
+            return $resultat;
+        }
     }
     protected function add(User $User)
     {

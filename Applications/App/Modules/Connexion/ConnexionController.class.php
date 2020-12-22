@@ -14,6 +14,10 @@ class ConnexionController extends \Library\BackController
             if (!empty($User)) {
                 $this->app()->user()->setAuthenticated();
                 $_SESSION['login'] = $User['login'];
+                $_SESSION['NomUsers'] = $User['NomUsers'];
+                $_SESSION['PrenomUsers'] = $User['PrenomUsers'];
+                $_SESSION['RefUsers'] = $User['RefUsers'];
+                $_SESSION['statut'] = $User['Name'];
                 $this->app()->httpResponse()->redirect('/');
             }
         }

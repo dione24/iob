@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes>
-	<route url="/" module="Articles" action="index"/>
-	<route url="/addArticle" module="Articles" action="add"/>
-	<route url="/modArticle/([0-9]+)" module="Articles" vars="id" action="update"/>
-	<route url="/supArticle/([0-9]+)" module="Articles" vars="id" action="delete"/>
-	<route url="/Search" module="Articles" vars="id" action="Search"/>
-	<route url="/Logout" module="Connexion" action="Logout"/>
-	<route url="/ListeUsers" module="Users" action="index"/>
-	<route url="/addUsers" module="Users" action="add"/>
-	<route url="/modUsers/([0-9]+)" module="Users" vars="id" action="update"/>
-	<route url="/supUsers/([0-9]+)" module="Users" vars="id" action="delete"/>
-	<route url="/ListeCategories" module="Categories" action="index"/>
-	<route url="/addCategories" module="Categories" action="add"/>
-	<route url="/modCategories/([0-9]+)" module="Categories" vars="id" action="update"/>
-	<route url="/supCategories/([0-9]+)" module="Categories" vars="id" action="delete"/>
+	<route url="/" module="Bielletage" action="index"/>
+	<route url="/logout" module="Connexion" action="Logout"/>
+	<route url="/bielletage/([0-9]+)" vars="id" module="Bielletage" action="bielletage"/>
+	<route url="/bordereau/([0-9]+)" vars="id" module="Bielletage" action="invoice"/>
+	<route url="/bielletage/add" module="Bielletage" action="add"/>
 </routes>
