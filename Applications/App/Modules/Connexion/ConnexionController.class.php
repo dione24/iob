@@ -1,6 +1,6 @@
 <?php
 
-namespace Applications\Blog\Modules\Connexion;
+namespace Applications\App\Modules\Connexion;
 
 class ConnexionController extends \Library\BackController
 {
