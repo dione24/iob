@@ -42,7 +42,7 @@
                     <div class="d-md-flex mb-3">
                         <h3 class="box-title mb-0">OPERATIONS</h3>
                         <?php if (!empty($CheckOuverture)) { ?>
-                        <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                        <div class="col-md-6 col-sm-4 col-xs-6 ml-auto">
                             <a href="/bielletage/1" class="btn btn-primary"><i class="fa fa-plus"></i>
                                 VERSEMENT</a>
                             <a href="/bielletage/2" class="btn btn-warning"><i class="fa fa-plus"></i>
