@@ -15,12 +15,12 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="/css/wizard.css" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
-
-
     <link href="/css/style.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
+        type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -125,18 +125,31 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
                                 aria-expanded="false"><i class="fas fa-home fa-fw" aria-hidden="true"></i><span
                                     class="hide-menu">Accueil</span></a></li>
+                        <?php if (!empty($CheckOuverture)) { ?>
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="basic-table.html" aria-expanded="false"><i class="fa fa-table"
+                                href="/bielletage/1" aria-expanded="false"><i class="fa fa-plus"
+                                    aria-hidden="true"></i><span class="hide-menu">Versement</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/bielletage/2" aria-expanded="false"><i class="fa fa-minus"
+                                    aria-hidden="true"></i><span class="hide-menu">Retrait</span></a></li>
+                        <?php } ?>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Journal/index" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Journal de Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="fontawesome.html" aria-expanded="false"><i class="fa fa-font"
-                                    aria-hidden="true"></i><span class="hide-menu">Rapport</span></a></li>
+                                href="/Arreter/index" aria-expanded="false"><i class="fa fa-lock"
+                                    aria-hidden="true"></i><span class="hide-menu">Arreter </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="map-google.html" aria-expanded="false"><i class="fa fa-globe"
-                                    aria-hidden="true"></i><span class="hide-menu">Google Map</span></a></li>
+                                    aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="blank.html" aria-expanded="false"><i class="fa fa-columns"
-                                    aria-hidden="true"></i><span class="hide-menu">Blank</span></a></li>
+                                    aria-hidden="true"></i><span class="hide-menu">Transfert de Fond</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="blank.html" aria-expanded="false"><i class="fa fa-columns"
+                                    aria-hidden="true"></i><span class="hide-menu">Appro Caisse</span></a></li>
                         <li class="text-center p-20 upgrade-btn">
                             <a href="/logout" class="btn btn-block btn-danger text-white">Se Déconnecter</a>
                         </li>
@@ -194,6 +207,7 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="/scripts/billetage.js"></script>
+
     <script>
     $(function() {
         var $NumCompte = $('#NumCompte');
@@ -237,7 +251,20 @@
     <script src="/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/js/custom.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+    </script>
 
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 
 </body>
 

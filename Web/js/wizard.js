@@ -4,11 +4,6 @@ $(document).ready(function () {
         .on('click', function () {
             submit();
         });
-    var btnCancel = $('<button></button>').text('Annuler')
-        .addClass('btn btn-danger')
-        .on('click', function () {
-            $('#smartwizard').smartWizard("reset");
-        });
     // Smart Wizard
     $('#smartwizard').smartWizard({
         selected: 0,
@@ -17,7 +12,7 @@ $(document).ready(function () {
             animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
         },
         toolbarSettings: {
-            toolbarExtraButtons: [btnFinish, btnCancel]
+            toolbarExtraButtons: [btnFinish]
         },
         lang: { // Language variables for button
             next: 'Suivant',

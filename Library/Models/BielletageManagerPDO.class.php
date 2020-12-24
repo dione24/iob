@@ -37,12 +37,12 @@ class BielletageManagerPDO extends BielletageManager
 
     public function CheckAfterRapport($Caisse)
     {
-        $requete = $this->dao->prepare("SELECT RefCaisse FROM TbleRapportOp WHERE RefCaisse=:RefCaisse AND Date=:jour");
+        $requete = $this->dao->prepare("SELECT * FROM TbleRapportOp WHERE RefCaisse=:RefCaisse AND Date=:jour");
         $requete->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
         $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
         $requete->execute();
         $data = $requete->fetch();
-        return $data['caisse'];
+        return $data;
     }
 
     public  function GetCaisse()

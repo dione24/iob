@@ -5,4 +5,9 @@
 	<route url="/bielletage/([0-9]+)" vars="id" module="Bielletage" action="bielletage"/>
 	<route url="/bordereau/([0-9]+)" vars="id" module="Bielletage" action="invoice"/>
 	<route url="/bielletage/add" module="Bielletage" action="add"/>
+	<route url="/Journal/index" module="Journal" action="index"/>
+	<route url="/Arreter/index" module="Arreter" action="index"/>
+	<route url="/Arreter/close/([0-9]+)" vars="id" module="Arreter" action="close"/>
+	<route url="/Arreter/View/([0-9]+)" vars="id" module="Arreter" action="View"/>
+
 </routes>

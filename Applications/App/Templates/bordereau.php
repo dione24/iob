@@ -7,6 +7,7 @@
     /* auto is the initial value */
     margin: 0mm;
     /* this affects the margin in the printer settings */
+
 }
 </style>
 
