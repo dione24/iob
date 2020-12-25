@@ -19,7 +19,7 @@ class ArreterController extends \Library\BackController
         $this->page->addVar("titles", "Liste des Rapports "); // Titre de la page
         $GetRapports = $this->managers->getManagerOf('Arreter')->GetRapports($request->getData('id'));
         $this->page->addVar('GetRapports', $GetRapports);
-        $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
+        $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage('2020-12-25');
         $this->page->addVar('Biellet', $Biellet);
     }
 }

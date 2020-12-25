@@ -19,31 +19,35 @@
                       </thead>
                       <tbody>
                           <?php foreach ($GetRapports as $key => $value) { ?>
-                              <tr>
-                                  <td><?= date('d/m/Y', strtotime($value['Date'])); ?></td>
-                                  <td><?= $value['SoldeOvEspeces']; ?></td>
-                                  <td><?= $value['SoldeOvOmni']; ?></td>
-                                  <td><?= $value['Versement']; ?></td>
-                                  <td><?= $value['Retrait']; ?></td>
-                                  <td><?= $value['ApproOmni']; ?></td>
-                                  <td><?= $value['SoldeFrEspeces']; ?></td>
-                                  <td><?= $value['SoldeFrOmni']; ?> </td>
-                                  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Bielletage-<?= $value['RefRapport']; ?>" data-whatever="@mdo"><i class="fa fa-eye"></i></button>
-                                  </td>
+                          <tr>
+                              <td><?= date('d/m/Y', strtotime($value['Date'])); ?></td>
+                              <td><?= $value['SoldeOvEspeces']; ?></td>
+                              <td><?= $value['SoldeOvOmni']; ?></td>
+                              <td><?= $value['Versement']; ?></td>
+                              <td><?= $value['Retrait']; ?></td>
+                              <td><?= $value['ApproOmni']; ?></td>
+                              <td><?= $value['SoldeFrEspeces']; ?></td>
+                              <td><?= $value['SoldeFrOmni']; ?> </td>
+                              <td><button type="button" class="btn btn-primary" id="button" data-toggle="modal"
+                                      data-target="#Bielletage-<?= $value['RefRapport']; ?>" data-whatever="@mdo"
+                                      onclick="buton(<?= $value['RefRapport']; ?>)"><i class="fa fa-eye"></i></button>
+                              </td>
 
-                              </tr>
-                              <div class="modal fade" id="Bielletage-<?= $value['RefRapport']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-                                  <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
+                          </tr>
+                          <div class="modal fade" id="Bielletage-<?= $value['RefRapport']; ?>" tabindex="-1"
+                              role="dialog" aria-labelledby="exampleModalLabel1">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
 
-                                          <div class="modal-body">
-                                              <div style="float:right;">
-                                                  <button onclick="window.print()" class="btn btn-secondary"><i class="fa fa-print">
+                                      <div class="modal-body">
+                                          <div style="float:right;">
+                                              <button onclick="window.print()" class="btn btn-secondary"><i
+                                                      class="fa fa-print">
 
-                                                      </i>
-                                                  </button>
-                                              </div>
-                                              <div class="row"></div>
+                                                  </i>
+                                              </button>
+                                          </div>
+                                          <div class="row">
                                               <div class="form-group">
                                                   <p>10.000 ----<?= $Biellet['dixmille'] ?>
                                                   </p>
@@ -51,8 +55,6 @@
                                                   <p>2.000 ----<?= $Biellet['deuxmille']; ?></p>
                                                   <p>1.000 ----<?= $Biellet['mille']; ?> </p>
                                                   <p>500 ----<?= $Biellet['cinqcent']; ?></p>
-                                              </div>
-                                              <div class="form-group">
                                                   <p>250 ----<?= $Biellet['deuxcentcinq']; ?></p>
                                                   <p>200 ----<?= $Biellet['deuxcent']; ?></p>
                                                   <p>100 ----<?= $Biellet['cent']; ?></p>
@@ -62,19 +64,21 @@
                                                   <p>5 ----<?= $Biellet['cinq']; ?></p>
                                                   <p>1 ----<?= $Biellet['un']; ?></p>
                                               </div>
-                                              <div style="float:right;">
-                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
-                                              </div>
+                                          </div>
+                                          <div style="float:right;">
+                                              <button type="button" class="btn btn-primary"
+                                                  data-dismiss="modal">Fermer</button>
                                           </div>
                                       </div>
-
                                   </div>
 
                               </div>
+
+                          </div>
               </div>
-          <?php } ?>
-          </tbody>
-          </table>
+              <?php } ?>
+              </tbody>
+              </table>
           </div>
       </div>
   </div>

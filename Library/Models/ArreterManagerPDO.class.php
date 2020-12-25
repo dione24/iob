@@ -104,8 +104,8 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:date AND tbleoperations.RefCaisse='1' AND tbleoperations.Insert_Id='1' AND RefType='1' ");
-        $requete->bindValue(':date', $Date, \PDO::PARAM_STR);
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Approve2_Time)=:day AND tbleoperations.RefCaisse='1' AND RefType='1' ");
+        $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $Versement = $requete->fetchAll();
         foreach ($Versement as $key => $value) {
@@ -164,8 +164,8 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:date AND tbleoperations.RefCaisse='1' AND tbleoperations.Insert_Id='1' AND RefType='2' ");
-        $requete->bindValue(':date', $Date, \PDO::PARAM_STR);
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:day AND tbleoperations.RefCaisse='1'  AND RefType='2' ");
+        $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $retrait = $requete->fetchAll();
         foreach ($retrait as $key => $value) {
@@ -213,7 +213,6 @@ class ArreterManagerPDO extends ArreterManager
 
         $Versement = $this->Versement($Date);
         $Retrait = $this->Retrait($Date);
-
         $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
         $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
         $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];

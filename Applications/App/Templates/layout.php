@@ -92,9 +92,9 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block mr-3">
+                            <form method="POST" action="/" class="app-search d-none d-md-block mr-3">
                                 <input type="text" placeholder="Search..." class="form-control mt-0">
-                                <a href="" class="active">
+                                <a href="#" class="active">
                                     <i class="fa fa-search"></i>
                                 </a>
                             </form>
@@ -140,16 +140,19 @@
                                     aria-hidden="true"></i><span class="hide-menu">Journal de Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Arreter/index" aria-expanded="false"><i class="fa fa-lock"
-                                    aria-hidden="true"></i><span class="hide-menu">Arreter </span></a></li>
+                                    aria-hidden="true"></i><span class="hide-menu">Arreter de Caisse </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="map-google.html" aria-expanded="false"><i class="fa fa-globe"
                                     aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="blank.html" aria-expanded="false"><i class="fa fa-columns"
+                                href="blank.html" aria-expanded="false"><i class="fa fa-share"
                                     aria-hidden="true"></i><span class="hide-menu">Transfert de Fond</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="blank.html" aria-expanded="false"><i class="fa fa-columns"
                                     aria-hidden="true"></i><span class="hide-menu">Appro Caisse</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/profile" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span
+                                    class="hide-menu">Mon Profile</span></a></li>
                         <li class="text-center p-20 upgrade-btn">
                             <a href="/logout" class="btn btn-block btn-danger text-white">Se Déconnecter</a>
                         </li>
@@ -207,41 +210,10 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="/scripts/billetage.js"></script>
-
+    <script src="/scripts/clientName.js"></script>
     <script>
-    $(function() {
-        var $NumCompte = $('#NumCompte');
-        var $NameClient = $('#NameClient');
-        $NumCompte.on('change', function() {
-            var val = $(this).val();
-            if (val != null) $NameClient.empty();
-            $.ajax({
-                url: '/config/client.php',
-                data: 'NumCompte=' + val,
-                dataType: 'json',
-                success: function(json) {
-                    if (json != null) {
-                        $NameClient.val(json);
-                    } else {
-                        $NameClient.val('');
-                    }
-                    if ($NumCompte.val().length != 12) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 4000
-                        });
-                        Toast.fire({
-                            type: 'warning',
-                            title: 'Numero de compte imcomplet, merci de verifier.'
-                        });
-                    }
 
-                }
-            });
-        })
-    });
+
     </script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app-style-switcher.js"></script>
@@ -256,7 +228,6 @@
         $('#dataTable').DataTable();
     });
     </script>
-
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>

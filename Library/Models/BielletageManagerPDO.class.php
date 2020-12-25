@@ -150,4 +150,78 @@ class BielletageManagerPDO extends BielletageManager
             $_SESSION['flash']['warning'] = "Veuillez  reprendre l'operation. le Formulaire n'est pas remplit correctement,";
         }
     }
+    public function SommeVersement($Date)
+    {
+        if ($_SESSION['statut'] != 'admin') {
+
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
+    }
+    public function SommeRetrait($Date)
+    {
+        if ($_SESSION['statut'] != 'admin') {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
+    }
+
+    public  function getCurrentWeek()
+    {
+        $monday = strtotime("last monday");
+        $monday = date('w', $monday) == date('w') ? $monday + 7 * 86400 : $monday;
+        $sunday = strtotime(date("Y-m-d", $monday) . " +6 days");
+        $date['Debut']  = date("Y-m-d", $monday);
+        $date['Fin'] = date("Y-m-d", $sunday);
+        return $date;
+    }
+
+    public  function daysofweek()
+    {
+
+        $getCurrentWeek = $this->getCurrentWeek();
+        $tableau = [];
+        for ($i = 0; $i < 7; $i++) {
+            $tableau[] = date('Y-m-d', strtotime($getCurrentWeek['Debut'] . " +" . $i . " days"));
+        }
+        return $tableau;
+    }
+    public function DailyVersement()
+    {
+        $jour = $this->daysofweek();
+        $Result['LundiVersement'] = $this->SommeVersement($jour['0']);
+        $Result['MardiVersement'] = $this->SommeVersement($jour['1']);
+        $Result['MercrediVersement'] = $this->SommeVersement($jour['2']);
+        $Result['JeudiVersement'] = $this->SommeVersement($jour['3']);
+        $Result['VendrediVersement'] = $this->SommeVersement($jour['4']);
+        $Result['SamediVersement'] = $this->SommeVersement($jour['5']);
+
+        $Result['LundiRetrait'] = $this->SommeRetrait($jour['0']);
+        $Result['MardiRetrait'] = $this->SommeRetrait($jour['1']);
+        $Result['MercrediRetrait'] = $this->SommeRetrait($jour['2']);
+        $Result['JeudiRetrait'] = $this->SommeRetrait($jour['3']);
+        $Result['VendrediRetrait'] = $this->SommeRetrait($jour['4']);
+        $Result['SamediRetrait'] = $this->SommeRetrait($jour['5']);
+        return $Result;
+    }
 }
