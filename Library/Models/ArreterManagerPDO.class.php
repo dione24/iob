@@ -104,7 +104,8 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Approve2_Time)=:day AND tbleoperations.RefCaisse='1' AND RefType='1' ");
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Approve2_Time)=:day  AND TbleOperations.Insert_Id=:users AND RefType='1' ");
+        $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $Versement = $requete->fetchAll();
@@ -164,7 +165,8 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:day AND tbleoperations.RefCaisse='1'  AND RefType='2' ");
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:day  AND TbleOperations.Insert_Id=:users AND RefType='2' ");
+        $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $retrait = $requete->fetchAll();

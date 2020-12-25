@@ -179,7 +179,7 @@
                                     <td class="counter text-danger">
                                         <?= number_format($DailyVersement['LundiVersement'], 0, '.', ','); ?></td>
                                     <td class="counter text-danger">
-                                        <?= number_format($DailyVersement['LundiRetrait'], 0, '.', ','); ?></td>>
+                                        <?= number_format($DailyVersement['LundiRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                                 <tr>
                                     <td>Mardi</td>
