@@ -8,7 +8,7 @@
                                     style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                             </div>
                         </li>
-                        <li class="ml-auto"><span class="counter text-success">659</span></li>
+                        <li class="ml-auto"><span class="counter text-danger">659</span></li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                                     <td><?= $value['NameType']; ?></td>
                                     <td><?= $value['NameClient']; ?></td>
                                     <td><?= $value['NumCompte']; ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($value['MontantVersement'], 0, '.', ','); ?></td>
                                     <td><?= $value['Remarque']; ?></td>
                                     <td><a href="/bordereau/<?= $value['RefOperations']; ?>" target="_blank"
@@ -86,45 +86,39 @@
                             <tbody>
                                 <tr>
                                     <td>10.000</td>
-                                    <td class="counter text-success"><?= $Biellet['dixmille'] ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['dixmille'] ?></td>
                                     <td>250</td>
-                                    <td class="counter text-success"><?= $Biellet['deuxcentcinq']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['deuxcentcinq']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>5.000</td>
-                                    <td class="counter text-success"><?= $Biellet['cinqmille']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['cinqmille']; ?></td>
                                     <td>200</td>
-                                    <td class="counter text-success"><?= $Biellet['deuxcent']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['deuxcent']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>2.000</td>
-                                    <td class="counter text-success"><?= $Biellet['deuxmille']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['deuxmille']; ?></td>
                                     <td>100</td>
-                                    <td class="counter text-success"><?= $Biellet['cent']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['cent']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>1.000</td>
-                                    <td class="counter text-success"><?= $Biellet['mille']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['mille']; ?></td>
                                     <td>50</td>
-                                    <td class="counter text-success"><?= $Biellet['cinquante']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['cinquante']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>500</td>
-                                    <td class="counter text-success"><?= $Biellet['cinqcent']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['cinqcent']; ?></td>
                                     <td>25</td>
-                                    <td class="counter text-success"><?= $Biellet['vingtcinq']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['vingtcinq']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td>500p</td>
-                                    <td></td>
                                     <td>10</td>
-                                    <td class="counter text-success"><?= $Biellet['dix']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="counter text-danger"><?= $Biellet['dix']; ?></td>
                                     <td>5</td>
-                                    <td><?= $Biellet['cinq']; ?></td>
+                                    <td class="counter text-danger"><?= $Biellet['cinq']; ?></td>
                                 </tr>
 
                             </tbody>
@@ -143,19 +137,19 @@
                                 <tr>
                                     <td>Versement</td>
                                     <td><span
-                                            class="counter text-success"><?= number_format($SommeVersement, 0, '.', ','); ?></span>
+                                            class="counter text-danger"><?= number_format($SommeVersement, 0, '.', ','); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Retrait</td>
                                     <td><span
-                                            class="counter text-success"><?= number_format($SommeRetrait, 0, '.', ','); ?></span>
+                                            class="counter text-danger"><?= number_format($SommeRetrait, 0, '.', ','); ?></span>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td>Solde</td>
-                                    <td><span class="counter text-success"><?php if (($SommeVersement - $SommeRetrait) > 0) {
+                                    <td><span class="counter text-danger"><?php if (($SommeVersement - $SommeRetrait) > 0) {
                                                                                 echo number_format($SommeVersement - $SommeRetrait, 0, '.', ',');
                                                                             }; ?></span>
                                     </td>
@@ -182,9 +176,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['LundiVersement'], 0, '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['LundiRetrait'], 0, '.', ','); ?></td>>
                                 </tr>
                                 <tr>
@@ -195,9 +189,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['MardiVersement'], '0', '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['MardiRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                                 <tr>
@@ -208,9 +202,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['MercrediVersement'], 0, '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['MercrediRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                                 <tr>
@@ -221,9 +215,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['JeudiVersement'], 0, '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['JeudiRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                                 <tr>
@@ -234,9 +228,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['VendrediVersement'], 0, '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['VendrediRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                                 <tr>
@@ -247,9 +241,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['SamediVersement'], 0, '.', ','); ?></td>
-                                    <td class="counter text-success">
+                                    <td class="counter text-danger">
                                         <?= number_format($DailyVersement['SamediRetrait'], 0, '.', ','); ?></td>
                                 </tr>
                             </tbody>

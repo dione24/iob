@@ -11,7 +11,7 @@ class BielletageController extends \Library\BackController
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
         $Operations = $this->managers->getManagerOf('Bielletage')->GetCaisse();
         $this->page->addVar('Operation', $Operations);
-        $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage('2020-12-25');
+        $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
         $this->page->addVar('Biellet', $Biellet);
 
         $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersement(date('Y-m-d'));

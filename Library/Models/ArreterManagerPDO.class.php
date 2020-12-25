@@ -131,8 +131,8 @@ class ArreterManagerPDO extends ArreterManager
                 += $value['l2'];
             $un
                 += $value['m2'];
-
             $Versement['dixmille'] = $dixmille;
+
             $Versement['cinqmille'] = $cinqmille;
             $Versement['deuxmille'] = $deuxmille;
             $Versement['mille'] = $mille;
@@ -213,19 +213,21 @@ class ArreterManagerPDO extends ArreterManager
 
         $Versement = $this->Versement($Date);
         $Retrait = $this->Retrait($Date);
-        $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
-        $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
-        $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
-        $Biellet['mille'] = $Versement['mille'] - $Retrait['mille'];
-        $Biellet['cinqcent'] = $Versement['cinqcent'] - $Retrait['cinqcent'];
-        $Biellet['deuxcentcinq'] = $Versement['deuxcentcinq'] - $Retrait['deuxcentcinq'];
-        $Biellet['deuxcent'] = $Versement['deuxcent'] - $Retrait['deuxcent'];
-        $Biellet['cent'] = $Versement['cent'] - $Retrait['cent'];
-        $Biellet['cinquante'] = $Versement['cinquante'] - $Retrait['cinquante'];
-        $Biellet['vingtcinq'] = $Versement['vingtcinq'] - $Retrait['vingtcinq'];
-        $Biellet['dix'] = $Versement['dix'] - $Retrait['dix'];
-        $Biellet['cinq'] = $Versement['cinq'] - $Retrait['cinq'];
-        $Biellet['un'] = $Versement['un'] - $Retrait['un'];
-        return $Biellet;
+        if (!empty($Versement) or !empty($Retrait)) {
+            $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
+            $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
+            $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
+            $Biellet['mille'] = $Versement['mille'] - $Retrait['mille'];
+            $Biellet['cinqcent'] = $Versement['cinqcent'] - $Retrait['cinqcent'];
+            $Biellet['deuxcentcinq'] = $Versement['deuxcentcinq'] - $Retrait['deuxcentcinq'];
+            $Biellet['deuxcent'] = $Versement['deuxcent'] - $Retrait['deuxcent'];
+            $Biellet['cent'] = $Versement['cent'] - $Retrait['cent'];
+            $Biellet['cinquante'] = $Versement['cinquante'] - $Retrait['cinquante'];
+            $Biellet['vingtcinq'] = $Versement['vingtcinq'] - $Retrait['vingtcinq'];
+            $Biellet['dix'] = $Versement['dix'] - $Retrait['dix'];
+            $Biellet['cinq'] = $Versement['cinq'] - $Retrait['cinq'];
+            $Biellet['un'] = $Versement['un'] - $Retrait['un'];
+            return $Biellet;
+        }
     }
 }
