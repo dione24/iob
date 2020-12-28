@@ -7,6 +7,8 @@ class ArreterController extends \Library\BackController
     public function executeIndex(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Arreter de Caisse"); // Titre de la page
+        $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
+        $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
         $Caisse  = $this->managers->getManagerOf("Arreter")->GetListeCaisse(); //Recuperation de la liste
         $this->page->addVar('Caisse', $Caisse);
     }

@@ -7,6 +7,8 @@ class JournalController extends \Library\BackController
     public function executeIndex(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Journal de Caisse"); // Titre de la page
+        $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
+        $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
         $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(); //Recuperation de la liste
         $this->page->addVar("UserCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         $this->page->addVar('Debut', $request->postData('Debut'));

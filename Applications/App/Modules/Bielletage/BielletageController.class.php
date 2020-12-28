@@ -13,14 +13,14 @@ class BielletageController extends \Library\BackController
         $this->page->addVar('Operation', $Operations);
         $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
         $this->page->addVar('Biellet', $Biellet);
-
         $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersement(date('Y-m-d'));
         $this->page->addVar('SommeVersement', $SommeVersement);
         $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetrait(date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
-
         $DailyVersement = $this->managers->getManagerOf('Bielletage')->DailyVersement();
         $this->page->addVar('DailyVersement', $DailyVersement);
+        $ResultCaisse = $this->managers->getManagerOf('Caisse')->ResultCaisse(NULL);
+        $this->page->addVar("Solde", $ResultCaisse); // Creation
     }
 
     public function executeBielletage(\Library\HTTPRequest $request)

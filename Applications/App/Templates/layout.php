@@ -142,7 +142,7 @@
                                 href="/Arreter/index" aria-expanded="false"><i class="fa fa-lock"
                                     aria-hidden="true"></i><span class="hide-menu">Arreter de Caisse </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="map-google.html" aria-expanded="false"><i class="fa fa-globe"
+                                href="/Caisse/solde" aria-expanded="false"><i class="fa fa-globe"
                                     aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="blank.html" aria-expanded="false"><i class="fa fa-share"

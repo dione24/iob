@@ -104,11 +104,13 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Approve2_Time)=:day  AND TbleOperations.Insert_Id=:users AND RefType='1' ");
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE tbleoperations.Approve2_Time=:day  AND TbleOperations.Insert_Id=:users AND RefType='1' ");
         $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $Versement = $requete->fetchAll();
+        $VersementList = [];
+
         foreach ($Versement as $key => $value) {
             $dixmille += $value['a2'];
             $cinqmille
@@ -132,22 +134,21 @@ class ArreterManagerPDO extends ArreterManager
                 += $value['l2'];
             $un
                 += $value['m2'];
-            $Versement['dixmille'] = $dixmille;
-
-            $Versement['cinqmille'] = $cinqmille;
-            $Versement['deuxmille'] = $deuxmille;
-            $Versement['mille'] = $mille;
-            $Versement['cinqcent'] = $cinqcent;
-            $Versement['deuxcentcinq'] = $deuxcentcinq;
-            $Versement['deuxcent'] = $deuxcent;
-            $Versement['cent'] = $cent;
-            $Versement['cinquante'] = $cinquante;
-            $Versement['vingtcinq'] = $vingtcinq;
-            $Versement['dix'] = $dix;
-            $Versement['cinq'] = $cinq;
-            $Versement['un'] = $un;
         }
-        return $Versement;
+        $VersementList['dixmille'] = $dixmille;
+        $VersementList['cinqmille'] = $cinqmille;
+        $VersementList['deuxmille'] = $deuxmille;
+        $VersementList['mille'] = $mille;
+        $VersementList['cinqcent'] = $cinqcent;
+        $VersementList['deuxcentcinq'] = $deuxcentcinq;
+        $VersementList['deuxcent'] = $deuxcent;
+        $VersementList['cent'] = $cent;
+        $VersementList['cinquante'] = $cinquante;
+        $VersementList['vingtcinq'] = $vingtcinq;
+        $VersementList['dix'] = $dix;
+        $VersementList['cinq'] = $cinq;
+        $VersementList['un'] = $un;
+        return $VersementList;
     }
 
     public function  Retrait($Date)
@@ -165,11 +166,12 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE date(tbleoperations.Insert_Time)=:day  AND TbleOperations.Insert_Id=:users AND RefType='2' ");
+        $requete = $this->dao->prepare("SELECT * FROM Tbleoperations INNER JOIN tblebilletage ON tblebilletage.RefOperations=tbleoperations.RefOperations WHERE tbleoperations.Approve2_Time=:day  AND TbleOperations.Insert_Id=:users AND RefType='2' ");
         $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
         $retrait = $requete->fetchAll();
+        $RetraitList = [];
         foreach ($retrait as $key => $value) {
             $dixmille += $value['a2'];
             $cinqmille
@@ -193,43 +195,41 @@ class ArreterManagerPDO extends ArreterManager
                 += $value['l2'];
             $un
                 += $value['m2'];
-
-            $retrait['dixmille'] = $dixmille;
-            $retrait['cinqmille'] = $cinqmille;
-            $retrait['deuxmille'] = $deuxmille;
-            $retrait['mille'] = $mille;
-            $retrait['cinqcent'] = $cinqcent;
-            $retrait['deuxcentcinq'] = $deuxcentcinq;
-            $retrait['deuxcent'] = $deuxcent;
-            $retrait['cent'] = $cent;
-            $retrait['cinquante'] = $cinquante;
-            $retrait['vingtcinq'] = $vingtcinq;
-            $retrait['dix'] = $dix;
-            $retrait['cinq'] = $cinq;
-            $retrait['un'] = $un;
         }
-        return $retrait;
+        $RetraitList['dixmille'] = $dixmille;
+        $RetraitList['cinqmille'] = $cinqmille;
+        $RetraitList['deuxmille'] = $deuxmille;
+        $RetraitList['mille'] = $mille;
+        $RetraitList['cinqcent'] = $cinqcent;
+        $RetraitList['deuxcentcinq'] = $deuxcentcinq;
+        $RetraitList['deuxcent'] = $deuxcent;
+        $RetraitList['cent'] = $cent;
+        $RetraitList['cinquante'] = $cinquante;
+        $RetraitList['vingtcinq'] = $vingtcinq;
+        $RetraitList['dix'] = $dix;
+        $RetraitList['cinq'] = $cinq;
+        $RetraitList['un'] = $un;
+        return $RetraitList;
     }
     public function GetDailyBielletage($Date)
     {
 
         $Versement = $this->Versement($Date);
         $Retrait = $this->Retrait($Date);
-        if (!empty($Versement) or !empty($Retrait)) {
-            $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
-            $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
-            $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
-            $Biellet['mille'] = $Versement['mille'] - $Retrait['mille'];
-            $Biellet['cinqcent'] = $Versement['cinqcent'] - $Retrait['cinqcent'];
-            $Biellet['deuxcentcinq'] = $Versement['deuxcentcinq'] - $Retrait['deuxcentcinq'];
-            $Biellet['deuxcent'] = $Versement['deuxcent'] - $Retrait['deuxcent'];
-            $Biellet['cent'] = $Versement['cent'] - $Retrait['cent'];
-            $Biellet['cinquante'] = $Versement['cinquante'] - $Retrait['cinquante'];
-            $Biellet['vingtcinq'] = $Versement['vingtcinq'] - $Retrait['vingtcinq'];
-            $Biellet['dix'] = $Versement['dix'] - $Retrait['dix'];
-            $Biellet['cinq'] = $Versement['cinq'] - $Retrait['cinq'];
-            $Biellet['un'] = $Versement['un'] - $Retrait['un'];
-            return $Biellet;
-        }
+
+        $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
+        $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
+        $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
+        $Biellet['mille'] = $Versement['mille'] - $Retrait['mille'];
+        $Biellet['cinqcent'] = $Versement['cinqcent'] - $Retrait['cinqcent'];
+        $Biellet['deuxcentcinq'] = $Versement['deuxcentcinq'] - $Retrait['deuxcentcinq'];
+        $Biellet['deuxcent'] = $Versement['deuxcent'] - $Retrait['deuxcent'];
+        $Biellet['cent'] = $Versement['cent'] - $Retrait['cent'];
+        $Biellet['cinquante'] = $Versement['cinquante'] - $Retrait['cinquante'];
+        $Biellet['vingtcinq'] = $Versement['vingtcinq'] - $Retrait['vingtcinq'];
+        $Biellet['dix'] = $Versement['dix'] - $Retrait['dix'];
+        $Biellet['cinq'] = $Versement['cinq'] - $Retrait['cinq'];
+        $Biellet['un'] = $Versement['un'] - $Retrait['un'];
+        return $Biellet;
     }
 }

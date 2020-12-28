@@ -3,12 +3,10 @@
                 <div class="white-box analytics-info">
                     <h3 class="box-title">VERSEMENT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li>
-                            <div id="sparklinedash"><canvas width="67" height="30"
-                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                            </div>
+
+                        <li class="ml-auto"><span
+                                class="counter text-danger"><?= number_format($SommeVersement, 0, '.', ','); ?></span>
                         </li>
-                        <li class="ml-auto"><span class="counter text-danger">659</span></li>
                     </ul>
                 </div>
             </div>
@@ -16,21 +14,18 @@
                 <div class="white-box analytics-info">
                     <h3 class="box-title">RETRAIT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li>
-
+                        <li class="ml-auto"><span
+                                class="counter text-purple"><?= number_format($SommeRetrait, 0, '.', ','); ?></span>
                         </li>
-                        <li class="ml-auto"><span class="counter text-purple">869</span></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">SOLDE</h3>
+                    <h3 class="box-title">SOLDE OMNI</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li>
-
-                        </li>
-                        <li class="ml-auto"><span class="counter text-info">911</span>
+                        <li class="ml-auto"><span
+                                class="counter text-info"><?= number_format($Solde, 0, '.', ','); ?></span>
                         </li>
                     </ul>
                 </div>

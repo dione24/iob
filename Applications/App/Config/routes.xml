@@ -9,5 +9,7 @@
 	<route url="/Arreter/index" module="Arreter" action="index"/>
 	<route url="/Arreter/close/([0-9]+)" vars="id" module="Arreter" action="close"/>
 	<route url="/Arreter/View/([0-9]+)" vars="id" module="Arreter" action="View"/>
+	<route url="/Caisse/solde" module="Caisse" action="index"/>
+
 
 </routes>
