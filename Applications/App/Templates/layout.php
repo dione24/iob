@@ -227,8 +227,6 @@
     <script src="/scripts/billetage.js"></script>
     <script src="/scripts/clientName.js"></script>
     <script>
-
-
     </script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app-style-switcher.js"></script>
