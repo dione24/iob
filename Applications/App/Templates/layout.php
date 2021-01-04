@@ -145,14 +145,30 @@
                                 href="/Caisse/solde" aria-expanded="false"><i class="fa fa-globe"
                                     aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="blank.html" aria-expanded="false"><i class="fa fa-share"
+                                href="/Caisse/transfertfond" aria-expanded="false"><i class="fa fa-share"
                                     aria-hidden="true"></i><span class="hide-menu">Transfert de Fond</span></a></li>
+                        <?php if ($_SESSION['statut'] == 'admin') { ?>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="blank.html" aria-expanded="false"><i class="fa fa-columns"
+                                href="/Caisse/ApproCaisse" aria-expanded="false"><i class="fa fa-columns"
                                     aria-hidden="true"></i><span class="hide-menu">Appro Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/profile" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span
-                                    class="hide-menu">Mon Profile</span></a></li>
+                                href="/Pannel/Caisse" aria-expanded="false"><i class="fa fa-table"
+                                    aria-hidden="true"></i><span class="hide-menu">Liste Caisse</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Pannel/Agence" aria-expanded="false"><i class="fa fa-table"
+                                    aria-hidden="true"></i><span class="hide-menu">Liste Agence</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Pannel/Banque" aria-expanded="false"><i class="fa fa-table"
+                                    aria-hidden="true"></i><span class="hide-menu">Liste Banque</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Users/index" aria-expanded="false"><i class="fa fa-users"
+                                    aria-hidden="true"></i><span class="hide-menu">Liste Users</span></a></li>
+                        <?php } ?>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Users/myprofile" aria-expanded="false"><i class="fa fa-user"
+                                    aria-hidden="true"></i><span class="hide-menu">Mon Profile</span></a></li>
                         <li class="text-center p-20 upgrade-btn">
                             <a href="/logout" class="btn btn-block btn-danger text-white">Se Déconnecter</a>
                         </li>

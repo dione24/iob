@@ -19,20 +19,22 @@ class BielletageManagerPDO extends BielletageManager
     public function CheckOuverture()
     {
         $ChomdUser = $this->ChomdUser();
-        $Caisse = [];
-        foreach ($ChomdUser as $key => $value) {
-            $Caisse[] = $value['RefCaisse'];
+        if (!empty($ChomdUser)) {
+            $Caisse = [];
+            foreach ($ChomdUser as $key => $value) {
+                $Caisse[] = $value['RefCaisse'];
+            }
+            $implode = implode(',', $Caisse);
+            $requete =
+                $this->dao->prepare("SELECT * FROM TbleOuverture INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOuverture.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleOuverture.RefCaisse IN (" . $implode . ") AND TbleOuverture.RefDays=:jour AND NOW() BETWEEN TbleOuverture.HeureDebut AND TbleOuverture.HeureFin ");
+            $requete->bindValue(':jour', (date('w') == 0) ? 7 : date('w'), \PDO::PARAM_STR);
+            $requete->execute();
+            $display = $requete->fetchAll();
+            foreach ($display as $key => $value) {
+                $display[$key]['caisse'] = $this->CheckAfterRapport($value['RefCaisse']);
+            }
+            return $display;
         }
-        $implode = implode(',', $Caisse);
-        $requete =
-            $this->dao->prepare("SELECT * FROM TbleOuverture INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOuverture.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleOuverture.RefCaisse IN (" . $implode . ") AND TbleOuverture.RefDays=:jour AND NOW() BETWEEN TbleOuverture.HeureDebut AND TbleOuverture.HeureFin ");
-        $requete->bindValue(':jour', (date('w') == 0) ? 7 : date('w'), \PDO::PARAM_STR);
-        $requete->execute();
-        $display = $requete->fetchAll();
-        foreach ($display as $key => $value) {
-            $display[$key]['caisse'] = $this->CheckAfterRapport($value['RefCaisse']);
-        }
-        return $display;
     }
 
     public function CheckAfterRapport($Caisse)

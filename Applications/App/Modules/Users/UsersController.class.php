@@ -1,47 +1,73 @@
 <?php
 
-namespace Applications\Blog\Modules\Users;
+namespace Applications\App\Modules\Users;
 
 class UsersController extends \Library\BackController
 {
     public function executeIndex(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Accueil"); // Titre de la page
-        $Users  = $this->managers->getManagerOf("User")->getListeOf(); //Recuperation de la liste
+        $Users  = $this->managers->getManagerOf("User")->ListeUsers();
+        $ListeCaisse  = $this->managers->getManagerOf("User")->ListeCaisse();
+        foreach ($Users as $key => $value) {
+            foreach ($ListeCaisse as $key1 => $value1) {
+                $caisse[$value['RefUsers']][$value1['RefCaisse']] =
+                    $this->managers->getManagerOf('User')->VerifCaisse($value1['RefCaisse'], $value['RefUsers']);
+            }
+        }
         $this->page->addVar("ListeUsers", $Users); // Creation de la variable, ajout d'une variable a la vue
-    }
-    public function executeAdd(\Library\HTTPRequest $request)
-    {
-        $this->page->addVar("titles", "Ajouter un Utilisateur");
-        if ($request->method() == 'POST') { //Verification de la methode send
-            $Users = new \Library\Entities\User(array('login' => $request->postData('login'), 'password' => $request->postData('password')));
-            if ($Users->isValid()) { //check de validite
-                $this->managers->getManagerOf("User")->save($Users);
-                $this->app()->user()->setFlash('Complete');
-                $this->app()->httpResponse()->redirect('/ListeUsers'); //Retour en arriere
-            }
+        $this->page->addVar("ListeCaisse", $ListeCaisse);
+        $this->page->addVar('VerifCaisse', $caisse);
+        $ListeStatut  = $this->managers->getManagerOf("User")->ListeStatut();
+        $this->page->addVar("ListeStatut", $ListeStatut);
+        if ($request->method() == 'POST' && empty($request->postData('RefUsers'))) {
+            $this->managers->getManagerOf('User')->AddUser($request);
+            $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
+        } elseif ($request->method() == 'POST' && !empty($request->postData('RefUsers'))) {
+            $this->managers->getManagerOf('User')->AddChmod($request);
+            $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
         }
-    }
-    public function executeUpdate(\Library\HTTPRequest $request)
-    {
-        $this->page->addVar('titles', 'Modifier un Utilisateur');
-        $Users = $this->managers->getManagerOf('User')->get($request->getData('id'));
-        if ($request->method() == 'POST') {
-            $Users = new  \Library\Entities\User(array('id' => $request->getData('id'), 'login' => $request->postData('login'), 'password' => $request->postData('password'))); //Stockage des donnees du post
-            if ($Users->isValid()) {
-                $this->managers->getManagerOf("User")->save($Users); //Creation de la variable
-                $this->app()->user()->setFlash('Complete');
-                $this->app()->httpResponse()->redirect('/ListeUsers'); //Retour en arriere
-            }
-        }
-        $this->page->addVar('User', $Users);
     }
 
-    public function executeDelete(\Library\HTTPRequest $request)
+    public function executeProfile(\Library\HTTPRequest $request)
     {
-        $this->page->addVar('titles', 'Suppression d\'un Article');
-        $this->managers->getManagerOf('User')->delete($request->getData('id'));
-        $this->app()->user()->setFlash('Complete');
-        $this->app()->httpResponse()->redirect('/ListeUsers');
+        $this->page->addVar("titles", "Mon Profile"); // Titre de la page
+        $MyProfile = $this->managers->getManagerOf('User')->MyProfile();
+        $this->page->addVar('Info', $MyProfile);
+        if ($request->method() == "POST" && empty($request->postData('password'))) {
+            $this->managers->getManagerOf('User')->UpdateInfo();
+            $this->app()->httpResponse()->redirect('/Users/myprofile'); //Retour en arriere
+        } elseif (!empty($request->postData('password'))) {
+            $this->managers->getManagerOf('User')->CheckPassword($request);
+        }
+    }
+    public function executeNewpassword(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Entrer un nouveau mot de passe"); // Titre de la page
+        if ($request->method() == "POST") {
+            $this->managers->getManagerOf('User')->ValidPassword($request);
+            $this->app()->httpResponse()->redirect('/Users/myprofile'); //Retour en arriere
+        }
+    }
+    public function executeDeleteusers(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Suppresssion user"); // Titre de la page
+        $this->managers->getManagerOf('User')->DeleteUsers($request->getData('id'));
+        $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
+
+    }
+
+    public function executeUpdateusers(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Mettre à jour les informations "); // Titre de la page
+        $Info = $this->managers->getManagerOf('User')->GetUserInfo($request->getData('id'));
+        $this->page->addVar('Info', $Info);
+        $ListeStatut  = $this->managers->getManagerOf("User")->ListeStatut();
+        $this->page->addVar("ListeStatut", $ListeStatut);
+        if ($request->method() == 'POST') {
+            $this->managers->getManagerOf("User")->UpdateUsers($request);
+            $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
+
+        }
     }
 }

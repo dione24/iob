@@ -112,28 +112,28 @@ class ArreterManagerPDO extends ArreterManager
         $VersementList = [];
 
         foreach ($Versement as $key => $value) {
-            $dixmille += $value['a2'];
+            $dixmille += intval($value['a2']);
             $cinqmille
-                += $value['b2'];
-            $deuxmille += $value['c2'];
-            $mille += $value['d2'];
+                += intval($value['b2']);
+            $deuxmille += intval($value['c2']);
+            $mille += intval($value['d2']);
             $cinqcent
-                += $value['e2'];
+                += intval($value['e2']);
             $deuxcentcinq
-                += $value['f2'];
+                += intval($value['f2']);
             $deuxcent
-                += $value['g2'];
-            $cent += $value['h2'];
+                += intval($value['g2']);
+            $cent += intval($value['h2']);
             $cinquante
-                += $value['i2'];
+                += intval($value['i2']);
             $vingtcinq
-                += $value['j2'];
+                += intval($value['j2']);
             $dix
-                += $value['k2'];
+                += intval($value['k2']);
             $cinq
-                += $value['l2'];
+                += intval($value['l2']);
             $un
-                += $value['m2'];
+                += intval($value['m2']);
         }
         $VersementList['dixmille'] = $dixmille;
         $VersementList['cinqmille'] = $cinqmille;
@@ -173,28 +173,28 @@ class ArreterManagerPDO extends ArreterManager
         $retrait = $requete->fetchAll();
         $RetraitList = [];
         foreach ($retrait as $key => $value) {
-            $dixmille += $value['a2'];
+            $dixmille += intval($value['a2']);
             $cinqmille
-                += $value['b2'];
-            $deuxmille += $value['c2'];
-            $mille += $value['d2'];
+                += intval($value['b2']);
+            $deuxmille += intval($value['c2']);
+            $mille += intval($value['d2']);
             $cinqcent
-                += $value['e2'];
+                += intval($value['e2']);
             $deuxcentcinq
-                += $value['f2'];
+                += intval($value['f2']);
             $deuxcent
-                += $value['g2'];
-            $cent += $value['h2'];
+                += intval($value['g2']);
+            $cent += intval($value['h2']);
             $cinquante
-                += $value['i2'];
+                += intval($value['i2']);
             $vingtcinq
-                += $value['j2'];
+                += intval($value['j2']);
             $dix
-                += $value['k2'];
+                += intval($value['k2']);
             $cinq
-                += $value['l2'];
+                += intval($value['l2']);
             $un
-                += $value['m2'];
+                += intval($value['m2']);
         }
         $RetraitList['dixmille'] = $dixmille;
         $RetraitList['cinqmille'] = $cinqmille;

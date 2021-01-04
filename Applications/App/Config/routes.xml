@@ -10,6 +10,29 @@
 	<route url="/Arreter/close/([0-9]+)" vars="id" module="Arreter" action="close"/>
 	<route url="/Arreter/View/([0-9]+)" vars="id" module="Arreter" action="View"/>
 	<route url="/Caisse/solde" module="Caisse" action="index"/>
+	<route url="/Caisse/transfertfond" module="Caisse" action="transfertfond"/>
+	<route url="/Caisse/ApproCaisse" module="Caisse" action="approcaisse"/>
+	<route url="/Caisse/Transfert/delete/([0-9]+)" vars="id" module="Caisse" action="deleteTransfert"/>
+	<route url="/Caisse/Appro/delete/([0-9]+)" vars="id" module="Caisse" action="deleteAppro"/>
+	<route url="/Pannel/Caisse" module="Pannel" action="listecaisse"/>
+	<route url="/Pannel/Agence" module="Pannel" action="listeagence"/>
+	<route url="/Pannel/Agence/delete/([0-9]+)" module="Pannel" vars="id" action="deleteagence"/>
+	<route url="/Pannel/Banque" module="Pannel" action="listebanque"/>
+	<route url="/Pannel/Banque/delete/([0-9]+)" module="Pannel" vars="id" action="deletebanque"/>
+	<route url="/Users/myprofile" module="Users" action="profile"/>
+	<route url="/Users/NewPassword" module="Users" action="newpassword"/>
+	<route url="/Users/index" module="Users" action="index"/>
+	<route url="/Users/deleteUsers/([0-9]+)" vars="id" action="deleteusers" module="Users"/>
+	<route url="/Users/UpdateUsers/([0-9]+)" vars="id" action="updateusers" module="Users"/>
+
+
+
+
+
+
+
+
+
 
 
 </routes>
