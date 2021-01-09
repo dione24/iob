@@ -36,6 +36,9 @@
                               <th class="border-top-0">Remarque</th>
                               <th class="border-top-0">Date</th>
                               <th class="border-top-0">Caissier</th>
+                              <?php if ($_SESSION['statut'] == 'admin') { ?>
+                              <th class="border-top-0">Action</th>
+                              <?php } ?>
                           </tr>
                       </thead>
                       <tbody>
@@ -49,6 +52,14 @@
                               <td><?= $value['Remarque']; ?></td>
                               <td><?= date('d/m/Y', strtotime($value['Approve2_Time'])); ?></td>
                               <td><?= $value['login']; ?></td>
+                              <?php if ($_SESSION['statut'] == 'admin') { ?>
+                              <td>
+                                  <a href="/Journal/delete/<?= $value['RefOperations']; ?>"
+                                      class="btn btn-xs btn-danger"
+                                      onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
+                                          class="fa fa-trash"></i></a>
+                              </td>
+                              <?php } ?>
                           </tr>
                           <?php } ?>
 

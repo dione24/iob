@@ -25,4 +25,10 @@ class JournalController extends \Library\BackController
             $this->page->addVar('Operations', $Operations);
         }
     }
+    public function executeDelete(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Suppresion "); // Titre de la page
+        $this->managers->getManagerOf("Journal")->DeleteOperations($request->getData('id'));
+        $this->app()->httpResponse()->redirect('/Journal/index'); //Retour en arriere
+    }
 }
