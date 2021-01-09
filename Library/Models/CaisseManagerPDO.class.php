@@ -130,7 +130,7 @@ class CaisseManagerPDO extends CaisseManager
             $Transfert = $this->Transfert(NULL);
         }
         $SoldeCaisse = $Solde['SoldeCompte'] + $Retrait - $Versement + $Appro - $Transfert;
-        return $SoldeCaisse;
+        return NULL;
     }
     public function ListeFond()
     {

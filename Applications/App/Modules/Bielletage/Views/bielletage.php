@@ -307,21 +307,21 @@
                     <div class="col-md-6">
                         <div class="form-group has-error">
                             <label class="control-label">Montant</label>
-                            <input type="int" id="total" class="form-control" name="MontantVersement">
+                            <input type="int" id="total" class="form-control" name="MontantVersement" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group has-error">
-                            <label class="control-label">Remarque (facultative)</label>
-                            <input type="text" class="form-control" name="Remarque">
+                            <label class="control-label">Remarque</label>
+                            <input type="text" class="form-control" name="Remarque" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group has-error">
                             <label class="control-label">Deposant/Auteur Retrait</label>
-                            <input type="text" class="form-control" name="NameDeposant">
+                            <input type="text" class="form-control" name="NameDeposant" required="">
                         </div>
                     </div>
                 </div>

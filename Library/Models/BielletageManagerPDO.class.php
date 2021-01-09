@@ -50,14 +50,14 @@ class BielletageManagerPDO extends BielletageManager
     public  function GetCaisse()
     {
         if ($_SESSION['statut'] == 'Caissier') {
-            $requeteCaisse = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType WHERE TbleOperations.Reset_Id IS NULL AND TbleOperations.Insert_Time=:today AND TbleOperations.Insert_Id=:RefUsers ');
+            $requeteCaisse = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleOperations.Reset_Id IS NULL AND TbleOperations.Insert_Time=:today AND TbleOperations.Insert_Id=:RefUsers ');
             $requeteCaisse->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
             $requeteCaisse->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requeteCaisse->execute();
             $GetCaisse = $requeteCaisse->fetchAll();
             return $GetCaisse;
         } elseif ($_SESSION['statut'] == 'ChefCaisse') {
-            $requeteCaisse = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType WHERE TbleOperations.Reset_Id IS NULL AND TbleOperations.Insert_Time=:today AND TbleOperations.Insert_Id=:RefUsers ');
+            $requeteCaisse = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleOperations.Reset_Id IS NULL AND TbleOperations.Insert_Time=:today AND TbleOperations.Insert_Id=:RefUsers ');
             $requeteCaisse->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
             $requeteCaisse->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requeteCaisse->execute();

@@ -22,10 +22,12 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">SOLDE OMNI</h3>
+                    <h3 class="box-title">SOLDE</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li class="ml-auto"><span
-                                class="counter text-info"><?= number_format($Solde, 0, '.', ','); ?></span>
+                                class="counter text-info"><?php if (($SommeVersement - $SommeRetrait) > 0) {
+                                                                                echo number_format($SommeVersement - $SommeRetrait, 0, '.', ',');
+                                                                            }; ?></span>
                         </li>
                     </ul>
                 </div>
