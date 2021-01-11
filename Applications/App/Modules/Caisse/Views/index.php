@@ -24,17 +24,11 @@
                             <th class="border-top-0">Operation</th>
                             <th class="border-top-0">Montant</th>
                             <th class="border-top-0">Date</th>
-
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $montant = 0;
-                        foreach ($GetOperations as $key => $value) {
-                            if ($value['RefType'] == 1) {
-                                $montant += $value['MontantVersement'];
-                            }
-                        ?>
+                        foreach ($GetOperations as $key => $value) {   ?>
                         <tr>
                             <td><?= $value['NameClient']; ?></td>
                             <td><?= $value['NameType']; ?></td>
@@ -43,12 +37,6 @@
                         </tr>
                         <?php } ?>
                     </tbody>
-                    <tfoot>
-                        <td>Total </td>
-                        <td>Versement</td>
-                        <td><?= number_format($montant, 0, '.', ','); ?></td>
-                        <td></td>
-                    </tfoot>
                 </table>
             </div>
         </div>

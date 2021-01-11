@@ -71,7 +71,8 @@ class CaisseManagerPDO extends CaisseManager
             $requete->execute();
             $data = $requete->fetch();
         } else {
-            $requete = $this->dao->prepare("SELECT SUM(MontantVersement) AS Retrait FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE RefType='2' AND  TbleChmod.RefUsers=:RefUsers");
+            $requete = $this->dao->prepare("SELECT SUM(MontantVersement) AS Retrait FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE RefType='2' AND  TbleChmod.RefUsers=:RefUsers AND Insert_Time=:today");
+            $requete->bindValue(':today', date('Y-m-d'), \PDO::PARAM_INT);
             $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requete->execute();
             $data = $requete->fetch();
@@ -129,8 +130,8 @@ class CaisseManagerPDO extends CaisseManager
             $Solde =  $this->GetSolde(NULL);
             $Transfert = $this->Transfert(NULL);
         }
-        $SoldeCaisse = $Solde['SoldeCompte'] + $Retrait - $Versement + $Appro - $Transfert;
-        return NULL;
+        $SoldeCaisse =  ($Retrait - $Versement);
+        return $SoldeCaisse;
     }
     public function ListeFond()
     {
@@ -151,7 +152,6 @@ class CaisseManagerPDO extends CaisseManager
 
     public function ListeAppro()
     {
-
         $requete = $this->dao->prepare("SELECT * FROM TbleAppro INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleAppro.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleAppro.RefCaisse WHERE TbleChmod.RefUsers=:RefUsers");
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
