@@ -35,7 +35,9 @@
                   <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                       <thead>
                           <tr>
-                              <th class="border-top-0">ID</th>
+                              <?php if ($_SESSION['statut'] == 'admin') { ?>
+                                  <th class="border-top-0">ID</th>
+                              <?php } ?>
                               <th class="border-top-0">Agence</th>
                               <th class="border-top-0">Operation</th>
                               <th class="border-top-0">Client</th>
@@ -52,7 +54,9 @@
                       <tbody>
                           <?php foreach ($Operations as $key => $value) { ?>
                               <tr>
-                                  <td><?= $value['RefOperations']; ?></td>
+                                  <?php if ($_SESSION['statut'] == 'admin') { ?>
+                                      <td><?= $value['RefOperations']; ?></td>
+                                  <?php } ?>
                                   <td><?= $value['NameAgency']; ?></td>
                                   <td><?= $value['NameType']; ?></td>
                                   <td><?= $value['NameClient']; ?></td>
@@ -68,7 +72,6 @@
                                   <?php } ?>
                               </tr>
                           <?php } ?>
-
                       </tbody>
                   </table>
               </div>
