@@ -6,9 +6,8 @@
                       <select class="form-control" name="RefCaisse" tabindex="1" required="">
                           <?php foreach ($UserCaisse as $key => $Caisse) {
                             ?>
-                          <option value="<?= $Caisse['RefCaisse']; ?>" <?php if ($Caisse['RefCaisse'] == $Value) { ?>
-                              selected="" <?php } ?>>
-                              <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
+                              <option value="<?= $Caisse['RefCaisse']; ?>" <?php if ($Caisse['RefCaisse'] == $Value) { ?> selected="" <?php } ?>>
+                                  <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
                           <?php }   ?>
                       </select>
                   </div>
@@ -16,21 +15,16 @@
                       <input type="date" id="Debut" name="Debut" value="<?= $Debut; ?>" class="form-control ">
                   </div>
                   <div class="col-md-2">Au
-                      <input type="date" id="Fin" name="Fin" value="<?= $Fin; ?>" class="form-control"
-                          onchange="document.getElementById('formulaire').submit();">
+                      <input type="date" id="Fin" name="Fin" value="<?= $Fin; ?>" class="form-control" onchange="document.getElementById('formulaire').submit();">
                   </div>
                   <div class="col-md-2">Total Versement
-                      <input type="text" value="<?= number_format($sommeVersementPeriode, 0, '.', ','); ?>"
-                          class="form-control" readonly>
+                      <input type="text" value="<?= number_format($sommeVersementPeriode, 0, '.', ','); ?>" class="form-control" readonly>
                   </div>
                   <div class="col-md-2">Total Retrait
-                      <input type="text" value="<?= number_format($sommeRetraitPeriode, 0, '.', ','); ?>"
-                          class="form-control" readonly>
+                      <input type="text" value="<?= number_format($sommeRetraitPeriode, 0, '.', ','); ?>" class="form-control" readonly>
                   </div>
                   <div class="col-md-2">Solde
-                      <input type="text"
-                          value="<?= number_format($sommeVersementPeriode - $sommeRetraitPeriode, 0, '.', ','); ?>"
-                          class="form-control" readonly>
+                      <input type="text" value="<?= number_format($sommeVersementPeriode - $sommeRetraitPeriode, 0, '.', ','); ?>" class="form-control" readonly>
                   </div>
               </div>
           </form>
@@ -41,6 +35,7 @@
                   <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                       <thead>
                           <tr>
+                              <th class="border-top-0">ID</th>
                               <th class="border-top-0">Agence</th>
                               <th class="border-top-0">Operation</th>
                               <th class="border-top-0">Client</th>
@@ -50,30 +45,28 @@
                               <th class="border-top-0">Date</th>
                               <th class="border-top-0">Caissier</th>
                               <?php if ($_SESSION['statut'] == 'admin') { ?>
-                              <th class="border-top-0">Action</th>
+                                  <th class="border-top-0">Action</th>
                               <?php } ?>
                           </tr>
                       </thead>
                       <tbody>
                           <?php foreach ($Operations as $key => $value) { ?>
-                          <tr>
-                              <td><?= $value['NameAgency']; ?></td>
-                              <td><?= $value['NameType']; ?></td>
-                              <td><?= $value['NameClient']; ?></td>
-                              <td><?= $value['NumCompte']; ?></td>
-                              <td><?= $value['MontantVersement']; ?></td>
-                              <td><?= $value['Remarque']; ?></td>
-                              <td><?= date('d/m/Y', strtotime($value['Approve2_Time'])); ?></td>
-                              <td><?= $value['login']; ?></td>
-                              <?php if ($_SESSION['statut'] == 'admin') { ?>
-                              <td>
-                                  <a href="/Journal/delete/<?= $value['RefOperations']; ?>"
-                                      class="btn btn-xs btn-danger"
-                                      onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
-                                          class="fa fa-trash"></i></a>
-                              </td>
-                              <?php } ?>
-                          </tr>
+                              <tr>
+                                  <td><?= $value['RefOperations']; ?></td>
+                                  <td><?= $value['NameAgency']; ?></td>
+                                  <td><?= $value['NameType']; ?></td>
+                                  <td><?= $value['NameClient']; ?></td>
+                                  <td><?= $value['NumCompte']; ?></td>
+                                  <td><?= $value['MontantVersement']; ?></td>
+                                  <td><?= $value['Remarque']; ?></td>
+                                  <td><?= date('d/m/Y', strtotime($value['Approve2_Time'])); ?></td>
+                                  <td><?= $value['login']; ?></td>
+                                  <?php if ($_SESSION['statut'] == 'admin') { ?>
+                                      <td>
+                                          <a href="/Journal/delete/<?= $value['RefOperations']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i class="fa fa-trash"></i></a>
+                                      </td>
+                                  <?php } ?>
+                              </tr>
                           <?php } ?>
 
                       </tbody>
