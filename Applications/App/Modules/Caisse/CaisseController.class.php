@@ -36,7 +36,6 @@ class CaisseController extends \Library\BackController
             $this->app()->httpResponse()->redirect('/Caisse/transfertfond'); //Retour en arriere
         }
     }
-
     public function executeApprocaisse(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Liste des Appro"); // Titre de la page
