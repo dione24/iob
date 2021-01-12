@@ -17,7 +17,7 @@
                   <div class="col-md-2">Au
                       <input type="date" id="Fin" name="Fin" value="<?= $Fin; ?>" class="form-control" onchange="document.getElementById('formulaire').submit();">
                   </div>
-                  <div class="col-md-2">Total Versement
+                  <div class="col-md-2">Total Encaissement
                       <input type="text" value="<?= number_format($sommeVersementPeriode, 0, '.', ','); ?>" class="form-control" readonly>
                   </div>
                   <div class="col-md-2">Total Retrait
