@@ -2,7 +2,7 @@
       <div class="col-md-12">
           <form method="POST" action="" id="formulaire">
               <div class="input-group">
-                  <div class="col-md-4">Caisse
+                  <div class="col-md-2">Caisse
                       <select class="form-control" name="RefCaisse" tabindex="1" required="">
                           <?php foreach ($UserCaisse as $key => $Caisse) {
                             ?>
@@ -12,12 +12,25 @@
                           <?php }   ?>
                       </select>
                   </div>
-                  <div class="col-md-4">Du
+                  <div class="col-md-2">Du
                       <input type="date" id="Debut" name="Debut" value="<?= $Debut; ?>" class="form-control ">
                   </div>
-                  <div class="col-md-3">Au
+                  <div class="col-md-2">Au
                       <input type="date" id="Fin" name="Fin" value="<?= $Fin; ?>" class="form-control"
                           onchange="document.getElementById('formulaire').submit();">
+                  </div>
+                  <div class="col-md-2">Total Versement
+                      <input type="text" value="<?= number_format($sommeVersementPeriode, 0, '.', ','); ?>"
+                          class="form-control" readonly>
+                  </div>
+                  <div class="col-md-2">Total Retrait
+                      <input type="text" value="<?= number_format($sommeRetraitPeriode, 0, '.', ','); ?>"
+                          class="form-control" readonly>
+                  </div>
+                  <div class="col-md-2">Solde
+                      <input type="text"
+                          value="<?= number_format($sommeVersementPeriode - $sommeRetraitPeriode, 0, '.', ','); ?>"
+                          class="form-control" readonly>
                   </div>
               </div>
           </form>

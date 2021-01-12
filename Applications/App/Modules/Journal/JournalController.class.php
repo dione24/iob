@@ -20,9 +20,17 @@ class JournalController extends \Library\BackController
             $this->page->addVar('Debut', $request->postData('Debut'));
             $this->page->addVar('Fin', $request->postData('Fin'));
             $this->page->addVar('Value', $request->postData('RefCaisse'));
+            $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
+            $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
         } else {
             $Operations = $this->managers->getManagerOf('Journal')->Operations();
             $this->page->addVar('Operations', $Operations);
+            $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode();
+            $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
+            $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode();
+            $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
         }
     }
     public function executeDelete(\Library\HTTPRequest $request)
