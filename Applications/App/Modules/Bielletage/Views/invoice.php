@@ -98,7 +98,8 @@
              </div>
          </div>
          <p style="text-align: right;"><?= date('d-M-Y', strtotime($GetInvoice['Insert_Time'])); ?>
-             <?= date("H:i:s", strtotime("-1 hour")); ?> </p>
+             <?= gmdate("M d Y H:i:s") . "\n"; // date("H:i:s", strtotime("-1 hour")); 
+                ?> </p>
          <hr>
          <div style="padding: 0px !important;">
              <div class="row"
