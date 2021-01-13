@@ -116,6 +116,12 @@
                                     <td>5</td>
                                     <td class="counter text-danger"><?= $Biellet['cinq']; ?></td>
                                 </tr>
+                                <tr>
+                                    <td style="border: none !important;"></td>
+                                    <td style="border: none !important;"></td>
+                                    <td>1</td>
+                                    <td class="counter text-danger"><?= $Biellet['un']; ?></td>
+                                </tr>
 
                             </tbody>
                         </table>
