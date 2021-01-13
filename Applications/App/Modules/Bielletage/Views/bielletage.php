@@ -3,17 +3,17 @@
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="#step-1">
-                Bielletage
+                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#step-2">
-                Bielletage
+                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#step-3">
-                Opérations
+                Opérations-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
             </a>
         </li>
     </ul>
@@ -283,8 +283,8 @@
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
                                     if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
                                 ?>
-                                <option value="<?= $Caisse['RefCaisse']; ?>">
-                                    <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
+                                        <option value="<?= $Caisse['RefCaisse']; ?>">
+                                            <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
                                 <?php }
                                 }   ?>
                             </select>
