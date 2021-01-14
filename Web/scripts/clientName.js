@@ -23,7 +23,7 @@ $(function () {
                     });
                     Toast.fire({
                         type: 'warning',
-                        title: 'Le numero compte est superieur à 14 chiffres, Veuillez Réessayer.',
+                        title: 'Le numero compte est superieur à 12 chiffres, Veuillez Réessayer.',
                         number: 2
                     });
                 }
