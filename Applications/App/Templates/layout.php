@@ -125,7 +125,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
                                 aria-expanded="false"><i class="fas fa-home fa-fw" aria-hidden="true"></i><span
                                     class="hide-menu">Accueil</span></a></li>
-                        <?php if (!empty($CheckOuverture)) { ?>
+                        <?php if (!empty($CheckOuverture) && $_SESSION['statut'] != 'Niveau1') { ?>
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/bielletage/1" aria-expanded="false"><i class="fa fa-plus"
@@ -138,16 +138,18 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Journal/index" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Journal de Caisse</span></a></li>
+                        <?php if ($_SESSION['statut'] == 'admin') { ?>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Arreter/index" aria-expanded="false"><i class="fa fa-lock"
                                     aria-hidden="true"></i><span class="hide-menu">Arreter de Caisse </span></a></li>
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/solde" aria-expanded="false"><i class="fa fa-globe"
                                     aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/transfertfond" aria-expanded="false"><i class="fa fa-share"
                                     aria-hidden="true"></i><span class="hide-menu">Transfert de Fond</span></a></li>
-                        <?php if ($_SESSION['statut'] == 'admin') { ?>
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/ApproCaisse" aria-expanded="false"><i class="fa fa-columns"
                                     aria-hidden="true"></i><span class="hide-menu">Appro Caisse</span></a></li>
