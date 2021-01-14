@@ -22,9 +22,15 @@ class UsersController extends \Library\BackController
         $this->page->addVar("ListeStatut", $ListeStatut);
         if ($request->method() == 'POST' && empty($request->postData('RefUsers'))) {
             $this->managers->getManagerOf('User')->AddUser($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
         } elseif ($request->method() == 'POST' && !empty($request->postData('RefUsers'))) {
             $this->managers->getManagerOf('User')->AddChmod($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
         }
     }
@@ -53,6 +59,9 @@ class UsersController extends \Library\BackController
     {
         $this->page->addVar("titles", "Suppresssion user"); // Titre de la page
         $this->managers->getManagerOf('User')->DeleteUsers($request->getData('id'));
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
 
     }
@@ -66,6 +75,9 @@ class UsersController extends \Library\BackController
         $this->page->addVar("ListeStatut", $ListeStatut);
         if ($request->method() == 'POST') {
             $this->managers->getManagerOf("User")->UpdateUsers($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Modification réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Users/index'); //Retour en arriere
 
         }

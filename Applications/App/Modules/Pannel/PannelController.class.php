@@ -20,9 +20,11 @@ class PannelController extends \Library\BackController
         $this->page->addVar("ListeCaisse", $ListeCaisse);
         $this->page->addVar("Opening", $Opening);
 
-
         if ($request->method() == 'POST' && !empty($request->postData('RefAgency'))) {
             $AddCaisse  = $this->managers->getManagerOf("Pannel")->AddCaisse($request); //Recuperation de la liste
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Pannel/Caisse'); //Retour en arriere
         }
         if ($request->method() == 'POST' && !empty($request->postData('RefCaisse'))) {
@@ -38,6 +40,9 @@ class PannelController extends \Library\BackController
         $this->page->addVar("ListeBanque", $ListeBanque);
         if ($request->method() == 'POST') {
             $this->managers->getManagerOf("Pannel")->AddAgency($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Pannel/Agence'); //Retour en arriere
 
         }
@@ -46,6 +51,9 @@ class PannelController extends \Library\BackController
     {
         $this->page->addVar("titles", "Delete Agence"); // Titre de la page
         $this->managers->getManagerOf("Pannel")->DeleteAgence($request->getData('id'));
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Pannel/Agence'); //Retour en arriere
 
     }
@@ -57,6 +65,9 @@ class PannelController extends \Library\BackController
 
         if ($request->method() == 'POST') {
             $this->managers->getManagerOf("Pannel")->AddBanque($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Pannel/Banque'); //Retour en arriere
 
         }
@@ -65,6 +76,9 @@ class PannelController extends \Library\BackController
     {
         $this->page->addVar("titles", "Delete Agence"); // Titre de la page
         $this->managers->getManagerOf("Pannel")->DeleteBanque($request->getData('id'));
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Pannel/Banque'); //Retour en arriere
     }
 }

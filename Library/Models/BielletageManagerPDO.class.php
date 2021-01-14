@@ -146,10 +146,14 @@ class BielletageManagerPDO extends BielletageManager
             $requetteBilletage->bindValue(':m2', $_POST['m2'], \PDO::PARAM_STR);
             $requetteBilletage->execute();
             header("location: /");
-            $_SESSION['flash']['success'] = "Changement Effectué";
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Opération réussie !';
+            $_SESSION['message']['number'] = 2;
         } else {
             header("location: /");
-            $_SESSION['flash']['warning'] = "Veuillez  reprendre l'operation. le Formulaire n'est pas remplit correctement,";
+            $_SESSION['message']['type'] = 'danger';
+            $_SESSION['message']['text'] = "Veuillez  reprendre l'operation. le Formulaire n'est pas remplit correctement,!";
+            $_SESSION['message']['number'] = 2;
         }
     }
     public function SommeVersement($Date)

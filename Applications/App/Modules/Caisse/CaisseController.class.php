@@ -33,6 +33,9 @@ class CaisseController extends \Library\BackController
         $this->page->addVar("ListeCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         if ($request->method() == 'POST') {
             $AddTransfert  = $this->managers->getManagerOf("Caisse")->AddTransfert($request); //Recuperation de la liste
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Caisse/transfertfond'); //Retour en arriere
         }
     }
@@ -45,6 +48,9 @@ class CaisseController extends \Library\BackController
         $this->page->addVar("ListeCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         if ($request->method() == 'POST') {
             $AddAppro  = $this->managers->getManagerOf("Caisse")->AddAppro($request); //Recuperation de la liste
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Caisse/ApproCaisse'); //Retour en arriere
         }
     }
@@ -52,12 +58,18 @@ class CaisseController extends \Library\BackController
     {
         $this->page->addVar("titles", "Delete Transfert"); // Titre de la page
         $this->managers->getManagerOf("Caisse")->DeleteTransfert($request->getData('id')); //Recuperation de la liste
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Caisse/transfertfond'); //Retour en arriere
     }
     public function executeDeleteAppro(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Delete Appro"); // Titre de la page
         $this->managers->getManagerOf("Caisse")->DeleteAppro($request->getData('id')); //Recuperation de la liste
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Caisse/ApproCaisse'); //Retour en arriere
     }
 }

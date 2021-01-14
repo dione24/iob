@@ -23,7 +23,8 @@ $(function () {
                     });
                     Toast.fire({
                         type: 'warning',
-                        title: 'Numero de compte imcomplet, merci de verifier.'
+                        title: 'Le numero compte est superieur à 14 chiffres, Veuillez Réessayer.',
+                        number: 2
                     });
                 }
 

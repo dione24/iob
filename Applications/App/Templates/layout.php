@@ -21,6 +21,8 @@
     <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
         type="text/css" />
+    <link href="/js/sweetalert2/sweetalert2.css" rel="stylesheet" type="text/css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -222,14 +224,15 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/wizard.js" type="text/javascript"></script>
+    <script src="/js/sweetalert2/sweetalert2.min.js"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="/scripts/billetage.js"></script>
     <script src="/scripts/clientName.js"></script>
-    <script>
-    </script>
+
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
@@ -256,7 +259,24 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <?php if (!empty($_SESSION['message']) && $_SESSION['message']['number'] > 0) { ?>
+    <script>
+    $(function() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+        });
 
+        Toast.fire({
+            type: '<?= $_SESSION['message']['type']; ?>',
+            title: '<?= $_SESSION['message']['text']; ?>'
+        });
+    });
+    </script>
+    <?php $_SESSION['message']['number']--;
+    } ?>
 </body>
 
 </html>
