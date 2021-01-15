@@ -231,6 +231,7 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="/scripts/billetage.js"></script>
+    <script src="/scripts/Checklogin.js"></script>
     <script src="/scripts/clientName.js"></script>
 
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -86,7 +86,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="login" class="control-label">Login</label>
-                        <input type="text" class="form-control" name="login" id="recipient-name1">
+                        <input type="text" class="form-control" name="login" id="login">
+                        <span id="statut"></span>
                     </div>
                     <div class="form-group">
                         <label for="nom" class="control-label">Nom</label>
@@ -98,7 +99,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="recipient-name1">
+                        <input type="email" class="form-control" name="email" id="email">
                     </div>
                     <div class="form-group">
                         <label for="password" class="control-label">Password</label>
@@ -116,7 +117,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button type="submit" id="register" class="btn btn-primary">Valider</button>
                 </div>
             </form>
         </div>
