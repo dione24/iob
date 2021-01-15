@@ -26,7 +26,9 @@ class ConnexionController extends \Library\BackController
     {
         $this->page->addVar('titles', 'Logout');
         $this->app()->user()->setAuthenticated(false); //deconnexion de user
-        $this->app()->user()->setFlash('Logout Successul');
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Déconnexion réussie !';
+        $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/');
     }
 }
