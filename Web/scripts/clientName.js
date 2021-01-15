@@ -23,7 +23,7 @@ $(function () {
                     });
                     Toast.fire({
                         type: 'warning',
-                        title: 'Le numero compte est incorrect, Veuillez Réessayer.',
+                        title: 'Le numero de compte est incorrect, Veuillez Réessayer.',
                         number: 2
                     });
                 }
