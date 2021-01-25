@@ -14,6 +14,8 @@ class JournalController extends \Library\BackController
         $this->page->addVar('Debut', $request->postData('Debut'));
         $this->page->addVar('Fin', $request->postData('Fin'));
         $this->page->addVar('Value', $request->postData('RefCaisse'));
+        $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal(NULL, NULL, NULL);
+        $this->page->addVar('Biellet', $Biellet);
         if (!empty($request->postData('RefCaisse'))) {
             $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('Operations', $Operations);
@@ -24,6 +26,8 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
+            $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $this->page->addVar('Biellet', $Biellet);
         } else {
             $Operations = $this->managers->getManagerOf('Journal')->Operations();
             $this->page->addVar('Operations', $Operations);

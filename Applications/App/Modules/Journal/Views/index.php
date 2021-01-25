@@ -89,4 +89,60 @@
               </div>
           </div>
       </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+              <div class="card-heading">
+                  Bielletage
+              </div>
+              <div class="card-body">
+                  <table class="table">
+                      <tbody>
+                          <tr>
+                              <td>10.000</td>
+                              <td class="counter text-danger"><?= $Biellet['dixmille'] ?></td>
+                              <td>250</td>
+                              <td class="counter text-danger"><?= $Biellet['deuxcentcinq']; ?></td>
+                          </tr>
+                          <tr>
+                              <td>5.000</td>
+                              <td class="counter text-danger"><?= $Biellet['cinqmille']; ?></td>
+                              <td>200</td>
+                              <td class="counter text-danger"><?= $Biellet['deuxcent']; ?></td>
+                          </tr>
+                          <tr>
+                              <td>2.000</td>
+                              <td class="counter text-danger"><?= $Biellet['deuxmille']; ?></td>
+                              <td>100</td>
+                              <td class="counter text-danger"><?= $Biellet['cent']; ?></td>
+                          </tr>
+                          <tr>
+                              <td>1.000</td>
+                              <td class="counter text-danger"><?= $Biellet['mille']; ?></td>
+                              <td>50</td>
+                              <td class="counter text-danger"><?= $Biellet['cinquante']; ?></td>
+                          </tr>
+                          <tr>
+                              <td>500</td>
+                              <td class="counter text-danger"><?= $Biellet['cinqcent']; ?></td>
+                              <td>25</td>
+                              <td class="counter text-danger"><?= $Biellet['vingtcinq']; ?></td>
+                          </tr>
+                          <tr>
+                              <td>10</td>
+                              <td class="counter text-danger"><?= $Biellet['dix']; ?></td>
+                              <td>5</td>
+                              <td class="counter text-danger"><?= $Biellet['cinq']; ?></td>
+                          </tr>
+                          <tr>
+                              <td style="border: none !important;"></td>
+                              <td style="border: none !important;"></td>
+                              <td>1</td>
+                              <td class="counter text-danger"><?= $Biellet['un']; ?></td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
   </div>

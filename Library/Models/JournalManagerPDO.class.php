@@ -82,4 +82,164 @@ class JournalManagerPDO extends JournalManager
             return $data['TotalPeriodeVersement'];
         }
     }
+
+    public function  Versement($debut = NULL, $fin = NULL, $caisse = NULL)
+    {
+        $dixmille = 0;
+        $cinqmille = 0;
+        $deuxmille = 0;
+        $mille = 0;
+        $cinqcent = 0;
+        $deuxcentcinq = 0;
+        $deuxcent = 0;
+        $cent = 0;
+        $cinquante = 0;
+        $vingtcinq = 0;
+        $dix = 0;
+        $cinq = 0;
+        $un = 0;
+        if (!empty($debut) && !empty($fin) && !empty($caisse)) {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND RefCaisse=:Caisse AND  RefType=1  ");
+            $requete->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
+            $requete->execute();
+            $Versement = $requete->fetchAll();
+            $VersementList = [];
+        } else {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:day AND TbleChmod.RefUsers=:RefUsers");
+            $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requete->bindValue(':day', date('Y-m-d'), \PDO::PARAM_STR);
+            $requete->execute();
+            $Versement = $requete->fetchAll();
+            $VersementList = [];
+        }
+
+        foreach ($Versement as $key => $value) {
+            $dixmille += intval($value['a2']);
+            $cinqmille
+                += intval($value['b2']);
+            $deuxmille += intval($value['c2']);
+            $mille += intval($value['d2']);
+            $cinqcent
+                += intval($value['e2']);
+            $deuxcentcinq
+                += intval($value['f2']);
+            $deuxcent
+                += intval($value['g2']);
+            $cent += intval($value['h2']);
+            $cinquante
+                += intval($value['i2']);
+            $vingtcinq
+                += intval($value['j2']);
+            $dix
+                += intval($value['k2']);
+            $cinq
+                += intval($value['l2']);
+            $un
+                += intval($value['m2']);
+        }
+        $VersementList['dixmille'] = $dixmille;
+        $VersementList['cinqmille'] = $cinqmille;
+        $VersementList['deuxmille'] = $deuxmille;
+        $VersementList['mille'] = $mille;
+        $VersementList['cinqcent'] = $cinqcent;
+        $VersementList['deuxcentcinq'] = $deuxcentcinq;
+        $VersementList['deuxcent'] = $deuxcent;
+        $VersementList['cent'] = $cent;
+        $VersementList['cinquante'] = $cinquante;
+        $VersementList['vingtcinq'] = $vingtcinq;
+        $VersementList['dix'] = $dix;
+        $VersementList['cinq'] = $cinq;
+        $VersementList['un'] = $un;
+        return $VersementList;
+    }
+
+    public function  Retrait($debut = NULL, $fin = NULL, $caisse = NULL)
+    {
+        $dixmille = 0;
+        $cinqmille = 0;
+        $deuxmille = 0;
+        $mille = 0;
+        $cinqcent = 0;
+        $deuxcentcinq = 0;
+        $deuxcent = 0;
+        $cent = 0;
+        $cinquante = 0;
+        $vingtcinq = 0;
+        $dix = 0;
+        $cinq = 0;
+        $un = 0;
+        if (!empty($debut) && !empty($fin) && !empty($caisse)) {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND RefCaisse=:Caisse AND  RefType=2 ");
+            $requete->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
+            $requete->execute();
+            $retrait = $requete->fetchAll();
+            $RetraitList = [];
+        } else {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:day AND TbleChmod.RefUsers=:RefUsers");
+            $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requete->bindValue(':day', date('Y-m-d'), \PDO::PARAM_STR);
+            $requete->execute();
+            $retrait = $requete->fetchAll();
+            $RetraitList = [];
+        }
+        foreach ($retrait as $key => $value) {
+            $dixmille += intval($value['a2']);
+            $cinqmille
+                += intval($value['b2']);
+            $deuxmille += intval($value['c2']);
+            $mille += intval($value['d2']);
+            $cinqcent
+                += intval($value['e2']);
+            $deuxcentcinq
+                += intval($value['f2']);
+            $deuxcent
+                += intval($value['g2']);
+            $cent += intval($value['h2']);
+            $cinquante
+                += intval($value['i2']);
+            $vingtcinq
+                += intval($value['j2']);
+            $dix
+                += intval($value['k2']);
+            $cinq
+                += intval($value['l2']);
+            $un
+                += intval($value['m2']);
+        }
+        $RetraitList['dixmille'] = $dixmille;
+        $RetraitList['cinqmille'] = $cinqmille;
+        $RetraitList['deuxmille'] = $deuxmille;
+        $RetraitList['mille'] = $mille;
+        $RetraitList['cinqcent'] = $cinqcent;
+        $RetraitList['deuxcentcinq'] = $deuxcentcinq;
+        $RetraitList['deuxcent'] = $deuxcent;
+        $RetraitList['cent'] = $cent;
+        $RetraitList['cinquante'] = $cinquante;
+        $RetraitList['vingtcinq'] = $vingtcinq;
+        $RetraitList['dix'] = $dix;
+        $RetraitList['cinq'] = $cinq;
+        $RetraitList['un'] = $un;
+        return $RetraitList;
+    }
+    public function GetBielletageJournal($debut, $fin, $caisse)
+    {
+
+        $Versement = $this->Versement($debut, $fin, $caisse);
+        $Retrait = $this->Retrait($debut, $fin, $caisse);
+
+        $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
+        $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
+        $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
+        $Biellet['mille'] = $Versement['mille'] - $Retrait['mille'];
+        $Biellet['cinqcent'] = $Versement['cinqcent'] - $Retrait['cinqcent'];
+        $Biellet['deuxcentcinq'] = $Versement['deuxcentcinq'] - $Retrait['deuxcentcinq'];
+        $Biellet['deuxcent'] = $Versement['deuxcent'] - $Retrait['deuxcent'];
+        $Biellet['cent'] = $Versement['cent'] - $Retrait['cent'];
+        $Biellet['cinquante'] = $Versement['cinquante'] - $Retrait['cinquante'];
+        $Biellet['vingtcinq'] = $Versement['vingtcinq'] - $Retrait['vingtcinq'];
+        $Biellet['dix'] = $Versement['dix'] - $Retrait['dix'];
+        $Biellet['cinq'] = $Versement['cinq'] - $Retrait['cinq'];
+        $Biellet['un'] = $Versement['un'] - $Retrait['un'];
+        return $Biellet;
+    }
 }
