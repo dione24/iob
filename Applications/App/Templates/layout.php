@@ -152,7 +152,7 @@
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/ApproCaisse" aria-expanded="false"><i class="fa fa-columns"
-                                    aria-hidden="true"></i><span class="hide-menu">Appro Petite Caisse</span></a></li>
+                                    aria-hidden="true"></i><span class="hide-menu">Appro Caisse</span></a></li>
                         <?php  }
                         if ($_SESSION['statut'] == 'admin') { ?>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
