@@ -2,7 +2,7 @@
     <div class="col-md-12">
 
         <div class="white-box">
-            <h3 class="box-title">Transfert de Fond</h3>
+            <h3 class="box-title">Sortie de Fond</h3>
             <a href="/bielletage/4" class="btn btn-primary"><i class="fa fa-plus"> Transferer</i></a> <br /> <br />
 
             <div class="table-responsive">
