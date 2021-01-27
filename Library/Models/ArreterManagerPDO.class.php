@@ -104,7 +104,7 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE TbleOperations.Approve2_Time=:day  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND TbleOperations.Insert_Id=:users AND RefType=1 ");
+        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE TbleOperations.Approve2_Time=:day  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND TbleOperations.Insert_Id=:users AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)");
         $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();
@@ -166,7 +166,7 @@ class ArreterManagerPDO extends ArreterManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE TbleOperations.Approve2_Time=:day  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND TbleOperations.Insert_Id=:users AND RefType=2 ");
+        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE TbleOperations.Approve2_Time=:day  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND TbleOperations.Insert_Id=:users AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4) ");
         $requete->bindValue(':users', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->bindValue(':day', $Date, \PDO::PARAM_STR);
         $requete->execute();

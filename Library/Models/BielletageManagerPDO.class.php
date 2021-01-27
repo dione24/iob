@@ -160,14 +160,14 @@ class BielletageManagerPDO extends BielletageManager
     {
         if ($_SESSION['statut'] != 'admin') {
 
-            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers  ');
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
             $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
             $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requeteSUm->execute();
             $data = $requeteSUm->fetch();
             return $data['TotalVersment'];
         } else {
-            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  ');
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
             $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
             $requeteSUm->execute();
             $data = $requeteSUm->fetch();
@@ -177,14 +177,14 @@ class BielletageManagerPDO extends BielletageManager
     public function SommeRetrait($Date)
     {
         if ($_SESSION['statut'] != 'admin') {
-            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers ');
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
             $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
             $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requeteSUm->execute();
             $data = $requeteSUm->fetch();
             return $data['TotalVersment'];
         } else {
-            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  ');
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
             $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
             $requeteSUm->execute();
             $data = $requeteSUm->fetch();
@@ -212,15 +212,36 @@ class BielletageManagerPDO extends BielletageManager
         }
         return $tableau;
     }
+
+
+
+    public function SommeVersementStatistique($Date)
+    {
+        if ($_SESSION['statut'] != 'admin') {
+
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=1)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND (TbleOperations.RefType=1) ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
+    }
     public function DailyVersement()
     {
         $jour = $this->daysofweek();
-        $Result['LundiVersement'] = $this->SommeVersement($jour['0']);
-        $Result['MardiVersement'] = $this->SommeVersement($jour['1']);
-        $Result['MercrediVersement'] = $this->SommeVersement($jour['2']);
-        $Result['JeudiVersement'] = $this->SommeVersement($jour['3']);
-        $Result['VendrediVersement'] = $this->SommeVersement($jour['4']);
-        $Result['SamediVersement'] = $this->SommeVersement($jour['5']);
+        $Result['LundiVersement'] = $this->SommeVersementStatistique($jour['0']);
+        $Result['MardiVersement'] = $this->SommeVersementStatistique($jour['1']);
+        $Result['MercrediVersement'] = $this->SommeVersementStatistique($jour['2']);
+        $Result['JeudiVersement'] = $this->SommeVersementStatistique($jour['3']);
+        $Result['VendrediVersement'] = $this->SommeVersementStatistique($jour['4']);
+        $Result['SamediVersement'] = $this->SommeVersementStatistique($jour['5']);
 
         $Result['LundiRetrait'] = $this->SommeRetrait($jour['0']);
         $Result['MardiRetrait'] = $this->SommeRetrait($jour['1']);

@@ -3,18 +3,19 @@
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="#step-1">
-                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
+                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } elseif ($_GET['id'] == 3) { ?>Appro
+                Petite Caisse <?php } elseif ($_GET['id'] == 4) { ?>Transfert Fond<?php } ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#step-2">
-                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
-            </a>
+                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } elseif ($_GET['id'] == 3) { ?>Appro
+                Petite Caisse <?php } elseif ($_GET['id'] == 4) { ?>Transfert Fond<?php } ?> </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#step-3">
-                Opérations-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } ?>
-            </a>
+                Bielletage-<?php if ($_GET['id'] == 1) { ?>Versement<?php } elseif ($_GET['id'] == 2) { ?>Retrait<?php } elseif ($_GET['id'] == 3) { ?>Appro
+                Petite Caisse <?php } elseif ($_GET['id'] == 4) { ?>Transfert Fond<?php } ?> </a>
         </li>
     </ul>
     <form method="POST" action='/bielletage/add'>
@@ -283,8 +284,8 @@
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
                                     if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
                                 ?>
-                                        <option value="<?= $Caisse['RefCaisse']; ?>">
-                                            <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
+                                <option value="<?= $Caisse['RefCaisse']; ?>">
+                                    <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
                                 <?php }
                                 }   ?>
                             </select>

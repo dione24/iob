@@ -3,8 +3,8 @@
 
         <div class="white-box">
             <h3 class="box-title">Transfert de Fond</h3>
-            <button type="button" class="btn btn-primary" id="button" data-toggle="modal" data-target="#AddTransfert"
-                data-whatever="@mdo"><i class="fa fa-plus"> Initier</i></button> <br /> <br />
+            <a href="/bielletage/4" class="btn btn-primary"><i class="fa fa-plus"> Transferer</i></a> <br /> <br />
+
             <div class="table-responsive">
                 <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                     <thead>
@@ -12,7 +12,9 @@
                             <th class="border-top-0">Caisse</th>
                             <th class="border-top-0">Montant</th>
                             <th class="border-top-0">Date</th>
+                            <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <th class="border-top-0">Actions</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,18 +24,18 @@
                                 <?= $value['NameAgency'] . "  " . $value['NameCaisse']; ?>
                             </td>
                             <td>
-                                <?= $value['MontantTransfert']; ?>
+                                <?= $value['MontantVersement']; ?>
                             </td>
                             <td>
-                                <?= $value['DateTransfert']; ?>
+                                <?= $value['Approve2_Time']; ?>
                             </td>
+                            <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <td>
-                                <a href="/Caisse/Transfert/delete/<?= $value['RefTransfert']; ?>"
-                                    class="btn btn-xs btn-danger"
+                                <a href="/Journal/delete/<?= $value['RefOperations']; ?>" class="btn btn-xs btn-danger"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
                                         class="fa fa-trash"></i></a>
-
                             </td>
+                            <?php } ?>
                         </tr>
                         <?php } ?>
                     </tbody>

@@ -135,7 +135,7 @@ class CaisseManagerPDO extends CaisseManager
     }
     public function ListeFond()
     {
-        $requete = $this->dao->prepare("SELECT * FROM tbletransfert INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=tbletransfert.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleCaisse.RefCaisse WHERE TbleChmod.RefUsers=:RefUsers");
+        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  TbleChmod.RefUsers=:RefUsers AND TbleOperations.RefType=4 ");
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
         $data = $requete->fetchAll();
@@ -152,7 +152,7 @@ class CaisseManagerPDO extends CaisseManager
 
     public function ListeAppro()
     {
-        $requete = $this->dao->prepare("SELECT * FROM TbleAppro INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleAppro.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleAppro.RefCaisse WHERE TbleChmod.RefUsers=:RefUsers");
+        $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  TbleChmod.RefUsers=:RefUsers AND TbleOperations.RefType=3 ");
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
         $data = $requete->fetchAll();
@@ -173,7 +173,6 @@ class CaisseManagerPDO extends CaisseManager
         $requete->bindValue(':RefTransfert', $Transfert, \PDO::PARAM_INT);
         $requete->execute();
     }
-
     public function DeleteAppro($Appro)
     {
         $requete = $this->dao->prepare("DELETE FROM TbleAppro WHERE RefAppro=:RefAppro");

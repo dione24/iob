@@ -2,9 +2,8 @@
     <div class="col-md-12">
 
         <div class="white-box">
-            <h3 class="box-title">Appro Caisse</h3>
-            <button type="button" class="btn btn-primary" id="button" data-toggle="modal" data-target="#AddAppro"
-                data-whatever="@mdo"><i class="fa fa-plus"> Initier</i></button> <br /> <br />
+            <h3 class="box-title">Appro Petite Caisse</h3>
+            <a href="/bielletage/3" class="btn btn-primary"><i class="fa fa-plus"> Initier</i></a> <br /> <br />
             <div class="table-responsive">
                 <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                     <thead>
@@ -12,7 +11,9 @@
                             <th class="border-top-0">Caisse</th>
                             <th class="border-top-0">Montant</th>
                             <th class="border-top-0">Date</th>
+                            <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <th class="border-top-0">Actions</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,16 +23,18 @@
                                 <?= $value['NameAgency'] . "  " . $value['NameCaisse']; ?>
                             </td>
                             <td>
-                                <?= $value['MontantAppro']; ?>
+                                <?= $value['MontantVersement']; ?>
                             </td>
                             <td>
-                                <?= $value['DateAppro']; ?>
+                                <?= $value['Approve2_Time']; ?>
                             </td>
+                            <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <td>
-                                <a href="/Caisse/Appro/delete/<?= $value['RefAppro']; ?>" class="btn btn-xs btn-danger"
+                                <a href="/Journal/delete/<?= $value['RefOperations']; ?>" class="btn btn-xs btn-danger"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
                                         class="fa fa-trash"></i></a>
                             </td>
+                            <?php } ?>
                         </tr>
                         <?php } ?>
                     </tbody>
