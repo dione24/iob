@@ -11,7 +11,7 @@
             </select>
         </form>
     </div>
-    <input class="form-control col-md-3" readonly="" value="<?= number_format($Solde, 0, '.', ','); ?>">
+    <input class="form-control col-md-3" readonly="" value="<?//= number_format($Solde, 0, '.', ','); ?>">
     <div class="col-md-12">
         <br />
         <div class="white-box">
