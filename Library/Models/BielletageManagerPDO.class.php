@@ -213,8 +213,6 @@ class BielletageManagerPDO extends BielletageManager
         return $tableau;
     }
 
-
-
     public function SommeVersementStatistique($Date)
     {
         if ($_SESSION['statut'] != 'admin') {
@@ -233,6 +231,24 @@ class BielletageManagerPDO extends BielletageManager
             return $data['TotalVersment'];
         }
     }
+
+    public function SommeRetraitStatistique($Date)
+    {
+        if ($_SESSION['statut'] != 'admin') {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=2)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND (TbleOperations.RefType=2)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
+    }
     public function DailyVersement()
     {
         $jour = $this->daysofweek();
@@ -242,13 +258,12 @@ class BielletageManagerPDO extends BielletageManager
         $Result['JeudiVersement'] = $this->SommeVersementStatistique($jour['3']);
         $Result['VendrediVersement'] = $this->SommeVersementStatistique($jour['4']);
         $Result['SamediVersement'] = $this->SommeVersementStatistique($jour['5']);
-
-        $Result['LundiRetrait'] = $this->SommeRetrait($jour['0']);
-        $Result['MardiRetrait'] = $this->SommeRetrait($jour['1']);
-        $Result['MercrediRetrait'] = $this->SommeRetrait($jour['2']);
-        $Result['JeudiRetrait'] = $this->SommeRetrait($jour['3']);
-        $Result['VendrediRetrait'] = $this->SommeRetrait($jour['4']);
-        $Result['SamediRetrait'] = $this->SommeRetrait($jour['5']);
+        $Result['LundiRetrait'] = $this->SommeRetraitStatistique($jour['0']);
+        $Result['MardiRetrait'] = $this->SommeRetraitStatistique($jour['1']);
+        $Result['MercrediRetrait'] = $this->SommeRetraitStatistique($jour['2']);
+        $Result['JeudiRetrait'] = $this->SommeRetraitStatistique($jour['3']);
+        $Result['VendrediRetrait'] = $this->SommeRetraitStatistique($jour['4']);
+        $Result['SamediRetrait'] = $this->SommeRetraitStatistique($jour['5']);
         return $Result;
     }
 }

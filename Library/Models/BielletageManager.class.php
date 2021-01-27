@@ -18,4 +18,6 @@ abstract class BielletageManager extends \Library\Manager
     abstract protected function getCurrentWeek();
     abstract  protected function daysofweek();
     abstract protected function DailyVersement();
+    abstract protected function SommeRetraitStatistique($Date);
+    abstract protected function SommeVersementStatistique($Date);
 }
