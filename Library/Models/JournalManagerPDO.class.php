@@ -50,13 +50,13 @@ class JournalManagerPDO extends JournalManager
     public function sommeRetraitPeriode($debut = NULL, $fin = NULL, $caisse = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($caisse)) {
-            $SommeRetraitPeriode = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  WHERE TbleOperations.RefType=2  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleOperations.RefCaisse=:Caisse ");
+            $SommeRetraitPeriode = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleOperations.RefCaisse=:Caisse AND  (TbleOperations.RefType=2 OR TbleOperations.RefType=4) ");
             $SommeRetraitPeriode->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
             $SommeRetraitPeriode->execute();
             $DataSomnmeRetrait = $SommeRetraitPeriode->fetch();
             return $DataSomnmeRetrait['TotalPeriodeRetrait'];
         } else {
-            $SommeRetraitPeriode = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.RefType=2 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers');
+            $SommeRetraitPeriode = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers AND  (TbleOperations.RefType=2 OR TbleOperations.RefType=4)');
             $SommeRetraitPeriode->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
             $SommeRetraitPeriode->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $SommeRetraitPeriode->execute();
@@ -68,13 +68,13 @@ class JournalManagerPDO extends JournalManager
     public function sommeVersementPeriode($debut = NULL, $fin = NULL, $caisse = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($caisse)) {
-            $requete = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  WHERE TbleOperations.RefType=1  AND  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleOperations.RefCaisse=:Caisse ");
+            $requete = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleOperations.RefCaisse=:Caisse  AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ");
             $requete->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
             $requete->execute();
             $data = $requete->fetch();
             return $data['TotalPeriodeVersement'];
         } else {
-            $requete = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.RefType=1 AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers');
+            $requete = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers  AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3) ');
             $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
             $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
             $requete->execute();
