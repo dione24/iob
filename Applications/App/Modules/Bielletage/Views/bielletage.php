@@ -282,7 +282,7 @@
                             <label class="control-label">Caisse</label>
                             <select class="form-control" name="RefCaisse" tabindex="1" required="">
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
-                                    if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
+                                    if ($Caisse['caisse'] != $Caisse['RefCaisse'] or $_SESSION['staut'] == 'admin') {
                                 ?>
                                 <option value="<?= $Caisse['RefCaisse']; ?>">
                                     <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
