@@ -14,7 +14,9 @@ class BielletageController extends \Library\BackController
         $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
         $this->page->addVar('Biellet', $Biellet);
         $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersement(date('Y-m-d'));
+        $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde(date('Y-m-d'));
         $this->page->addVar('SommeVersement', $SommeVersement);
+        $this->page->addVar('Yesterday', $Yesterday);
         $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetrait(date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
         $DailyVersement = $this->managers->getManagerOf('Bielletage')->DailyVersement();

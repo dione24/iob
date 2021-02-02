@@ -21,4 +21,5 @@ abstract class BielletageManager extends \Library\Manager
     abstract protected function DailyVersement();
     abstract protected function SommeRetraitStatistique($Date);
     abstract protected function SommeVersementStatistique($Date);
+    abstract protected function YesterdaySolde($Date);
 }

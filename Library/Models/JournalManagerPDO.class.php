@@ -83,6 +83,13 @@ class JournalManagerPDO extends JournalManager
         }
     }
 
+    public function YesterdaySolde($debut = NULL, $fin = NULL, $caisse = NULL)
+    {
+        $Versement = $this->sommeVersementPeriode(date('Y-m-d', strtotime(date($debut) . ' - 1 days')), date('Y-m-d', strtotime(date($fin) . ' - 1 days')), $caisse);
+        $Retrait = $this->sommeRetraitPeriode(date('Y-m-d', strtotime(date($debut) . ' - 1 days')), date('Y-m-d', strtotime(date($fin) . ' - 1 days')), $caisse);
+        return $Versement - $Retrait;
+    }
+
     public function  Versement($debut = NULL, $fin = NULL, $caisse = NULL)
     {
         $dixmille = 0;
