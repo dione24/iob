@@ -94,8 +94,8 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class=" in">
-                            <form method="POST" action="/" class="app-search d-none d-md-block mr-3">
-                                <input type="text" placeholder="Search..." class="form-control mt-0">
+                            <form method="POST" action="/bordereau/" class="app-search d-none d-md-block mr-3">
+                                <input type="text" placeholder="Bordereau N°..." class="form-control mt-0" name="id">
                                 <a href="#" class="active">
                                     <i class="fa fa-search"></i>
                                 </a>

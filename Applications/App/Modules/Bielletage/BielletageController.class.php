@@ -34,7 +34,12 @@ class BielletageController extends \Library\BackController
     {
         $this->page->addVar("titles", "Bordereau"); // Titre de la page
         $this->page->setTemplate('bordereau');
-        $Invoice  = $this->managers->getManagerOf("Bielletage")->GetInvoice($request->getData('id')); //Recuperation de la liste
+        if ($request->method() == 'POST') {
+            $reference  = $request->postData('id');
+        } else {
+            $reference = $request->getData('id');
+        }
+        $Invoice  = $this->managers->getManagerOf("Bielletage")->GetInvoice($reference); //Recuperation de la liste
         $this->page->addVar("GetInvoice", $Invoice); // Creation de la variable, ajout d'une variable a la vue
     }
     public function executeAdd(\Library\HTTPRequest $request)
