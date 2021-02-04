@@ -144,13 +144,9 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Arreter/index" aria-expanded="false"><i class="fa fa-lock"
                                     aria-hidden="true"></i><span class="hide-menu">Arreter de Caisse </span></a></li>
-
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/transfertfond" aria-expanded="false"><i class="fa fa-share"
                                     aria-hidden="true"></i><span class="hide-menu">Sortie de Fond</span></a></li>
-
-
                         <?php  }
                         if ($_SESSION['statut'] == 'admin') { ?>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
