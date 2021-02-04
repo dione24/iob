@@ -13,9 +13,26 @@ class ArreterManagerPDO extends ArreterManager
         $requeteAgence->execute();
         $ListeCaisse = $requeteAgence->fetchAll();
         foreach ($ListeCaisse as $key => $value) {
-            $ListeCaisse[$key]['Valide'] = $this->CheckRapportDaily($value['RefCaisse']);
+            $ListeCaisse[$key]['Valide'] = $this->CheckDailyClose($value['RefCaisse']);
         }
         return $ListeCaisse;
+    }
+    public function StopCaisse($RefCaisse, $Solde)
+    {
+        $StopCaisse = $this->dao->prepare('INSERT INTO TbleSolde(RefCaisse,Solde,RefUsers) VALUES(:RefCaisse,:Solde,:RefUsers)');
+        $StopCaisse->bindValue(':RefCaisse', $RefCaisse, \PDO::PARAM_INT);
+        $StopCaisse->bindValue(':Solde', $Solde, \PDO::PARAM_STR);
+        $StopCaisse->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+        $StopCaisse->execute();
+    }
+    public function CheckDailyClose($Caisse)
+    {
+        $requete = $this->dao->prepare("SELECT * FROM TbleSolde WHERE RefCaisse=:RefCaisse AND date(DateSolde)=:jour");
+        $requete->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
+        $requete->execute();
+        $Result = $requete->fetch();
+        return $Result;
     }
     public function CheckRapportDaily($Caisse)
     {
@@ -79,6 +96,20 @@ class ArreterManagerPDO extends ArreterManager
             header("location: /Arreter/index");
             $_SESSION['flash']['warning'] = "Changement non effectué, Absence du rapport initial, Veuillez Contacter l\'admin";
         }
+    }
+    public function ListeSolde($Caisse)
+    {
+        $requeteRapport = $this->dao->prepare('SELECT * FROM TbleSolde INNER JOIN TbleUsers ON TbleUsers.RefUsers=TbleSolde.RefUsers WHERE RefCaisse=:RefCaisse');
+        $requeteRapport->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteRapport->execute();
+        $data = $requeteRapport->fetchAll();
+        return $data;
+    }
+    public function DeleteSolde($RefSolde)
+    {
+        $requete = $this->dao->prepare('DELETE FROM TbleSolde WHERE RefSolde=:RefSolde');
+        $requete->bindValue(':RefSolde', $RefSolde, \PDO::PARAM_INT);
+        $requete->execute();
     }
     public function GetRapports($Caisse)
     {

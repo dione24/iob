@@ -19,9 +19,16 @@ class ArreterController extends \Library\BackController
     public function executeView(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Liste des Rapports "); // Titre de la page
-        $GetRapports = $this->managers->getManagerOf('Arreter')->GetRapports($request->getData('id'));
-        $this->page->addVar('GetRapports', $GetRapports);
+        $ListeSolde = $this->managers->getManagerOf('Arreter')->ListeSolde($request->getData('id'));
+        $this->page->addVar('ListeSolde', $ListeSolde);
         $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage('2020-12-25');
         $this->page->addVar('Biellet', $Biellet);
+    }
+
+    public function executeDelete(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Suppresion "); // Titre de la page
+        $this->managers->getManagerOf("Arreter")->DeleteSolde($request->getData('id'));
+        $this->app()->httpResponse()->redirect('/Arreter/index'); //Retour en arriere
     }
 }

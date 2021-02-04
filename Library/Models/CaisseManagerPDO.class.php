@@ -28,7 +28,6 @@ class CaisseManagerPDO extends CaisseManager
             $data = $requete->fetch();
         }
 
-
         return $data;
     }
     public function GetOperations($Caisse)
@@ -46,7 +45,6 @@ class CaisseManagerPDO extends CaisseManager
         }
         return $data;
     }
-
     public function Versement($Caisse)
     {
         if (!empty($Caisse)) {
@@ -94,9 +92,6 @@ class CaisseManagerPDO extends CaisseManager
         }
         return $data['Appro'];
     }
-
-
-
     public function Transfert($Caisse)
     {
         if (!empty($Caisse)) {
@@ -112,27 +107,6 @@ class CaisseManagerPDO extends CaisseManager
         }
         return $data['Transfert'];
     }
-
-
-    public function ResultCaisse($Caisse)
-    {
-        $SoldeCaisse = 0;
-        if (!empty($Caisse)) {
-            $Versement = $this->Versement($Caisse);
-            $Retrait = $this->Retrait($Caisse);
-            $Appro = $this->Appro($Caisse);
-            $Solde =  $this->GetSolde($Caisse);
-            $Transfert = $this->Transfert($Caisse);
-        } else {
-            $Versement = $this->Versement(NULL);
-            $Retrait = $this->Retrait(NULL);
-            $Appro = $this->Appro(NULL);
-            $Solde =  $this->GetSolde(NULL);
-            $Transfert = $this->Transfert(NULL);
-        }
-        $SoldeCaisse =  ($Retrait - $Versement);
-        return $SoldeCaisse;
-    }
     public function ListeFond()
     {
         $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  TbleChmod.RefUsers=:RefUsers AND TbleOperations.RefType=4 ");
@@ -142,6 +116,7 @@ class CaisseManagerPDO extends CaisseManager
         return $data;
     }
     public function AddTransfert()
+    //Transfert Olde Code NOW WITH BIELLETAGE
     {
         $requete = $this->dao->prepare("INSERT INTO tbletransfert(RefCaisse,MontantTransfert,RefUsers) VALUES(:RefCaisse,:MontantTransfert,:RefUsers)");
         $requete->bindValue(':RefCaisse', $_POST['RefCaisse'], \PDO::PARAM_INT);
@@ -160,6 +135,7 @@ class CaisseManagerPDO extends CaisseManager
     }
 
     public function AddAppro()
+    //Old APPRO COde NOW WITH BIELLETAGE, THIS CODE IS FOR OMNI APPRO 
     {
         $requete = $this->dao->prepare("INSERT INTO TbleAppro(RefCaisse,MontantAppro,RefUsers) VALUES(:RefCaisse,:MontantAppro,:RefUsers)");
         $requete->bindValue(':RefCaisse', $_POST['RefCaisse'], \PDO::PARAM_INT);
@@ -168,12 +144,14 @@ class CaisseManagerPDO extends CaisseManager
         $requete->execute();
     }
     public function DeleteTransfert($Transfert)
+    //Olde Transfert
     {
         $requete = $this->dao->prepare("DELETE FROM tbletransfert WHERE RefTransfert=:RefTransfert");
         $requete->bindValue(':RefTransfert', $Transfert, \PDO::PARAM_INT);
         $requete->execute();
     }
     public function DeleteAppro($Appro)
+    //OMNI APPRO DELETE
     {
         $requete = $this->dao->prepare("DELETE FROM TbleAppro WHERE RefAppro=:RefAppro");
         $requete->bindValue(':RefAppro', $Appro, \PDO::PARAM_INT);

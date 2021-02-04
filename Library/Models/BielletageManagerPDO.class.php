@@ -31,21 +31,19 @@ class BielletageManagerPDO extends BielletageManager
             $requete->execute();
             $display = $requete->fetchAll();
             foreach ($display as $key => $value) {
-                $display[$key]['caisse'] = $this->CheckAfterRapport($value['RefCaisse']);
+                $display[$key]['caisse'] = $this->CheckDailyClose($value['RefCaisse']);
             }
             return $display;
         }
     }
-
-
-    public function CheckAppro($Caisse)
+    public function CheckDailyClose($Caisse)
     {
-        $requete = $this->dao->prepare("SELECT * FROM TbleOperations WHERE TbleOperations.Insert_Time=:today AND TbleOperations.RefCaisse=:RefCaisse AND RefType=3 AND Reset_Id IS NULL ");
+        $requete = $this->dao->prepare("SELECT * FROM TbleSolde WHERE RefCaisse=:RefCaisse AND date(DateSolde)=:jour");
         $requete->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
-        $requete->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
+        $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
         $requete->execute();
-        $data = $requete->fetch();
-        return $data['RefOperations'];
+        $Result = $requete->fetch();
+        return $Result['RefCaisse'];
     }
     public function CheckAfterRapport($Caisse)
     {
@@ -175,15 +173,19 @@ class BielletageManagerPDO extends BielletageManager
         }
     }
 
-
-    public function YesterdaySolde($Date)
+    public function YesterdaySolde()
     {
-
-        $Versement = $this->SommeVersement(date('Y-m-d', strtotime(date($Date) . ' - 1 days')));
-        $Retrait = $this->SommeRetrait(date('Y-m-d', strtotime(date($Date) . ' - 1 days')));
-        return $Versement - $Retrait;
+        $ChomdUser = $this->ChomdUser();
+        $montant = 0;
+        foreach ($ChomdUser as $key => $Caisse) {
+            $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse) ");
+            $Solde->bindValue(':RefCaisse', $Caisse['RefCaisse'], \PDO::PARAM_INT);
+            $Solde->execute();
+            $data = $Solde->fetch();
+            $montant += $data['Solde'];
+        }
+        return $montant;
     }
-
     public function SommeVersement($Date)
     {
 

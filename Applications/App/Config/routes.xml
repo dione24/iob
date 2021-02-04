@@ -9,8 +9,10 @@
 	<route url="/Journal/index" module="Journal" action="index"/>
 	<route url="/Journal/delete/([0-9]+)" module="Journal" vars="id" action="delete"/>
 	<route url="/Arreter/index" module="Arreter" action="index"/>
-	<route url="/Arreter/close/([0-9]+)" vars="id" module="Arreter" action="close"/>
+	<route url="/Arreter/close/([0-9]+)" vars="id" module="Bielletage" action="stopcaisse"/>
 	<route url="/Arreter/View/([0-9]+)" vars="id" module="Arreter" action="View"/>
+	<route url="/Arreter/delete/([0-9]+)" module="Arreter" vars="id" action="delete"/>
+
 	<route url="/Caisse/solde" module="Caisse" action="index"/>
 	<route url="/Caisse/transfertfond" module="Caisse" action="transfertfond"/>
 	<route url="/Caisse/ApproCaisse" module="Caisse" action="approcaisse"/>

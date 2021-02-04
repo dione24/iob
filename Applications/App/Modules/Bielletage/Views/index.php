@@ -24,9 +24,8 @@
                 <div class="white-box analytics-info">
                     <h3 class="box-title">SOLDE ESPECES</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li class="ml-auto"><span class="counter text-info"><?php if (($SommeVersement - $SommeRetrait) > 0) {
-                                                                                echo number_format($SommeVersement - $SommeRetrait, 0, '.', ',');
-                                                                            }; ?></span>
+                        <li class="ml-auto"><span
+                                class="counter text-info"><?= number_format($Solde, 0, '.', ','); ?></span>
                         </li>
                     </ul>
                 </div>

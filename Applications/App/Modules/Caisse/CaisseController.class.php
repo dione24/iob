@@ -14,16 +14,12 @@ class CaisseController extends \Library\BackController
         if (!empty($request->postData('RefCaisse'))) {
             $GetOperations  = $this->managers->getManagerOf("Caisse")->GetOperations($request->postData('RefCaisse')); //Recuperation de la liste
             $this->page->addVar("GetOperations", $GetOperations); // Creation de 
-            $ResultCaisse = $this->managers->getManagerOf('Caisse')->ResultCaisse($request->postData('RefCaisse'));
-            $this->page->addVar("Solde", $ResultCaisse); // Creation de 
         } else {
             $GetOperations  = $this->managers->getManagerOf("Caisse")->GetOperations(NULL); //Recuperation de la liste
             $this->page->addVar("GetOperations", $GetOperations); // Creation de 
-            $ResultCaisse = $this->managers->getManagerOf('Caisse')->ResultCaisse(NULL);
-            $this->page->addVar("Solde", $ResultCaisse); // Creation d
+
         }
     }
-
     public function executeTransfertfond(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Liste des Transfert de fond"); // Titre de la page
