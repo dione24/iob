@@ -40,8 +40,9 @@
                   <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                       <thead>
                           <tr>
-                              <?php if ($_SESSION['statut'] == 'admin') { ?>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
                               <th class="border-top-0">ID</th>
+                              <th class="border-top-0">Statut</th>
                               <?php } ?>
                               <th class="border-top-0">Agence</th>
                               <th class="border-top-0">Operation</th>
@@ -60,8 +61,13 @@
                       <tbody>
                           <?php foreach ($Operations as $key => $value) { ?>
                           <tr>
-                              <?php if ($_SESSION['statut'] == 'admin') { ?>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
                               <td><?= $value['RefOperations']; ?></td>
+                              <td> <?php if ($value['Validate'] == 1) { ?> <button class="btn btn-danger"
+                                      data-toggle="modal" data-target="#modal-<?= $value['RefOperations']; ?>">Non
+                                      Vérifiée </button> <?php } else { ?> <button class="btn btn-success">
+                                      Verifiée le <span><?= $value['DateValidate']; ?></span> </button> <?php   } ?>
+                              </td>
                               <?php } ?>
                               <td><?= $value['NameAgency']; ?></td>
                               <td><?= $value['NameType']; ?></td>
@@ -74,14 +80,42 @@
                               <td><a href="/bordereau/<?= $value['RefOperations']; ?>" target="_blank"
                                       class="btn btn-secondary"><i class="fa fa-print"> Reçu</i> </td>
                               <?php if ($_SESSION['statut'] == 'admin') { ?>
-                              <td>
-                                  <a href="/Journal/delete/<?= $value['RefOperations']; ?>"
+                              <td><a href="/Journal/delete/<?= $value['RefOperations']; ?>"
                                       class="btn btn-xs btn-danger"
                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
                                           class="fa fa-trash"></i></a>
                               </td>
                               <?php } ?>
                           </tr>
+                          <!--modalStatut-->
+                          <div class="modal fade" id="modal-<?= $value['RefOperations']; ?>" tabindex="-1" role="dialog"
+                              aria-labelledby="modalStatut" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Confirmation de l'Opération
+                                          </h5>
+                                      </div>
+                                      <form role="form" method="post" action="/Journal/validate">
+                                          <div class=" modal-body">
+                                              <div class="modal-body">
+                                                  <input type="hidden" class="form-control" name="RefOperations"
+                                                      value="<?= $value['RefOperations']; ?>">
+                                                  <div class="form-group">
+                                                      <input type="date" class="form-control" name="DateValidate">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary"
+                                                  data-dismiss="modal">Fermer</button>
+                                              <button type="submit" class="btn btn-primary">Confirmer</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <!--modalStatut-->
                           <?php } ?>
                       </tbody>
                   </table>
@@ -138,7 +172,6 @@
                               <td>1</td>
                               <td class="counter text-danger"><?= $Biellet['un']; ?></td>
                           </tr>
-
                       </tbody>
                   </table>
               </div>

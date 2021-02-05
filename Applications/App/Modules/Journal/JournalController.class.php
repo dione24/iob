@@ -44,6 +44,13 @@ class JournalController extends \Library\BackController
             $this->page->addVar('Solde', $Solde);
         }
     }
+
+
+    public function executeValidate(\Library\HTTPRequest $request)
+    {
+        $this->managers->getManagerOf("Journal")->ValidateOperations($request);
+        $this->app()->httpResponse()->redirect('/Journal/index'); //Retour en arriere
+    }
     public function executeDelete(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Suppresion "); // Titre de la page

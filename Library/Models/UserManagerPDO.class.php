@@ -21,7 +21,7 @@ class UserManagerPDO extends UserManager
     public function SendUserinfo($to, $login, $Password)
     {
         $subject = "Identifiants de connexion | CAISSE MLC";
-        $message = "Veuillez recevoir vos Identifiants de connexion. Votre login est: $login et le mot de passe est: $Password  le lien d'acces du site est : https://iob.malicreances-sa.com/  Merci de modifier votre mot de passe dès reception de ce mail. ";
+        $message = "Veuillez recevoir vos Identifiants de connexion. Votre login est: $login et le mot de passe est: $Password  le lien d'acces du site est : https://app.malicreances-sa.com/  Merci de modifier votre mot de passe dès reception de ce mail. ";
         $headers = 'From: no-reply@malicreances-sa.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         mail($to, $subject, $message, $headers);

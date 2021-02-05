@@ -254,4 +254,13 @@ class JournalManagerPDO extends JournalManager
         $Biellet['un'] = $Versement['un'] - $Retrait['un'];
         return $Biellet;
     }
+
+    public function ValidateOperations()
+    {
+        $requete = $this->dao->prepare("UPDATE TbleOperations SET Validate= 2,DateValidate=:date,RefValidate=:RefUsers WHERE RefOperations=:RefOperations");
+        $requete->bindValue(':RefOperations', $_POST['RefOperations'], \PDO::PARAM_STR);
+        $requete->bindValue(':date', date('Y-m-d'), \PDO::PARAM_STR);
+        $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+        $requete->execute();
+    }
 }

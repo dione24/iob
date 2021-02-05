@@ -16,4 +16,5 @@ abstract class JournalManager extends \Library\Manager
     abstract protected function Versement($debut, $fin, $caisse);
     abstract protected function Retrait($debut, $fin, $caisse);
     abstract protected function YesterdaySolde($debut, $fin, $caisse);
+    abstract protected function ValidateOperations();
 }
