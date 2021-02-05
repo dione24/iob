@@ -29,7 +29,8 @@ class BielletageController extends \Library\BackController
         $this->page->addVar('SommeVersement', $SommeVersement);
         $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetrait(date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
-        $Solde = $SommeVersement - $SommeRetrait;
+        $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
+        $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
         $this->managers->getManagerOf('Arreter')->StopCaisse($request->getData('id'), $Solde);
         $this->app()->httpResponse()->redirect('/'); //Retour en arriere
     }
