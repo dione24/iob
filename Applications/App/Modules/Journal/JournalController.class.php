@@ -27,6 +27,8 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode + $Yesterday);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
+            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode;
+            $this->page->addVar('Solde', $Solde);
             $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('Biellet', $Biellet);
         } else {
@@ -37,6 +39,9 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode();
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
+            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
+            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode + $Yesterday;
+            $this->page->addVar('Solde', $Solde);
         }
     }
     public function executeDelete(\Library\HTTPRequest $request)

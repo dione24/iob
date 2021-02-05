@@ -28,9 +28,8 @@
                           class="form-control" readonly>
                   </div>
                   <div class="col-md-2">Solde
-                      <input type="text"
-                          value="<?= number_format($sommeVersementPeriode - $sommeRetraitPeriode, 0, '.', ','); ?>"
-                          class="form-control" readonly>
+                      <input type="text" value="<?= number_format($Solde, 0, '.', ','); ?>" class="form-control"
+                          readonly>
                   </div>
               </div>
           </form>
