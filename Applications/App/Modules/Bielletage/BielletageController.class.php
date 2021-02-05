@@ -25,9 +25,9 @@ class BielletageController extends \Library\BackController
     }
     public function executeStopcaisse(\Library\HTTPRequest $request)
     {
-        $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersement(date('Y-m-d'));
+        $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(date('Y-m-d'));
         $this->page->addVar('SommeVersement', $SommeVersement);
-        $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetrait(date('Y-m-d'));
+        $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
         $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
