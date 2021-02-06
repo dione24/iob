@@ -24,10 +24,10 @@ class JournalController extends \Library\BackController
             $this->page->addVar('Value', $request->postData('RefCaisse'));
             $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
-            $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode + $Yesterday);
+            $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
-            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode;
+            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode + $Yesterday;
             $this->page->addVar('Solde', $Solde);
             $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('Biellet', $Biellet);
