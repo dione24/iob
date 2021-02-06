@@ -35,7 +35,6 @@ class JournalController extends \Library\BackController
             $Operations = $this->managers->getManagerOf('Journal')->Operations();
             $this->page->addVar('Operations', $Operations);
             $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode();
-            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde(date('Y-m-d'));
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode();
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
