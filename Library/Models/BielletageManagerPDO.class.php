@@ -178,8 +178,9 @@ class BielletageManagerPDO extends BielletageManager
         $ChomdUser = $this->ChomdUser();
         $montant = 0;
         foreach ($ChomdUser as $key => $Caisse) {
-            $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse) ");
+            $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <: today");
             $Solde->bindValue(':RefCaisse', $Caisse['RefCaisse'], \PDO::PARAM_INT);
+            $Solde->bindValue(':today', $Caisse['today'], \PDO::PARAM_INT);
             $Solde->execute();
             $data = $Solde->fetch();
             $montant += $data['Solde'];

@@ -87,8 +87,9 @@ class JournalManagerPDO extends JournalManager
     {
 
         $montant = 0;
-        $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse) ");
+        $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <: today");
         $Solde->bindValue(':RefCaisse', $caisse, \PDO::PARAM_INT);
+        $Solde->bindValue(':today', $fin, \PDO::PARAM_INT);
         $Solde->execute();
         $data = $Solde->fetch();
         $montant += $data['Solde'];
