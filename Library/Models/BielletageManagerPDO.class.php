@@ -6,7 +6,6 @@ use \Library\Entities\Bielletage;
 
 class BielletageManagerPDO extends BielletageManager
 {
-
     public function ChomdUser()
     {
         $requete
@@ -107,8 +106,6 @@ class BielletageManagerPDO extends BielletageManager
     {
         $date = date('Y-m-d');
         if (!empty($_POST['NumCompte']) && !empty($_POST['MontantVersement']) && !empty($_POST['NameClient']) && !empty($_POST['RefCaisse'])) {
-            // $CheckAppro  = $this->CheckAppro($_POST['RefCaisse']);
-            //  if (!empty($CheckAppro) or $_POST['RefType'] == 3) {
             $requeteAddversement = $this->dao->prepare('INSERT INTO TbleOperations(RefCaisse,NumCompte,NameClient,MontantVersement,Remarque,Insert_Id,Insert_Time,Approve1_Id,Approve1_Time,Approve2_Id,Approve2_Time,Bordereau,NameDeposant,RefType) VALUES(:RefCaisse,:NumCompte,:NameClient,:MontantVersement,:Remarque,:Insert_Id,:Insert_Time,:Approve1_Id,:Approve1_Time,:Approve2_Id,:Approve2_Time,:Bordereau,:NameDeposant,:RefType)');
             $requeteAddversement->bindValue(':RefCaisse', $_POST['RefCaisse'], \PDO::PARAM_INT);
             $requeteAddversement->bindValue(':NumCompte', $_POST['NumCompte'], \PDO::PARAM_STR);
@@ -159,12 +156,6 @@ class BielletageManagerPDO extends BielletageManager
             $_SESSION['message']['type'] = 'success';
             $_SESSION['message']['text'] = 'Opération réussie !';
             $_SESSION['message']['number'] = 2;
-            // } elseif ($CheckAppro == NULL) {
-            // header("location: /");
-            // $_SESSION['message']['type'] = 'error';
-            //  $_SESSION['message']['text'] = "Approvisonner la Caisse en premier ! ";
-            //  $_SESSION['message']['number'] = 2;
-            // }
         } else {
             header("location: /");
             $_SESSION['message']['type'] = 'error';
@@ -172,7 +163,6 @@ class BielletageManagerPDO extends BielletageManager
             $_SESSION['message']['number'] = 2;
         }
     }
-
     public function YesterdaySolde()
     {
         $ChomdUser = $this->ChomdUser();
@@ -187,7 +177,6 @@ class BielletageManagerPDO extends BielletageManager
         }
         return $montant;
     }
-
     public function SommeVersementAgence($Date)
     {
         $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers   AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
@@ -197,7 +186,6 @@ class BielletageManagerPDO extends BielletageManager
         $data = $requeteSUm->fetch();
         return $data['TotalVersment'];
     }
-
     public function SommeRetraitAgence($Date)
     {
         $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleChmod.RefUsers=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
@@ -207,10 +195,6 @@ class BielletageManagerPDO extends BielletageManager
         $data = $requeteSUm->fetch();
         return $data['TotalVersment'];
     }
-
-
-
-
     public function SommeVersement($Date)
     {
 
@@ -257,10 +241,8 @@ class BielletageManagerPDO extends BielletageManager
         $date['Fin'] = date("Y-m-d", $sunday);
         return $date;
     }
-
     public  function daysofweek()
     {
-
         $getCurrentWeek = $this->getCurrentWeek();
         $tableau = [];
         for ($i = 0; $i < 7; $i++) {
@@ -287,7 +269,6 @@ class BielletageManagerPDO extends BielletageManager
             return $data['TotalVersment'];
         }
     }
-
     public function SommeRetraitStatistique($Date)
     {
         if ($_SESSION['statut'] != 'admin') {

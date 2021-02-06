@@ -6,11 +6,8 @@ use \Library\Entities\Journal;
 
 class JournalManagerPDO extends JournalManager
 {
-
-
     public function Operations()
     {
-
         $requete = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleUsers ON TbleUsers.Refusers=TbleOperations.Insert_Id  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleChmod.RefUsers=:RefUsers ORDER BY TbleOperations.datePayement ASC ');
         $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
@@ -85,7 +82,6 @@ class JournalManagerPDO extends JournalManager
 
     public function YesterdaySolde($debut = NULL, $fin = NULL, $caisse = NULL)
     {
-
         $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <:today)");
         $Solde->bindValue(':RefCaisse', $caisse, \PDO::PARAM_INT);
         $Solde->bindValue(':today', $fin, \PDO::PARAM_STR);
@@ -93,7 +89,6 @@ class JournalManagerPDO extends JournalManager
         $data = $Solde->fetch();
         return  $data['Solde'];
     }
-
     public function  Versement($debut = NULL, $fin = NULL, $caisse = NULL)
     {
         $dixmille = 0;
@@ -253,7 +248,6 @@ class JournalManagerPDO extends JournalManager
         $Biellet['un'] = $Versement['un'] - $Retrait['un'];
         return $Biellet;
     }
-
     public function ValidateOperations()
     {
         $requete = $this->dao->prepare("UPDATE TbleOperations SET Validate= 2,DateValidate=:date,RefValidate=:RefUsers WHERE RefOperations=:RefOperations");
