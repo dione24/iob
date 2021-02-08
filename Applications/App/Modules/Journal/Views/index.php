@@ -27,7 +27,7 @@
                       <input type="text" value="<?= number_format($sommeRetraitPeriode, 0, '.', ','); ?>"
                           class="form-control" readonly>
                   </div>
-                  <div class="col-md-2">Solde
+                  <div class="col-md-2">Solde Especes
                       <input type="text" value="<?= number_format($Solde, 0, '.', ','); ?>" class="form-control"
                           readonly>
                   </div>

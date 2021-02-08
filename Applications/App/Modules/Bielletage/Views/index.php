@@ -22,7 +22,7 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">SOLDE ESPECES</h3>
+                    <h3 class="box-title">SOLDE ESPECES (CAISSE)</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li class="ml-auto"><span class="counter text-info">
                                 <?php if ($_SESSION['statut'] != 'Niveau1') {
@@ -134,7 +134,7 @@
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-heading">
-                        Solde du Jour
+                        Solde du Jour (AGENCE)
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -142,21 +142,18 @@
                                 <tr>
                                     <td>Versement</td>
                                     <td><span
-                                            class="counter text-danger"><?= number_format($SommeVersement, 0, '.', ','); ?></span>
+                                            class="counter text-danger"><?= number_format($SommeVersementAgence, 0, '.', ','); ?></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Retrait</td>
                                     <td><span
-                                            class="counter text-danger"><?= number_format($SommeRetrait, 0, '.', ','); ?></span>
+                                            class="counter text-danger"><?= number_format($SommeRetraitAgence, 0, '.', ','); ?></span>
                                     </td>
                                 </tr>
-
                                 <tr>
-                                    <td>Solde</td>
-                                    <td><span class="counter text-danger"><?php if (($SommeVersement - $SommeRetrait) > 0) {
-                                                                                echo number_format($SommeVersement - $SommeRetrait, 0, '.', ',');
-                                                                            }; ?></span>
+                                    <td>Solde Especes</td>
+                                    <td><span class="counter text-danger"><?= $SoldeAgence; ?></span>
                                     </td>
                                 </tr>
 

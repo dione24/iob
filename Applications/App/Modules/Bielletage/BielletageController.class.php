@@ -22,6 +22,13 @@ class BielletageController extends \Library\BackController
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
         $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
         $this->page->addVar('Solde', $Solde);
+
+        $SommeVersementAgence = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(date('Y-m-d'));
+        $this->page->addVar('SommeVersementAgence', $SommeVersementAgence);
+        $SommeRetraitAgence = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(date('Y-m-d'));
+        $this->page->addVar('SommeRetraitAgence', $SommeRetraitAgence);
+        $SoldeAgence = $SommeVersementAgence - $SommeRetraitAgence + $Yesterday;
+        $this->page->addVar('SoldeAgence', $SoldeAgence);
     }
     public function executeStopcaisse(\Library\HTTPRequest $request)
     {
