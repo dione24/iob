@@ -153,7 +153,8 @@
                                 </tr>
                                 <tr>
                                     <td>Solde Especes</td>
-                                    <td><span class="counter text-danger"><?= $SoldeAgence; ?></span>
+                                    <td><span
+                                            class="counter text-danger"><?= number_format($SoldeAgence, 0, '.', ','); ?></span>
                                     </td>
                                 </tr>
 
