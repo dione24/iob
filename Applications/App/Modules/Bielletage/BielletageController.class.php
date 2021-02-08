@@ -20,7 +20,7 @@ class BielletageController extends \Library\BackController
         $DailyVersement = $this->managers->getManagerOf('Bielletage')->DailyVersement();
         $this->page->addVar('DailyVersement', $DailyVersement);
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
-        $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
+        $Solde = $SommeVersement - $SommeRetrait;
         $this->page->addVar('Solde', $Solde);
 
         $SommeVersementAgence = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(date('Y-m-d'));
