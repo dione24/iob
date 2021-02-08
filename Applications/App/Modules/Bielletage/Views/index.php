@@ -1,5 +1,5 @@
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
                     <h3 class="box-title">VERSEMENT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -8,9 +8,10 @@
                                 class="counter text-danger"><?= number_format($SommeVersement, 0, '.', ','); ?></span>
                         </li>
                     </ul>
+                    <span>CAISSE</span>
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
                     <h3 class="box-title">RETRAIT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -18,11 +19,13 @@
                                 class="counter text-purple"><?= number_format($SommeRetrait, 0, '.', ','); ?></span>
                         </li>
                     </ul>
+                    <span>CAISSE</span>
+
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">SOLDE ESPECES (CAISSE)</h3>
+                    <h5 class="box-title">SOLDE ESPECES</h5>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li class="ml-auto"><span class="counter text-info">
                                 <?php if ($_SESSION['statut'] != 'Niveau1') {
@@ -32,6 +35,23 @@
                                 } ?></span>
                         </li>
                     </ul>
+                    <span>CAISSE</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-xs-12">
+                <div class="white-box analytics-info">
+                    <h5 class="box-title">SOLDE ESPECES</h5>
+                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                        <li class="ml-auto"><span class="counter text-info">
+                                <?php if ($_SESSION['statut'] != 'Niveau1') {
+                                    echo number_format($SoldeAgence, 0, '.', ',');
+                                } else {
+                                    echo 0;
+                                } ?></span>
+                        </li>
+
+                    </ul>
+                    <span>AGENCE</span>
                 </div>
             </div>
         </div>
