@@ -42,7 +42,7 @@
                 <div class="white-box analytics-info">
                     <h5 class="box-title">SOLDE ESPECES</h5>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li class="ml-auto"><span class="counter text-info">
+                        <li class="ml-auto"><span class="counter text-danger">
                                 <?php if ($_SESSION['statut'] != 'Niveau1') {
                                     echo number_format($SoldeAgence, 0, '.', ',');
                                 } else {
