@@ -22,19 +22,18 @@ class BielletageController extends \Library\BackController
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
         $Solde = $SommeVersement - $SommeRetrait;
         $this->page->addVar('Solde', $Solde);
-
-        $SommeVersementAgence = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(date('Y-m-d'));
+        $SommeVersementAgence = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(NULL, date('Y-m-d'));
         $this->page->addVar('SommeVersementAgence', $SommeVersementAgence);
-        $SommeRetraitAgence = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(date('Y-m-d'));
+        $SommeRetraitAgence = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(NULL, date('Y-m-d'));
         $this->page->addVar('SommeRetraitAgence', $SommeRetraitAgence);
         $SoldeAgence = $SommeVersementAgence - $SommeRetraitAgence + $Yesterday;
         $this->page->addVar('SoldeAgence', $SoldeAgence);
     }
     public function executeStopcaisse(\Library\HTTPRequest $request)
     {
-        $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(date('Y-m-d'));
+        $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence($request->getData('id'), date('Y-m-d'));
         $this->page->addVar('SommeVersement', $SommeVersement);
-        $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(date('Y-m-d'));
+        $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence($request->getData('id'), date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
         $Solde = $SommeVersement - $SommeRetrait + $Yesterday;

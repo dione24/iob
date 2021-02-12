@@ -177,23 +177,41 @@ class BielletageManagerPDO extends BielletageManager
         }
         return $montant;
     }
-    public function SommeVersementAgence($Date)
+    public function SommeVersementAgence($Caisse, $Date)
     {
-        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers   AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
-        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
-        $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
-        $requeteSUm->execute();
-        $data = $requeteSUm->fetch();
-        return $data['TotalVersment'];
+        if (!empty($Caisse)) {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations   WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefCaisse=:RefCaisse   AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers   AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
     }
-    public function SommeRetraitAgence($Date)
+    public function SommeRetraitAgence($Caisse, $Date)
     {
-        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleChmod.RefUsers=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
-        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
-        $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
-        $requeteSUm->execute();
-        $data = $requeteSUm->fetch();
-        return $data['TotalVersment'];
+        if (!empty($Caisse)) {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.RefCaisse=:RefCaisse AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        } else {
+            $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleChmod.RefUsers=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
+            $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+            $requeteSUm->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requeteSUm->execute();
+            $data = $requeteSUm->fetch();
+            return $data['TotalVersment'];
+        }
     }
     public function SommeVersement($Date)
     {
