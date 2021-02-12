@@ -163,20 +163,31 @@ class BielletageManagerPDO extends BielletageManager
             $_SESSION['message']['number'] = 2;
         }
     }
-    public function YesterdaySolde()
+    public function YesterdaySolde($Caisse = NULL)
     {
-        $ChomdUser = $this->ChomdUser();
-        $montant = 0;
-        foreach ($ChomdUser as $key => $Caisse) {
+        if (empty($Caisse)) {
+            $ChomdUser = $this->ChomdUser();
+            $montant = 0;
+            foreach ($ChomdUser as $key => $RefCaisse) {
+                $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <:today)");
+                $Solde->bindValue(':RefCaisse', $RefCaisse['RefCaisse'], \PDO::PARAM_INT);
+                $Solde->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
+                $Solde->execute();
+                $data = $Solde->fetch();
+                $montant += $data['Solde'];
+            }
+        } else {
             $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <:today)");
-            $Solde->bindValue(':RefCaisse', $Caisse['RefCaisse'], \PDO::PARAM_INT);
+            $Solde->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
             $Solde->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
             $Solde->execute();
             $data = $Solde->fetch();
-            $montant += $data['Solde'];
+            $montant = $data['Solde'];
         }
         return $montant;
     }
+
+
     public function SommeVersementAgence($Caisse, $Date)
     {
         if (!empty($Caisse)) {
