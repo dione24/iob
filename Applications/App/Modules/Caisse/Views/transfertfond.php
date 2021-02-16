@@ -3,7 +3,9 @@
 
         <div class="white-box">
             <h3 class="box-title">Sortie de Fond</h3>
+            <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'ChefCaisse') { ?>
             <a href="/bielletage/4" class="btn btn-primary"><i class="fa fa-plus"> Transferer</i></a> <br /> <br />
+            <?php } ?>
 
             <div class="table-responsive">
                 <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
