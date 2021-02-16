@@ -15,6 +15,7 @@
                             <th class="border-top-0">Caisse</th>
                             <th class="border-top-0">Montant</th>
                             <th class="border-top-0">Date</th>
+                            <th class="border-top-0">RECU</th>
                             <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <th class="border-top-0">Actions</th>
                             <?php } ?>
@@ -35,6 +36,8 @@
                             <td>
                                 <?= $value['Approve2_Time']; ?>
                             </td>
+                            <td><a href="/bordereau/<?= $value['RefOperations']; ?>" target="_blank"
+                                    class="btn btn-secondary"><i class="fa fa-print"> Reçu</i> </td>
                             <?php if ($_SESSION['statut'] == 'admin') { ?>
                             <td>
                                 <a href="/Journal/delete/<?= $value['RefOperations']; ?>" class="btn btn-xs btn-danger"
