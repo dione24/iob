@@ -38,7 +38,7 @@ class BielletageController extends \Library\BackController
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde($request->getData('id'));
         $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
         $this->managers->getManagerOf('Arreter')->StopCaisse($request->getData('id'), $Solde);
-        $this->app()->httpResponse()->redirect('/'); //Retour en arriere
+        $this->app()->httpResponse()->redirect('/Arreter/index'); //Retour en arriere
     }
     public function executeBielletage(\Library\HTTPRequest $request)
     {
