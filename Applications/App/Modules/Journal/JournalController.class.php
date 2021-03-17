@@ -16,12 +16,19 @@ class JournalController extends \Library\BackController
         $this->page->addVar('Value', $request->postData('RefCaisse'));
         $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal(NULL, NULL, NULL);
         $this->page->addVar('Biellet', $Biellet);
-        if (!empty($request->postData('RefCaisse'))) {
-            $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+        if (!empty($request->postData('RefCaisse')) or isset($_GET['value'])) {
+            if (isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['value'])) {
+                $Operations = $this->managers->getManagerOf('Journal')->GetOperations($_GET['debut'], $_GET['fin'], $_GET['value']);
+                $this->page->addVar('Debut', $_GET['debut']);
+                $this->page->addVar('Fin', $_GET['fin']);
+                $this->page->addVar('Value', $_GET['value']);
+            } else {
+                $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+                $this->page->addVar('Debut', $request->postData('Debut'));
+                $this->page->addVar('Fin', $request->postData('Fin'));
+                $this->page->addVar('Value', $request->postData('RefCaisse'));
+            }
             $this->page->addVar('Operations', $Operations);
-            $this->page->addVar('Debut', $request->postData('Debut'));
-            $this->page->addVar('Fin', $request->postData('Fin'));
-            $this->page->addVar('Value', $request->postData('RefCaisse'));
             $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
@@ -43,12 +50,10 @@ class JournalController extends \Library\BackController
             $this->page->addVar('Solde', $Solde);
         }
     }
-
-
     public function executeValidate(\Library\HTTPRequest $request)
     {
         $this->managers->getManagerOf("Journal")->ValidateOperations($request);
-        $this->app()->httpResponse()->redirect('/Journal/index'); //Retour en arriere
+        $this->app()->httpResponse()->redirect("/Journal/index/" . $request->postData('Debut') . "/" . $request->postData('Fin') . "/" . $request->postData('RefCaisse')); //Retour en arriere
     }
     public function executeDelete(\Library\HTTPRequest $request)
     {

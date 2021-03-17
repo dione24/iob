@@ -104,6 +104,12 @@
                                                   <div class="form-group">
                                                       <input type="date" class="form-control" name="DateValidate">
                                                   </div>
+                                                  <input type="hidden" id="Debut" name="Debut" value="<?= $Debut; ?>"
+                                                      class="form-control ">
+                                                  <input type="hidden" id="Fin" name="Fin" value="<?= $Fin; ?>"
+                                                      class="form-control ">
+                                                  <input type="hidden" id="RefCaisse" name="RefCaisse"
+                                                      value="<?= $value['RefCaisse']; ?>" class="form-control ">
                                               </div>
                                           </div>
                                           <div class="modal-footer">
