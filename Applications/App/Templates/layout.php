@@ -210,7 +210,8 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2020 © <a href="https://malicreances-sa.com" target="_blank">MALI
+            <footer class="footer text-center"> <?= date('Y'); ?> © <a href="https://malicreances-sa.com"
+                    target="_blank">MALI
                     CREANCES SA</a> CONNCEPTION BY <a href="https://niangaly.ml" target="_blank">NIANGALY</a>
             </footer>
             <!-- ============================================================== -->
