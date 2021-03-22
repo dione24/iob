@@ -1,6 +1,6 @@
   <div class="row">
       <div class="col-md-12">
-          <form method="POST" action="" id="formulaire">
+          <form method="POST" action="/Journal/index" id="formulaire">
               <div class="input-group">
                   <div class="col-md-2">Caisse
                       <select class="form-control" name="RefCaisse" tabindex="1" required="">
@@ -40,8 +40,9 @@
                   <table id="dataTable" class="display nowrap" cellspacing="0" width="100%">
                       <thead>
                           <tr>
-                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
+
                               <th class="border-top-0">ID</th>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
                               <th class="border-top-0">Statut</th>
                               <?php } ?>
                               <th class="border-top-0">Agence</th>
@@ -61,12 +62,17 @@
                       <tbody>
                           <?php foreach ($Operations as $key => $value) { ?>
                           <tr>
-                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
+
                               <td><?= $value['RefOperations']; ?></td>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
                               <td> <?php if ($value['Validate'] == 1) { ?> <button class="btn btn-danger"
                                       data-toggle="modal" data-target="#modal-<?= $value['RefOperations']; ?>">Non
-                                      Vérifiée </button> <?php } else { ?> <button class="btn btn-success">
-                                      Verifiée le <span><?= $value['DateValidate']; ?></span> </button> <?php   } ?>
+                                      Vérifiée </button> <?php } else { ?> <a
+                                      href="/Journal/cancelvalidate/<?= $value['RefOperations']; ?>"
+                                      class="btn btn-success"
+                                      onclick="return confirm('Êtes-vous sûr de vouloir annuler cette validatation ?');">
+                                      Verifiée le <span><?= $value['DateValidate']; ?></span></a>
+                                  <?php   } ?>
                               </td>
                               <?php } ?>
                               <td><?= $value['NameAgency']; ?></td>

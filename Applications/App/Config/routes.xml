@@ -10,6 +10,7 @@
 	<route url="/Journal/index/([0-9]{4}-[0-9]{2}-[0-9]{2})/([0-9]{4}-[0-9]{2}-[0-9]{2})/([0-9]+)" vars="debut,fin,value" module="Journal" action="index"/>
 	<route url="/Journal/delete/([0-9]+)" module="Journal" vars="id" action="delete"/>
 	<route url="/Journal/validate" module="Journal" action="validate"/>
+	<route url="/Journal/cancelvalidate/([0-9]+)" vars="id" module="Journal" action="cancelvalidate"/>
 	<route url="/Arreter/index" module="Arreter" action="index"/>
 	<route url="/Arreter/close/([0-9]+)" vars="id" module="Bielletage" action="stopcaisse"/>
 	<route url="/Arreter/View/([0-9]+)" vars="id" module="Arreter" action="View"/>

@@ -256,4 +256,11 @@ class JournalManagerPDO extends JournalManager
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
     }
+
+    public function CancelValidate($id)
+    {
+        $requete = $this->dao->prepare("UPDATE TbleOperations SET Validate= 1,DateValidate=NULL,RefValidate=NULL WHERE RefOperations=:RefOperations");
+        $requete->bindValue(':RefOperations', $id, \PDO::PARAM_STR);
+        $requete->execute();
+    }
 }
