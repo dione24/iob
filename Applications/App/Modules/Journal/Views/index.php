@@ -70,7 +70,7 @@
                                       Vérifiée </button> <?php } else { ?> <a
                                       href="/Journal/cancelvalidate/<?= $value['RefOperations']; ?>"
                                       class="btn btn-success"
-                                      onclick="return confirm('Êtes-vous sûr de vouloir annuler cette validatation ?');">
+                                      onclick="return confirm('Êtes-vous sûr de vouloir annuler cette vérifcation ?');">
                                       Verifiée le <span><?= $value['DateValidate']; ?></span></a>
                                   <?php   } ?>
                               </td>
