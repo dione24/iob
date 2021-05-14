@@ -82,6 +82,12 @@ class BielletageManagerPDO extends BielletageManager
             $requeteCaisse->execute();
             $GetCaisse = $requeteCaisse->fetchAll();
             return $GetCaisse;
+        } elseif ($_SESSION['statut'] == 'Control') {
+            $requeteCaisse = $this->dao->prepare('SELECT * FROM TbleOperations INNER JOIN TbleType ON TbleType.RefType=TbleOperations.RefType INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleOperations.Reset_Id IS NULL AND TbleOperations.Insert_Time=:today ');
+            $requeteCaisse->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
+            $requeteCaisse->execute();
+            $GetCaisse = $requeteCaisse->fetchAll();
+            return $GetCaisse;
         }
     }
     public function GetInvoice($id)
