@@ -42,7 +42,7 @@
                           <tr>
 
                               <th class="border-top-0">ID</th>
-                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Control') { ?>
                               <th class="border-top-0">Statut</th>
                               <?php } ?>
                               <th class="border-top-0">Agence</th>
