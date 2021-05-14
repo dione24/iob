@@ -64,7 +64,7 @@
                           <tr>
 
                               <td
-                                  style="<?php if ($value['Validate'] == 2) { ?> background-color:#7ace4c;  <?php } else { ?> background-color: #f33155; <?php   } ?>">
+                                  style="<?php if ($value['Validate'] == 2 && ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1')) { ?> background-color:#7ace4c;  <?php } elseif ($value['Validate'] == 1 && ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1')) { ?> background-color: #f33155; <?php   } ?>">
                                   <?= $value['RefOperations']; ?></td>
                               <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Control') { ?>
                               <td> <?php if ($value['Validate'] == 1) { ?> <button class="btn btn-danger"
