@@ -44,9 +44,9 @@
                              <b><u><?php if ($GetInvoice['RefType'] == 1) { ?>DEPOSANT<?php } elseif ($GetInvoice['RefType'] == 2) { ?>AUTEUR
                                      DU RETRAIT<?php } ?></u></b>
                          </p>
-                         <p class="text-uppercase">Nom : <?= $GetInvoice['NameDeposant']; ?></p>
-                         <br>
-                         <p>Signature :</p>
+                         <p class="text-uppercase">Nom & Prénom : <?= $GetInvoice['NameDeposant']; ?></p>
+                         <p class="text-uppercase">Tel : <?= $GetInvoice['TelDeposant']; ?></p>
+                         <p class="text-uppercase">Signature :</p>
                          <br>
                      </div>
                      <table class="table table-bordered" style="border: none !important;">
@@ -155,9 +155,9 @@
                              <b><u><?php if ($GetInvoice['RefType'] == 1) { ?>DEPOSANT<?php } elseif ($GetInvoice['RefType'] == 2) { ?>AUTEUR
                                      DU RETRAIT<?php } ?></u></b>
                          </p>
-                         <p class="text-uppercase">Nom : <?= $GetInvoice['NameDeposant']; ?></p>
-                         <br>
-                         <p>Signature :</p>
+                         <p class="text-uppercase">Nom & Prénom : <?= $GetInvoice['NameDeposant']; ?></p>
+                         <p class="text-uppercase">Tel : <?= $GetInvoice['TelDeposant']; ?></p>
+                         <p class="text-uppercase">Signature :</p>
                          <br>
                      </div>
                      <table class="table table-bordered" style="border: none !important;">

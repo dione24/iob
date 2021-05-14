@@ -319,10 +319,16 @@
                             <input type="text" class="form-control" name="Remarque" required="">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group has-error">
                             <label class="control-label">Deposant/Auteur Retrait</label>
                             <input type="text" class="form-control" name="NameDeposant" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group has-error">
+                            <label class="control-label">Téléphone</label>
+                            <input type="text" class="form-control" name="TelDeposant" required="">
                         </div>
                     </div>
                 </div>
