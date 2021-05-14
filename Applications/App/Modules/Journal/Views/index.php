@@ -63,8 +63,10 @@
                           <?php foreach ($Operations as $key => $value) { ?>
                           <tr>
 
-                              <td><?= $value['RefOperations']; ?></td>
-                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1') { ?>
+                              <td
+                                  style="<?php if ($value['Validate'] == 1) { ?> background-color:#7ace4c; border-color: #7ace4c;  <?php } ?>">
+                                  <?= $value['RefOperations']; ?></td>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Control') { ?>
                               <td> <?php if ($value['Validate'] == 1) { ?> <button class="btn btn-danger"
                                       data-toggle="modal" data-target="#modal-<?= $value['RefOperations']; ?>">Non
                                       Vérifiée </button> <?php } else { ?> <a
