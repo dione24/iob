@@ -127,7 +127,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
                                 aria-expanded="false"><i class="fas fa-home fa-fw" aria-hidden="true"></i><span
                                     class="hide-menu">Accueil</span></a></li>
-                        <?php if ($_SESSION['statut'] == 'admin' or (!empty($CheckOuverture) && $_SESSION['statut'] != 'Niveau1') && $_SESSION['statut'] != 'Control') { ?>
+                        <?php if ($_SESSION['statut'] == 'admin' or (!empty($CheckOuverture) && $_SESSION['statut'] != 'Niveau1') && $_SESSION['statut'] != 'Control' && $_SESSION['statut'] != 'Head') { ?>
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/bielletage/1" aria-expanded="false"><i class="fa fa-plus"
@@ -157,14 +157,12 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Pannel/Caisse" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Liste Caisse</span></a></li>
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Pannel/Agence" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Liste Agence</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Pannel/Banque" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Liste Banque</span></a></li>
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Users/index" aria-expanded="false"><i class="fa fa-users"
                                     aria-hidden="true"></i><span class="hide-menu">Liste Users</span></a></li>
@@ -176,7 +174,6 @@
                             <a href="/logout" class="btn btn-block btn-danger text-white">Se Déconnecter</a>
                         </li>
                     </ul>
-
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -225,7 +222,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/wizard.js" type="text/javascript"></script>
     <script src="/js/sweetalert2/sweetalert2.min.js"></script>
-
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript">
@@ -233,7 +229,6 @@
     <script src="/scripts/billetage.js"></script>
     <script src="/scripts/Checklogin.js"></script>
     <script src="/scripts/clientName.js"></script>
-
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app-style-switcher.js"></script>
     <!--Wave Effects -->

@@ -16,12 +16,12 @@
                           <tr>
                               <td><?= $value['NameCaisse']; ?></td>
                               <td><?= $value['NameAgency']; ?></td>
-                              <td><?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'ChefCaisse') { ?>
+                              <td>
                                   <?php if (!empty($value['Valide'])) { ?><button class="btn btn-success"><i
                                           class="fa  fa-lock"></i></button> <?php } else { ?><a
-                                      href="/Arreter/close/<?= $value['RefCaisse']; ?>" class="btn btn-danger"><i
-                                          class="fa fa-unlock"></i></a><?php }
-                                                                                                                                                                                                                                                                            } ?>
+                                      <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'ChefCaisse') { ?>
+                                      href="/Arreter/close/<?= $value['RefCaisse']; ?>" <?php } ?>
+                                      class="btn btn-danger"><i class="fa fa-unlock"></i></a> <?php } ?>
                                   <a href="/Arreter/View/<?= $value['RefCaisse']; ?>" class="btn btn-primary"><i
                                           class="fa fa-eye"></i></a>
                               </td>
