@@ -17,6 +17,10 @@
                       <input type="text" value="<?= number_format($totalRetrait, 0, '.', ',');   ?>"
                           class="form-control" readonly>
                   </div>
+
+                  <div class="col-md-3">Commission
+                      <input type="text" value="<?= $Commission;   ?>" class="form-control" readonly>
+                  </div>
               </div>
           </form>
           <br />
@@ -36,7 +40,6 @@
                               <th class="border-top-0">Remarque</th>
                               <th class="border-top-0">Date</th>
                               <th class="border-top-0">Caissier</th>
-                              <th class="border-top-0">Commission</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -51,7 +54,6 @@
                               <td><?= $value['Remarque']; ?></td>
                               <td><?= date('d/m/Y', strtotime($value['Approve2_Time'])); ?></td>
                               <td><?= $value['login']; ?></td>
-                              <td><?= $Commission; ?></td>
                           </tr>
                           <?php } ?>
                       </tbody>
