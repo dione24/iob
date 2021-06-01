@@ -39,9 +39,9 @@ class AnalyticsController extends \Library\BackController
                     }
                 }
             }
-            $this->page->addVar('totalVersement', $TotalVersement);
-            $this->page->addVar('totalRetrait', $TotalRetrait);
-            $this->page->addVar('Commission', $Commission + $CommissionRetrait);
         }
+        $this->page->addVar('totalVersement', $TotalVersement);
+        $this->page->addVar('totalRetrait', $TotalRetrait);
+        $this->page->addVar('Commission', $Commission + $CommissionRetrait);
     }
 }

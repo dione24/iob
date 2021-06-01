@@ -2,24 +2,24 @@
       <div class="col-md-12">
           <form method="POST" action="/Analytics/index" id="formulaire">
               <div class="input-group">
-                  <div class="col-md-3">Du
+                  <div class="col-md-2">Du
                       <input type="date" id="Debut" name="Debut" value="<?= $Debut; ?>" class="form-control ">
                   </div>
-                  <div class="col-md-3">Au
+                  <div class="col-md-2">Au
                       <input type="date" id="Fin" name="Fin" value="<?= $Fin; ?>" class="form-control"
                           onchange="document.getElementById('formulaire').submit();">
                   </div>
-                  <div class="col-md-3">Total Versement
+                  <div class="col-md-2">Total Versement
                       <input type="text" value="<?= number_format($totalVersement, 0, '.', ','); ?>"
                           class="form-control" readonly>
                   </div>
-                  <div class="col-md-3">Total Retrait
+                  <div class="col-md-2">Total Retrait
                       <input type="text" value="<?= number_format($totalRetrait, 0, '.', ',');   ?>"
                           class="form-control" readonly>
                   </div>
 
-                  <div class="col-md-3">Commission
-                      <input type="text" value="<?= $Commission;   ?>" class="form-control" readonly>
+                  <div class="col-md-2">Commission
+                      <input type="text" value="<?= $Commission;  ?>" class="form-control" readonly>
                   </div>
               </div>
           </form>
