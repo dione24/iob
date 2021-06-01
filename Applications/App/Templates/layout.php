@@ -136,7 +136,6 @@
                                 href="/bielletage/2" aria-expanded="false"><i class="fa fa-minus"
                                     aria-hidden="true"></i><span class="hide-menu">Retrait</span></a></li>
                         <?php } ?>
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Journal/index" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Journal de Caisse</span></a></li>
@@ -146,7 +145,11 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/transfertfond" aria-expanded="false"><i class="fa fa-share"
                                     aria-hidden="true"></i><span class="hide-menu">Sortie de Fond</span></a></li>
-
+                        <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'Niveau1' or $_SESSION['statut'] == 'Head') { ?>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Analytics/index" aria-expanded="false"><i class="fa fa-columns"
+                                    aria-hidden="true"></i><span class="hide-menu">Analytics</span></a></li>
+                        <?php } ?>
                         <?php if ($_SESSION['statut'] == 'admin') { ?>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/ApproCaisse" aria-expanded="false"><i class="fa fa-columns"
