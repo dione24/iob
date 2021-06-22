@@ -68,4 +68,27 @@ class JournalController extends \Library\BackController
         $this->managers->getManagerOf("Journal")->DeleteOperations($request->getData('id'));
         $this->app()->httpResponse()->redirect('/Journal/index'); //Retour en arriere
     }
+
+    public function executePetitecaisse(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Petite Caisse"); // Titre de la page
+        $Caisse  = $this->managers->getManagerOf("Arreter")->GetListeCaisse(); //Recuperation de la liste
+        foreach ($Caisse as $key => $value) {
+            if (!empty($request->postData('jour'))) {
+                $Caisse[$key]['FullName'] =  $this->managers->getManagerOf('Journal')->GetCaissier($request->postData('jour'), $value['RefCaisse']);
+                $Caisse[$key]['Versement'] = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
+                $Caisse[$key]['Yesterday'] = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
+                $Caisse[$key]['Retrait'] = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
+                $Caisse[$key]['SoldeGlobal'] = ($Caisse[$key]['Versement'] - $Caisse[$key]['Retrait']) +  $Caisse[$key]['Yesterday'];
+            } else {
+                $Caisse[$key]['FullName'] =  $this->managers->getManagerOf('Journal')->GetCaissier(date('Y-m-d'), $value['RefCaisse']);
+                $Caisse[$key]['Versement'] = $this->managers->getManagerOf('Journal')->sommeVersementPeriode(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
+                $Caisse[$key]['Yesterday'] = $this->managers->getManagerOf('Journal')->YesterdaySolde(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
+                $Caisse[$key]['Retrait'] = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
+                $Caisse[$key]['SoldeGlobal'] = ($Caisse[$key]['Versement'] - $Caisse[$key]['Retrait']) +  $Caisse[$key]['Yesterday'];
+            }
+        }
+        $this->page->addVar('Caisse', $Caisse);
+        $this->page->addVar('jour', $request->postData('jour'));
+    }
 }

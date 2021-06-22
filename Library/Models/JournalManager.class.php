@@ -18,4 +18,5 @@ abstract class JournalManager extends \Library\Manager
     abstract protected function YesterdaySolde($debut, $fin, $caisse);
     abstract protected function ValidateOperations();
     abstract protected function CancelValidate($id);
+    abstract protected function GetCaissier($Date, $id);
 }

@@ -263,4 +263,41 @@ class JournalManagerPDO extends JournalManager
         $requete->bindValue(':RefOperations', $id, \PDO::PARAM_STR);
         $requete->execute();
     }
+    public function GetCaissier($Date = NULL, $id)
+    {
+        $requete = $this->dao->prepare("SELECT * FROM TbleUsers INNER JOIN TbleChmod ON TbleChmod.RefUsers=TbleUsers.RefUsers INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleChmod.Refcaisse INNER JOIN TbleStatut ON TbleStatut.RefStatut=TbleUsers.RefStatut WHERE (TbleStatut.Name='Caissier' OR TbleStatut.Name='ChefCaisse' ) AND  TbleCaisse.RefCaisse=:RefCaissse ");
+        $requete->bindValue('RefCaissse', $id, \PDO::PARAM_INT);
+        $requete->execute();
+        $result = $requete->fetchAll();
+        foreach ($result as $key => $Caissier) {
+            $result[$key]['Solde'] =  $this->SoldeCaissier($Date, $Caissier['RefUsers']);
+        }
+        return $result;
+    }
+    public function SomnmeVersementCaissier($Date, $id)
+    {
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
+        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSUm->bindValue(':RefUsers', $id, \PDO::PARAM_INT);
+        $requeteSUm->execute();
+        $data = $requeteSUm->fetch();
+        return $data['TotalVersment'];
+    }
+    public function SommeRetraitCaissier($Date, $id)
+    {
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
+        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSUm->bindValue(':RefUsers', $id, \PDO::PARAM_INT);
+        $requeteSUm->execute();
+        $data = $requeteSUm->fetch();
+        return $data['TotalVersment'];
+    }
+
+    public function SoldeCaissier($Date, $id)
+    {
+        $Versement = $this->SomnmeVersementCaissier($Date, $id);
+        $Retrait = $this->SommeRetraitCaissier($Date, $id);
+        $SoleCaisse = $Versement - $Retrait;
+        return $SoleCaisse;
+    }
 }
