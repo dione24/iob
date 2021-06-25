@@ -277,17 +277,30 @@
             </div>
             <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                 <div class="row">
-                    <div class="col-md-6">
+                    <?php if ($_GET['id'] == 3) { ?>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">Caisse</label>
                             <select class="form-control" name="RefCaisse" tabindex="1" required="">
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
-                                    if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
-                                ?>
+                                        if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
+                                    ?>
                                 <option value="<?= $Caisse['RefCaisse']; ?>">
                                     <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
                                 <?php }
-                                }   ?>
+                                    }   ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Type Appro</label>
+                            <select class="form-control" name="TypeAppro" tabindex="1" required="">
+                                <?php foreach ($TypeAppro as $key => $type) { ?>
+                                <option value="<?= $type['RefTypeAppro']; ?>">
+                                    <?= $type['NameTypeAppro']; ?></option>
+                                <?php }   ?>
                             </select>
                         </div>
                     </div>
@@ -297,6 +310,28 @@
                             <input type="int" id="NumCompte" class="form-control" name="NumCompte" required="">
                         </div>
                     </div>
+                    <?php } else { ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Caisse</label>
+                            <select class="form-control" name="RefCaisse" tabindex="1" required="">
+                                <?php foreach ($CheckOuverture as $key => $Caisse) {
+                                        if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
+                                    ?>
+                                <option value="<?= $Caisse['RefCaisse']; ?>">
+                                    <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
+                                <?php }
+                                    }   ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-error">
+                            <label class="control-label">Numéro de compte</label>
+                            <input type="int" id="NumCompte" class="form-control" name="NumCompte" required="">
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -312,6 +347,29 @@
                         </div>
                     </div>
                 </div>
+                <?php if ($_GET['id'] == 3) { ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group has-error">
+                            <label class="control-label">Remarque</label>
+                            <input type="text" class="form-control" name="Remarque" value="NULL" readonly="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group has-error">
+                            <label class="control-label">Deposant/Auteur Retrait</label>
+                            <input type="text" class="form-control" name="NameDeposant"
+                                value="<?= $_SESSION['PrenomUsers'], " " . $_SESSION['NomUsers']; ?>" readonly="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group has-error">
+                            <label class="control-label">Téléphone</label>
+                            <input type="text" class="form-control" name="TelDeposant" value="NULL" readonly="">
+                        </div>
+                    </div>
+                </div>
+                <?php } else { ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group has-error">
@@ -332,6 +390,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
 
         </div>

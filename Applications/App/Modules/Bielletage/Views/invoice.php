@@ -10,7 +10,9 @@
                      <p>MALI CREANCES SA - PARTENAIRE ECOBANK MALI</p>
                      <h2><?php if ($GetInvoice['RefType'] == 1) { ?>VERSEMENT
                          <?php } elseif ($GetInvoice['RefType'] == 2) { ?> RETRAIT
-                         <?php } elseif ($GetInvoice['RefType'] == 4) { ?> SORTIE DE FOND <?php } ?>ESPECES </h2>
+                         <?php } elseif ($GetInvoice['RefType'] == 4) { ?> SORTIE DE FOND
+                         <?php } elseif ($GetInvoice['RefType'] == 3) { ?> APPRO CAISSE
+                         <?php } ?>ESPECES </h2>
                      <h3>BANQUE</h3>
                  </div>
              </div>
@@ -121,7 +123,8 @@
                      <p>MALI CREANCES SA - PARTENAIRE ECOBANK MALI</p>
                      <h2><?php if ($GetInvoice['RefType'] == 1) { ?>VERSEMENT
                          <?php } elseif ($GetInvoice['RefType'] == 2) { ?> RETRAIT
-                         <?php } elseif ($GetInvoice['RefType'] == 4) { ?> SORTIE DE FOND <?php } ?>ESPECES </h2>
+                         <?php } elseif ($GetInvoice['RefType'] == 4) { ?> SORTIE DE FOND
+                         <?php } elseif ($GetInvoice['RefType'] == 3) { ?> APPRO CAISSE <?php } ?>ESPECES </h2>
                      <h3>CLIENT</h3>
                  </div>
              </div>

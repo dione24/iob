@@ -25,6 +25,14 @@
 	<route url="/Pannel/Agence/delete/([0-9]+)" module="Pannel" vars="id" action="deleteagence"/>
 	<route url="/Pannel/Banque" module="Pannel" action="listebanque"/>
 	<route url="/Pannel/Banque/delete/([0-9]+)" module="Pannel" vars="id" action="deletebanque"/>
+	<route url="/Pannel/Produit" module="Pannel" action="listeproduit"/>
+	<route url="/Pannel/Produit/delete/([0-9]+)" module="Pannel" vars="id" action="deleteproduit"/>
+	<route url="/Arreter/reserve" module="Arreter" action="reserve"/>
+
+
+
+
+
 	<route url="/Users/myprofile" module="Users" action="profile"/>
 	<route url="/Users/NewPassword" module="Users" action="newpassword"/>
 	<route url="/Users/index" module="Users" action="index"/>

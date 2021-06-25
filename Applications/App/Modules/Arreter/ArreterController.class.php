@@ -31,4 +31,24 @@ class ArreterController extends \Library\BackController
         $this->managers->getManagerOf("Arreter")->DeleteSolde($request->getData('id'));
         $this->app()->httpResponse()->redirect('/Arreter/index'); //Retour en arriere
     }
+
+    public function executeReserve(\Library\HTTPRequest $request)
+    {
+        $this->managers->getManagerOf("Journal")->Reserve($request); //Arreter Reserve
+        $Agence  = $this->managers->getManagerOf("Pannel")->GetAgency($request->postData('RefAgency')); //Recuperation de la liste
+        $Agence = $this->managers->getManagerOf('Journal')->CaisseAgence($Agence['RefAgency'], date('Y-m-d'));
+
+        foreach ($Agence as $clef => $data) {
+
+            $CheckClose = $this->managers->getManagerOf('Bielletage')->CheckDailyClose($data['RefCaisse']);
+            if (empty($CheckClose)) {
+                $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence($data['RefCaisse'], date('Y-m-d'));
+                $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence($data['RefCaisse'], date('Y-m-d'));
+                $Solde = $SommeVersement -   $SommeRetrait;
+                $this->managers->getManagerOf('Arreter')->StopCaisse($data['RefCaisse'], $Solde);
+            }
+        }
+
+        $this->app()->httpResponse()->redirect('/Journal/petite_caisse'); //Retour en arriere
+    }
 }

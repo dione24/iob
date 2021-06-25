@@ -1,5 +1,5 @@
         <div class="row justify-content-center">
-            <div class="col-lg-3 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
                     <h3 class="box-title">VERSEMENT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -11,7 +11,7 @@
                     <span>CAISSE</span>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
                     <h3 class="box-title">RETRAIT</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -20,40 +20,21 @@
                         </li>
                     </ul>
                     <span>CAISSE</span>
-
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
                 <div class="white-box analytics-info">
                     <h5 class="box-title">SOLDE ESPECES</h5>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li class="ml-auto"><span class="counter text-info">
-                                <?php if ($_SESSION['statut'] != 'Niveau1') {
-                                    echo number_format($Solde, 0, '.', ',');
-                                } else {
-                                    echo 0;
-                                } ?></span>
+                                <?= number_format($Solde, 0, '.', ','); ?>
+                            </span>
                         </li>
                     </ul>
                     <span>CAISSE</span>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6 col-xs-12">
-                <div class="white-box analytics-info">
-                    <h5 class="box-title">SOLDE ESPECES</h5>
-                    <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li class="ml-auto"><span class="counter text-danger">
-                                <?php if ($_SESSION['statut'] != 'Niveau1') {
-                                    echo number_format($SoldeAgence, 0, '.', ',');
-                                } else {
-                                    echo 0;
-                                } ?></span>
-                        </li>
 
-                    </ul>
-                    <span>AGENCE</span>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
@@ -66,6 +47,7 @@
                             <thead>
                                 <tr>
                                     <th class="border-top-0">AGENCE</th>
+                                    <th class="border-top-0">CAISSE</th>
                                     <th class="border-top-0">OPERATION</th>
                                     <th class="border-top-0">CLIENT</th>
                                     <th class="border-top-0">N°COMPTE</th>
@@ -78,6 +60,7 @@
                                 <?php foreach ($Operation as $key => $value) { ?>
                                 <tr class="advance-table-row">
                                     <td> <?= $value['NameAgency']; ?></td>
+                                    <td> <?= $value['NameCaisse']; ?></td>
                                     <td><?= $value['NameType']; ?></td>
                                     <td><?= $value['NameClient']; ?></td>
                                     <td><?= $value['NumCompte']; ?></td>
@@ -154,30 +137,32 @@
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-heading">
-                        Solde du Jour (AGENCE)
+                        Solde du Jour
                     </div>
                     <div class="card-body">
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <td>Versement</td>
-                                    <td><span
-                                            class="counter text-danger"><?= number_format($SommeVersementAgence, 0, '.', ','); ?></span>
+                                    <td><span class="counter text-danger">
+                                            <?= number_format($SommeVersement, 0, '.', ','); ?>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Retrait</td>
-                                    <td><span
-                                            class="counter text-danger"><?= number_format($SommeRetraitAgence, 0, '.', ','); ?></span>
+                                    <td><span class="counter text-danger">
+                                            <?= number_format($SommeRetrait, 0, '.', ','); ?>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Solde Especes</td>
-                                    <td><span
-                                            class="counter text-danger"><?= number_format($SoldeAgence, 0, '.', ','); ?></span>
+                                    <td><span class="counter text-danger">
+                                            <?= number_format($Solde, 0, '.', ','); ?>
+                                        </span>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>

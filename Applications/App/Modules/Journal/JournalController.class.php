@@ -9,7 +9,7 @@ class JournalController extends \Library\BackController
         $this->page->addVar("titles", "Journal de Caisse"); // Titre de la page
         $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
-        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(); //Recuperation de la liste
+        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
         $this->page->addVar("UserCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         $this->page->addVar('Debut', $request->postData('Debut'));
         $this->page->addVar('Fin', $request->postData('Fin'));
@@ -30,11 +30,11 @@ class JournalController extends \Library\BackController
             }
             $this->page->addVar('Operations', $Operations);
             $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
-            $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            // $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
-            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode + $Yesterday;
+            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode;
             $this->page->addVar('Solde', $Solde);
             $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('Biellet', $Biellet);
@@ -45,8 +45,8 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode();
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
-            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
-            $Solde = (($sommeVersementPeriode - $sommeRetraitPeriode) + $Yesterday);
+            // $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
+            $Solde = (($sommeVersementPeriode - $sommeRetraitPeriode));
             $this->page->addVar('Solde', $Solde);
         }
     }
@@ -72,23 +72,18 @@ class JournalController extends \Library\BackController
     public function executePetitecaisse(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Petite Caisse"); // Titre de la page
-        $Caisse  = $this->managers->getManagerOf("Arreter")->GetListeCaisse(); //Recuperation de la liste
-        foreach ($Caisse as $key => $value) {
-            if (!empty($request->postData('jour'))) {
-                $Caisse[$key]['FullName'] =  $this->managers->getManagerOf('Journal')->GetCaissier($request->postData('jour'), $value['RefCaisse']);
-                $Caisse[$key]['Versement'] = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
-                $Caisse[$key]['Yesterday'] = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
-                $Caisse[$key]['Retrait'] = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('jour'), $request->postData('jour'), $value['RefCaisse']);
-                $Caisse[$key]['SoldeGlobal'] = ($Caisse[$key]['Versement'] - $Caisse[$key]['Retrait']) +  $Caisse[$key]['Yesterday'];
-            } else {
-                $Caisse[$key]['FullName'] =  $this->managers->getManagerOf('Journal')->GetCaissier(date('Y-m-d'), $value['RefCaisse']);
-                $Caisse[$key]['Versement'] = $this->managers->getManagerOf('Journal')->sommeVersementPeriode(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
-                $Caisse[$key]['Yesterday'] = $this->managers->getManagerOf('Journal')->YesterdaySolde(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
-                $Caisse[$key]['Retrait'] = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode(date('Y-m-d'), date('Y-m-d'), $value['RefCaisse']);
-                $Caisse[$key]['SoldeGlobal'] = ($Caisse[$key]['Versement'] - $Caisse[$key]['Retrait']) +  $Caisse[$key]['Yesterday'];
-            }
+        $Agence  = $this->managers->getManagerOf("Pannel")->UserAgence(); //Recuperation de la liste
+        foreach ($Agence as $key => $value) {
+            $Agence[$key]['Afficher'] = $this->managers->getManagerOf("Journal")->CaisseAgence($value['RefAgency'], date('Y-m-d'));
+            $Agence[$key]['validate'] = $this->managers->getManagerOf("Journal")->CheckDailyClose($value['RefAgency']);
+            $Agence[$key]['YesterdayReserve'] = $this->managers->getManagerOf("Journal")->YesterdayReserve($value['RefAgency']);
+            $Agence[$key]['SommeDepot'] = $this->managers->getManagerOf("Journal")->SommeDepotAgence(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['SommeSortie'] = $this->managers->getManagerOf("Journal")->SommeRetraitAgence(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['TotalAppoAgence'] = $this->managers->getManagerOf("Journal")->TotalApproAgence(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['TotalSortieAgence'] = $this->managers->getManagerOf("Journal")->TotalSortieAgence(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['ReserveActuelle'] = $Agence[$key]['YesterdayReserve'] + $Agence[$key]['SommeDepot'] - $Agence[$key]['SommeSortie'] +
+                $Agence[$key]['TotalAppoAgence'] - $Agence[$key]['TotalSortieAgence'];
         }
-        $this->page->addVar('Caisse', $Caisse);
-        $this->page->addVar('jour', $request->postData('jour'));
+        $this->page->addVar('Agence', $Agence);
     }
 }

@@ -161,6 +161,10 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Caisse/solde" aria-expanded="false"><i class="fa fa-globe"
                                     aria-hidden="true"></i><span class="hide-menu">Ma Caisse</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/Pannel/Produit" aria-expanded="false"><i class="fa fa-table"
+                                    aria-hidden="true"></i><span class="hide-menu">Liste Produit</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/Pannel/Caisse" aria-expanded="false"><i class="fa fa-table"
                                     aria-hidden="true"></i><span class="hide-menu">Liste Caisse</span></a></li>
@@ -247,6 +251,12 @@
     <script>
     $(document).ready(function() {
         $('#dataTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#dataTable1').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'

@@ -10,10 +10,54 @@ class PannelManagerPDO extends PannelManager
 
     public function ListeAgence()
     {
-        $requeteAgence = $this->dao->prepare('SELECT * FROM TbleAgency INNER JOIN TbleBanque ON TbleBanque.RefBanque=TbleAgency.RefBanque');
+        $requeteAgence = $this->dao->prepare('SELECT * FROM TbleAgency');
         $requeteAgence->execute();
         $ListeAgence = $requeteAgence->fetchAll();
         return $ListeAgence;
+    }
+
+    public function UserAgence()
+    {
+        $requeteAgence = $this->dao->prepare('SELECT * FROM TbleAgency INNER JOIN TbleCaisse ON TbleCaisse.RefAgency=TbleAgency.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleCaisse.RefCaisse WHERE TbleChmod.RefUsers=:RefUsers GROUP BY(TbleAgency.RefAgency)');
+        $requeteAgence->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+        $requeteAgence->execute();
+        $ListeAgence = $requeteAgence->fetchAll();
+        return $ListeAgence;
+    }
+
+
+    public function GetAgency($id)
+    {
+        $requeteAgence = $this->dao->prepare('SELECT * FROM TbleAgency WHERE RefAgency=:RefAgency');
+        $requeteAgence->bindValue(':RefAgency', $id, \PDO::PARAM_INT);
+        $requeteAgence->execute();
+        $ListeAgence = $requeteAgence->fetch();
+        return $ListeAgence;
+    }
+
+
+    public function ListeProduit()
+    {
+        $requeteProduuit = $this->dao->prepare('SELECT * FROM TbleProduit INNER JOIN TbleBanque ON TbleBanque.RefBanque=TbleProduit.RefBanque');
+        $requeteProduuit->execute();
+        $ListeProduit = $requeteProduuit->fetchAll();
+        return $ListeProduit;
+    }
+
+
+    public function AddProduit()
+    {
+        $requeteAdd = $this->dao->prepare("INSERT INTO TbleProduit(NameProduit,RefBanque) VALUES(:NameProduit,:RefBanque)");
+        $requeteAdd->bindValue(':NameProduit', $_POST['NameProduit'], \PDO::PARAM_STR);
+        $requeteAdd->bindValue(':RefBanque', $_POST['RefBanque'], \PDO::PARAM_INT);
+        $requeteAdd->execute();
+    }
+
+    public function DeleteProduit($Produit)
+    {
+        $requete = $this->dao->prepare('DELETE FROM TbleProduit WHERE RefProduit=:RefProduit');
+        $requete->bindValue(':RefProduit', $Produit, \PDO::PARAM_INT);
+        $requete->execute();
     }
 
     public function AddCaisse()
@@ -70,9 +114,8 @@ class PannelManagerPDO extends PannelManager
     }
     public function AddAgency()
     {
-        $requeteAddService = $this->dao->prepare("INSERT INTO TbleAgency(NameAgency,RefBanque) VALUES(:NameAgency,:RefBanque)");
+        $requeteAddService = $this->dao->prepare("INSERT INTO TbleAgency(NameAgency) VALUES(:NameAgency)");
         $requeteAddService->bindValue(':NameAgency', $_POST['NameAgency'], \PDO::PARAM_STR);
-        $requeteAddService->bindValue(':RefBanque', $_POST['RefBanque'], \PDO::PARAM_INT);
         $requeteAddService->execute();
     }
 

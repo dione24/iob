@@ -81,4 +81,30 @@ class PannelController extends \Library\BackController
         $_SESSION['message']['number'] = 2;
         $this->app()->httpResponse()->redirect('/Pannel/Banque'); //Retour en arriere
     }
+
+    public function executeListeProduit(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Liste des Produits"); // Titre de la page
+        $ListeProduits  = $this->managers->getManagerOf("Pannel")->ListeProduit();
+        $this->page->addVar("ListeProduit", $ListeProduits);
+        $ListeBanque  = $this->managers->getManagerOf("Pannel")->ListeBanque();
+        $this->page->addVar("ListeBanque", $ListeBanque);
+        if ($request->method() == 'POST') {
+            $this->managers->getManagerOf("Pannel")->AddProduit($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
+            $this->app()->httpResponse()->redirect('/Pannel/Produit'); //Retour en arriere
+
+        }
+    }
+    public function executeDeleteProduit(\Library\HTTPRequest $request)
+    {
+        $this->page->addVar("titles", "Delete Produit"); // Titre de la page
+        $this->managers->getManagerOf("Pannel")->DeleteProduit($request->getData('id'));
+        $_SESSION['message']['type'] = 'success';
+        $_SESSION['message']['text'] = 'Suppression réussie !';
+        $_SESSION['message']['number'] = 2;
+        $this->app()->httpResponse()->redirect('/Pannel/Produit'); //Retour en arriere
+    }
 }

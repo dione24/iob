@@ -13,21 +13,22 @@ class BielletageController extends \Library\BackController
         $this->page->addVar('Operation', $Operations);
         $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
         $this->page->addVar('Biellet', $Biellet);
-        $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersement(date('Y-m-d'));
-        $this->page->addVar('SommeVersement', $SommeVersement);
-        $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetrait(date('Y-m-d'));
-        $this->page->addVar('SommeRetrait', $SommeRetrait);
+        // $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementCaissier(date('Y-m-d'));
+        // $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitCaissier(date('Y-m-d'));
         $DailyVersement = $this->managers->getManagerOf('Bielletage')->DailyVersement();
         $this->page->addVar('DailyVersement', $DailyVersement);
-        $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
-        $Solde = $SommeVersement - $SommeRetrait;
+        $UsersCaisse = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d'));
+        $Solde = 0;
+        $SommeVersement = 0;
+        $SommeRetrait = 0;
+        foreach ($UsersCaisse as $key => $value) {
+            $Solde += $value['SoldeDisponible'];
+            $SommeVersement += $value['TotalVersement'];
+            $SommeRetrait += $value['TotalRetrait'];
+        }
         $this->page->addVar('Solde', $Solde);
-        $SommeVersementAgence = $this->managers->getManagerOf('Bielletage')->SommeVersementAgence(NULL, date('Y-m-d'));
-        $this->page->addVar('SommeVersementAgence', $SommeVersementAgence);
-        $SommeRetraitAgence = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence(NULL, date('Y-m-d'));
-        $this->page->addVar('SommeRetraitAgence', $SommeRetraitAgence);
-        $SoldeAgence = $SommeVersementAgence - $SommeRetraitAgence + $Yesterday;
-        $this->page->addVar('SoldeAgence', $SoldeAgence);
+        $this->page->addVar('SommeVersement', $SommeVersement);
+        $this->page->addVar('SommeRetrait', $SommeRetrait);
     }
     public function executeStopcaisse(\Library\HTTPRequest $request)
     {
@@ -36,7 +37,8 @@ class BielletageController extends \Library\BackController
         $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitAgence($request->getData('id'), date('Y-m-d'));
         $this->page->addVar('SommeRetrait', $SommeRetrait);
         $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde($request->getData('id'));
-        $Solde = $SommeVersement - $SommeRetrait + $Yesterday;
+        //On ne tient pas compte de Yesterday pour chaque caisse
+        $Solde = $SommeVersement - $SommeRetrait;
         $this->managers->getManagerOf('Arreter')->StopCaisse($request->getData('id'), $Solde);
         $this->app()->httpResponse()->redirect('/Arreter/index'); //Retour en arriere
     }
@@ -45,6 +47,8 @@ class BielletageController extends \Library\BackController
         $this->page->addVar("titles", "Nouvelle Opération"); // Titre de la page
         $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
+        $TypeAppro  = $this->managers->getManagerOf("Journal")->TypeAppro(); //Recuperation de la liste
+        $this->page->addVar("TypeAppro", $TypeAppro); // Creation de la variable, ajout d'une variable a la vue
     }
     public function executeInvoice(\Library\HTTPRequest $request)
     {

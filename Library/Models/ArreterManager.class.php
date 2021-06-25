@@ -7,7 +7,7 @@ use \Library\Entities\Arreter;
 abstract class ArreterManager extends \Library\Manager
 {
     abstract protected function GetListeCaisse();
-    abstract protected function CloseCaisse($Caisse);
+    // abstract protected function CloseCaisse($Caisse);
     abstract protected function SommeVersementCaisse($Caisse);
     abstract protected function SommeRetraitCaisse($Caisse);
     abstract protected function GetRapports($Caisse);

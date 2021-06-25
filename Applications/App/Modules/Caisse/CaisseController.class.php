@@ -9,7 +9,7 @@ class CaisseController extends \Library\BackController
         $this->page->addVar("titles", "Ma Caisse"); // Titre de la page
         $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
-        $UserCaisse  = $this->managers->getManagerOf("Caisse")->UserCaisse(); //Recuperation de la liste
+        $UserCaisse  = $this->managers->getManagerOf("Caisse")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
         $this->page->addVar("UserCaisse", $UserCaisse); // Creation de 
         if (!empty($request->postData('RefCaisse'))) {
             $GetOperations  = $this->managers->getManagerOf("Caisse")->GetOperations($request->postData('RefCaisse')); //Recuperation de la liste
@@ -25,7 +25,7 @@ class CaisseController extends \Library\BackController
         $this->page->addVar("titles", "Liste des Transfert de fond"); // Titre de la page
         $Fond  = $this->managers->getManagerOf("Caisse")->ListeFond(); //Recuperation de la liste
         $this->page->addVar("ListeFond", $Fond); // Creation d
-        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(); //Recuperation de la liste
+        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
         $this->page->addVar("ListeCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         if ($request->method() == 'POST') {
             $AddTransfert  = $this->managers->getManagerOf("Caisse")->AddTransfert($request); //Recuperation de la liste
@@ -40,7 +40,7 @@ class CaisseController extends \Library\BackController
         $this->page->addVar("titles", "Liste des Appro"); // Titre de la page
         $Appro  = $this->managers->getManagerOf("Caisse")->ListeAppro(); //Recuperation de la liste
         $this->page->addVar("ListeAppro", $Appro); // Creation d
-        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(); //Recuperation de la liste
+        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
         $this->page->addVar("ListeCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         if ($request->method() == 'POST') {
             $AddAppro  = $this->managers->getManagerOf("Caisse")->AddAppro($request); //Recuperation de la liste

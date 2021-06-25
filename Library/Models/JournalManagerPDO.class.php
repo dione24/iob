@@ -27,13 +27,21 @@ class JournalManagerPDO extends JournalManager
         }
         return $data;
     }
-    public function UserCaisse()
+    public function UserCaisse($Date)
     {
         $requete = $this->dao->prepare("SELECT * FROM TbleCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleCaisse.RefCaisse WHERE TbleChmod.RefUsers=:RefUsers");
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
-        $data = $requete->fetchAll();
-        return $data;
+        $listeCaisse = $requete->fetchAll();
+        foreach ($listeCaisse as $key => $value) {
+            $listeCaisse[$key]['SoldeInitial'] =  $this->SoldeInitialCaisse($Date, $value['RefCaisse']);
+            $listeCaisse[$key]['TotalAppro'] =  $this->TotalApproCaisse($Date, $value['RefCaisse']);
+            $listeCaisse[$key]['TotalVersement'] =  $this->SomnmeVersementCaisse($Date, $value['RefCaisse']);
+            $listeCaisse[$key]['TotalRetrait'] =  $this->SommeRetraitCaisse($Date, $value['RefCaisse']);
+            $listeCaisse[$key]['TotalSortieCaisse'] = $this->TotalSortieCaisse($Date, $value['RefCaisse']);
+            $listeCaisse[$key]['SoldeDisponible'] =   $listeCaisse[$key]['SoldeInitial']  + $listeCaisse[$key]['TotalVersement'] - $listeCaisse[$key]['TotalRetrait'] - $listeCaisse[$key]['TotalSortieCaisse'];
+        }
+        return $listeCaisse;
     }
     public function DeleteOperations($id)
     {
@@ -232,7 +240,6 @@ class JournalManagerPDO extends JournalManager
 
         $Versement = $this->Versement($debut, $fin, $caisse);
         $Retrait = $this->Retrait($debut, $fin, $caisse);
-
         $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
         $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
         $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];
@@ -256,48 +263,149 @@ class JournalManagerPDO extends JournalManager
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
     }
-
     public function CancelValidate($id)
     {
         $requete = $this->dao->prepare("UPDATE TbleOperations SET Validate= 1,DateValidate=NULL,RefValidate=NULL WHERE RefOperations=:RefOperations");
         $requete->bindValue(':RefOperations', $id, \PDO::PARAM_STR);
         $requete->execute();
     }
-    public function GetCaissier($Date = NULL, $id)
+
+    public function CaisseAgence($Agence, $Date)
     {
-        $requete = $this->dao->prepare("SELECT * FROM TbleUsers INNER JOIN TbleChmod ON TbleChmod.RefUsers=TbleUsers.RefUsers INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleChmod.Refcaisse INNER JOIN TbleStatut ON TbleStatut.RefStatut=TbleUsers.RefStatut WHERE (TbleStatut.Name='Caissier' OR TbleStatut.Name='ChefCaisse' ) AND  TbleCaisse.RefCaisse=:RefCaissse ");
-        $requete->bindValue('RefCaissse', $id, \PDO::PARAM_INT);
-        $requete->execute();
-        $result = $requete->fetchAll();
-        foreach ($result as $key => $Caissier) {
-            $result[$key]['Solde'] =  $this->SoldeCaissier($Date, $Caissier['RefUsers']);
+        $requeteAgence = $this->dao->prepare('SELECT * FROM TbleCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleAgency.RefAgency=:RefAgency');
+        $requeteAgence->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requeteAgence->execute();
+        $ListeCaisse = $requeteAgence->fetchAll();
+        foreach ($ListeCaisse as $key => $value) {
+            $ListeCaisse[$key]['SoldeInitial'] =  $this->SoldeInitialCaisse($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['TotalAppro'] =  $this->TotalApproCaisse($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['TotalVersement'] =  $this->SomnmeVersementCaisse($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['TotalRetrait'] =  $this->SommeRetraitCaisse($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['TotalSortieCaisse'] = $this->TotalSortieCaisse($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['SoldeDisponible'] =   $ListeCaisse[$key]['SoldeInitial']  + $ListeCaisse[$key]['TotalVersement'] - $ListeCaisse[$key]['TotalRetrait'] - $ListeCaisse[$key]['TotalSortieCaisse'];
         }
-        return $result;
+        return $ListeCaisse;
     }
-    public function SomnmeVersementCaissier($Date, $id)
+
+    public function YesterdayReserve($Agence)
     {
-        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3)  ');
+        $requeteSoldeInittial = $this->dao->prepare("SELECT SoldeCompte FROM TbleCompte WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleCompte WHERE RefAgency=:RefAgency AND DateSolde <:today)");
+        $requeteSoldeInittial->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':today', date('Y-m-d'), \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['SoldeCompte'];
+    }
+
+    public function SommeDepotAgence($Date, $Agence)
+    {
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleAgency.RefAgency=:RefAgency AND (TbleOperations.RefType=1)');
         $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
-        $requeteSUm->bindValue(':RefUsers', $id, \PDO::PARAM_INT);
+        $requeteSUm->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
         $requeteSUm->execute();
         $data = $requeteSUm->fetch();
         return $data['TotalVersment'];
     }
-    public function SommeRetraitCaissier($Date, $id)
+    public function SommeRetraitAgence($Date, $Agence)
     {
-        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.Insert_Id=:RefUsers AND (TbleOperations.RefType=2 OR TbleOperations.RefType=4)  ');
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleAgency.RefAgency=:RefAgency AND (TbleOperations.RefType=2)');
         $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
-        $requeteSUm->bindValue(':RefUsers', $id, \PDO::PARAM_INT);
+        $requeteSUm->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
         $requeteSUm->execute();
         $data = $requeteSUm->fetch();
         return $data['TotalVersment'];
     }
 
-    public function SoldeCaissier($Date, $id)
+    public function SoldeInitialCaisse($Date, $Caisse)
     {
-        $Versement = $this->SomnmeVersementCaissier($Date, $id);
-        $Retrait = $this->SommeRetraitCaissier($Date, $id);
-        $SoleCaisse = $Versement - $Retrait;
-        return $SoleCaisse;
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS SoldeInitial FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.TypeAppro=1  AND TbleOperations.RefType=3 AND TbleOperations.RefCaisse=:RefCaisse ');
+        $requeteSoldeInittial->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['SoldeInitial'];
+    }
+
+    public function TotalApproCaisse($Date, $Caisse)
+    {
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.TypeAppro=2 AND TbleOperations.RefType=3 AND TbleOperations.RefCaisse=:RefCaisse ');
+        $requeteSoldeInittial->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['TotalAppro'];
+    }
+
+    public function TotalApproAgence($Date, $Agence)
+    {
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleAgency.RefAgency=:RefAgency AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefType=3 AND TbleOperations.TypeAppro=2 ');
+        $requeteSoldeInittial->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['TotalAppro'];
+    }
+
+    public function TotalSortieCaisse($Date, $Caisse)
+    {
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefType=4 AND TbleOperations.RefCaisse=:RefCaisse ');
+        $requeteSoldeInittial->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['TotalAppro'];
+    }
+
+    public function TotalSortieAgence($Date, $Agence)
+    {
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefType=4 AND TbleAgency.RefAgency=:RefAgency ');
+        $requeteSoldeInittial->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['TotalAppro'];
+    }
+
+    public function TypeAppro()
+    {
+        $requete = $this->dao->prepare('SELECT * FROM TbleTypeAppro');
+        $requete->execute();
+        $result = $requete->fetchAll();
+        return $result;
+    }
+
+    public function Reserve()
+    {
+        $requeteAddService = $this->dao->prepare("INSERT INTO TbleCompte(RefAgency,SoldeCompte) VALUES(:RefAgency,:SoldeCompte)");
+        $requeteAddService->bindValue(':RefAgency', $_POST['RefAgency'], \PDO::PARAM_INT);
+        $requeteAddService->bindValue(':SoldeCompte', $_POST['ReserveActuelle'], \PDO::PARAM_STR);
+        $requeteAddService->execute();
+    }
+    public function SomnmeVersementCaisse($Date, $Caisse)
+    {
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.RefCaisse=:RefCaisse AND (TbleOperations.RefType=1)');
+        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSUm->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteSUm->execute();
+        $data = $requeteSUm->fetch();
+        return $data['TotalVersment'];
+    }
+    public function SommeRetraitCaisse($Date, $Caisse)
+    {
+        $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalRetrait FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.RefCaisse=:RefCaisse AND (TbleOperations.RefType=2)  ');
+        $requeteSUm->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSUm->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
+        $requeteSUm->execute();
+        $data = $requeteSUm->fetch();
+        return $data['TotalRetrait'];
+    }
+    public function CheckDailyClose($Agence)
+    {
+        $requete = $this->dao->prepare("SELECT * FROM TbleCompte WHERE RefAgency=:RefAgency AND date(DateSolde)=:jour");
+        $requete->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
+        $requete->execute();
+        $Result = $requete->fetch();
+        return $Result;
     }
 }

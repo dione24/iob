@@ -8,7 +8,7 @@ abstract class JournalManager extends \Library\Manager
 {
     abstract protected function  Operations();
     abstract protected function GetOperations($debut, $fin, $caisse);
-    abstract protected function UserCaisse();
+    abstract protected function UserCaisse($Date);
     abstract protected function DeleteOperations($id);
     abstract protected function sommeVersementPeriode($debut, $fin, $caisse);
     abstract protected function sommeRetraitPeriode($debut, $fin, $caisse);
@@ -18,5 +18,4 @@ abstract class JournalManager extends \Library\Manager
     abstract protected function YesterdaySolde($debut, $fin, $caisse);
     abstract protected function ValidateOperations();
     abstract protected function CancelValidate($id);
-    abstract protected function GetCaissier($Date, $id);
 }
