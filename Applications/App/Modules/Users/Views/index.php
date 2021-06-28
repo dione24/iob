@@ -31,19 +31,22 @@
                                 <a href="/Users/UpdateUsers/<?= $users['RefUsers']; ?>"
                                     class="btn btn-info btn-outline btn-circle btn-lg m-r-5"><i
                                         class="ti-pencil-alt"></i></a>
+                                <button type="button" class="btn btn-warning btn-outline btn-circle btn-lg m-r-5"
+                                    data-toggle="modal" data-target="#ChmodAppro-<?= $users['RefUsers']; ?>"
+                                    data-whatever="@mdo"><i class="ticon ti-lock"></i></button>
                             </td>
                         </tr>
-
                         <div class="modal fade" id="Chmod-<?= $users['RefUsers']; ?>" tabindex="-1" role="dialog"
                             aria-labelledby="AddCaisse">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header">Chmod Caisse
                                         <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <form role="form" method="post" action="">
                                         <div class="modal-body">
+
                                             <div class="form-group">
                                                 <?php foreach ($ListeCaisse as $key => $value) {                                                    ?>
                                                 <div class="checkbox checkbox-success checkbox-circle">
@@ -57,6 +60,42 @@
                                                 <?php } ?>
                                             </div>
                                             <input type="hidden" value="<?= $users['RefUsers']; ?>" name="RefUsers">
+                                            <input type="hidden" value="chmod" name="Type">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Valider</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ChmodAppro-<?= $users['RefUsers']; ?>" tabindex="-1" role="dialog"
+                            aria-labelledby="AddCaisse">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header"> Chmod Appro et Sortie
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <form role="form" method="post" action="">
+                                        <div class="modal-body">
+
+                                            <div class="form-group">
+                                                <?php foreach ($ListeCaisse as $key => $value) {                                                    ?>
+                                                <div class="checkbox checkbox-success checkbox-circle">
+                                                    <input id="checkbox-10" type="checkbox" name="RefCaisse[]"
+                                                        multiple="" value="<?= $value['RefCaisse']; ?>"
+                                                        <?php if ($VerifCaisseAppro[$users['RefUsers']][$value['RefCaisse']] == $value['RefCaisse']) { ?>
+                                                        checked="" <?php } ?> />
+                                                    <label for="checkbox-10">
+                                                        <?= $value['NameCaisse'] . " | " . $value['NameAgency']; ?></label>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                            <input type="hidden" value="<?= $users['RefUsers']; ?>" name="RefUsers">
+                                            <input type="hidden" value="appro" name="Type">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default"

@@ -14,6 +14,12 @@ class CaisseManagerPDO extends CaisseManager
         $data = $requete->fetchAll();
         return $data;
     }
+
+
+    public function UserCaisseAgence($Caisse)
+    {
+    }
+
     public function GetSolde($Caisse)
     {
         if (!empty($Caisse)) {

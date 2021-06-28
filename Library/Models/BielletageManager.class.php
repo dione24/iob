@@ -6,7 +6,7 @@ use \Library\Entities\Bielletage;
 
 abstract class BielletageManager extends \Library\Manager
 {
-    abstract protected function CheckOuverture();
+    abstract protected function CheckOuverture($data);
     abstract protected function ChomdUser();
     abstract protected function GetCaisse();
     abstract protected function GetInvoice($id);

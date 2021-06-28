@@ -87,6 +87,16 @@ class UserManagerPDO extends UserManager
         $Verfiy = $requeteCaisse->fetch();
         return $Verfiy['RefCaisse'];
     }
+
+    public function VerifCaisseAppro($Caisse, $Users)
+    {
+        $requeteCaisse = $this->dao->prepare("SELECT * FROM TbleChmodAppro WHERE RefCaisse=:caisse AND RefUsers=:users");
+        $requeteCaisse->bindValue(':caisse', $Caisse, \PDO::PARAM_INT);
+        $requeteCaisse->bindValue(':users', $Users, \PDO::PARAM_INT);
+        $requeteCaisse->execute();
+        $Verfiy = $requeteCaisse->fetch();
+        return $Verfiy['RefCaisse'];
+    }
     public function ListeStatut()
     {
         $requeteStatut = $this->dao->prepare('SELECT * FROM TbleStatut ');
@@ -145,15 +155,29 @@ class UserManagerPDO extends UserManager
     }
     public function AddChmod()
     {
-        $requeteDelete = $this->dao->prepare('DELETE FROM TbleChmod WHERE RefUsers=:users');
-        $requeteDelete->bindValue(':users', $_POST['RefUsers'], \PDO::PARAM_INT);
-        $requeteDelete->execute();
-        if (!empty($_POST['RefCaisse'])) {
-            foreach ($_POST['RefCaisse'] as $key => $value) {
-                $requeteInsert = $this->dao->prepare('INSERT INTO TbleChmod(RefCaisse,RefUsers) VALUES(:RefCaisse,:RefUsers)');
-                $requeteInsert->bindValue(':RefCaisse', $value, \PDO::PARAM_INT);
-                $requeteInsert->bindValue(':RefUsers', $_POST['RefUsers'], \PDO::PARAM_INT);
-                $requeteInsert->execute();
+        if ($_POST['Type'] == 'appro') {
+            $requeteDelete = $this->dao->prepare('DELETE FROM TbleChmodAppro WHERE RefUsers=:users');
+            $requeteDelete->bindValue(':users', $_POST['RefUsers'], \PDO::PARAM_INT);
+            $requeteDelete->execute();
+            if (!empty($_POST['RefCaisse'])) {
+                foreach ($_POST['RefCaisse'] as $key => $value) {
+                    $requeteInsert = $this->dao->prepare('INSERT INTO TbleChmodAppro(RefCaisse,RefUsers) VALUES(:RefCaisse,:RefUsers)');
+                    $requeteInsert->bindValue(':RefCaisse', $value, \PDO::PARAM_INT);
+                    $requeteInsert->bindValue(':RefUsers', $_POST['RefUsers'], \PDO::PARAM_INT);
+                    $requeteInsert->execute();
+                }
+            }
+        } elseif ($_POST['Type'] == 'chmod') {
+            $requeteDelete = $this->dao->prepare('DELETE FROM TbleChmod WHERE RefUsers=:users');
+            $requeteDelete->bindValue(':users', $_POST['RefUsers'], \PDO::PARAM_INT);
+            $requeteDelete->execute();
+            if (!empty($_POST['RefCaisse'])) {
+                foreach ($_POST['RefCaisse'] as $key => $value) {
+                    $requeteInsert = $this->dao->prepare('INSERT INTO TbleChmod(RefCaisse,RefUsers) VALUES(:RefCaisse,:RefUsers)');
+                    $requeteInsert->bindValue(':RefCaisse', $value, \PDO::PARAM_INT);
+                    $requeteInsert->bindValue(':RefUsers', $_POST['RefUsers'], \PDO::PARAM_INT);
+                    $requeteInsert->execute();
+                }
             }
         }
     }

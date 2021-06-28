@@ -6,18 +6,21 @@ use \Library\Entities\Bielletage;
 
 class BielletageManagerPDO extends BielletageManager
 {
-    public function ChomdUser()
+    public function ChomdUser($type = NULL)
     {
-        $requete
-            = $this->dao->prepare('SELECT * FROM TbleChmod WHERE RefUsers=:RefUsers');
+        if ($type == 1) {
+            $requete = $this->dao->prepare('SELECT * FROM TbleChmodAppro WHERE RefUsers=:RefUsers');
+        } else {
+            $requete = $this->dao->prepare('SELECT * FROM TbleChmod WHERE RefUsers=:RefUsers');
+        }
         $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
         $requete->execute();
         $display = $requete->fetchAll();
         return $display;
     }
-    public function CheckOuverture()
+    public function CheckOuverture($data = NULL)
     {
-        $ChomdUser = $this->ChomdUser();
+        $ChomdUser = $this->ChomdUser($data);
         if (!empty($ChomdUser)) {
             $Caisse = [];
             foreach ($ChomdUser as $key => $value) {

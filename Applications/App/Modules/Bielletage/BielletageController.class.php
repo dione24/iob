@@ -45,7 +45,11 @@ class BielletageController extends \Library\BackController
     public function executeBielletage(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Nouvelle Opération"); // Titre de la page
-        $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
+        if ($_GET['id'] == 3) {
+            $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(1); //Recuperation de la liste
+        } else {
+            $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
+        }
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
         $TypeAppro  = $this->managers->getManagerOf("Journal")->TypeAppro(); //Recuperation de la liste
         $this->page->addVar("TypeAppro", $TypeAppro); // Creation de la variable, ajout d'une variable a la vue

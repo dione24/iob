@@ -13,11 +13,13 @@ class UsersController extends \Library\BackController
             foreach ($ListeCaisse as $key1 => $value1) {
                 $caisse[$value['RefUsers']][$value1['RefCaisse']] =
                     $this->managers->getManagerOf('User')->VerifCaisse($value1['RefCaisse'], $value['RefUsers']);
+                $VerifAppro[$value['RefUsers']][$value1['RefCaisse']] =  $this->managers->getManagerOf('User')->VerifCaisseAppro($value1['RefCaisse'], $value['RefUsers']);
             }
         }
         $this->page->addVar("ListeUsers", $Users); // Creation de la variable, ajout d'une variable a la vue
         $this->page->addVar("ListeCaisse", $ListeCaisse);
         $this->page->addVar('VerifCaisse', $caisse);
+        $this->page->addVar('VerifCaisseAppro', $VerifAppro);
         $ListeStatut  = $this->managers->getManagerOf("User")->ListeStatut();
         $this->page->addVar("ListeStatut", $ListeStatut);
         if ($request->method() == 'POST' && empty($request->postData('RefUsers'))) {
