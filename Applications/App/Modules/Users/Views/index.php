@@ -81,7 +81,6 @@
                                     </div>
                                     <form role="form" method="post" action="">
                                         <div class="modal-body">
-
                                             <div class="form-group">
                                                 <?php foreach ($ListeCaisse as $key => $value) {                                                    ?>
                                                 <div class="checkbox checkbox-success checkbox-circle">

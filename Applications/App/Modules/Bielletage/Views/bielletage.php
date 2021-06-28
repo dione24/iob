@@ -1,5 +1,4 @@
 <div id="smartwizard">
-
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="#step-1">
@@ -313,7 +312,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">Caisse</label>
-                            <select class="form-control" name="RefCaisse" tabindex="1" required="">
+                            <select class="form-control" name="RefCaisse" id="RefCaisse" tabindex="1" required="">
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
                                         if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
                                     ?>
@@ -324,15 +323,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group has-error">
-                            <label class="control-label">Numéro de compte</label>
-                            <input type="int" id="NumCompte" class="form-control" name="NumCompte" required="">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Produit</label>
+                            <select class="form-control" name="RefProduit" tabindex="1" id="RefProduit" required="">
+                                <option></option>
+                            </select>
                         </div>
+                    </div>
+                    <div id="hidden" class="col-md-3">
                     </div>
                     <?php } ?>
                 </div>
-                <div class="row">
+                <div class=" row">
                     <div class="col-md-6">
                         <div class="form-group has-error">
                             <label class="control-label">Client</label>

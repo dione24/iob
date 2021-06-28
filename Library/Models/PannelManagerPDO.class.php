@@ -133,12 +133,35 @@ class PannelManagerPDO extends PannelManager
     }
     public function VerifOpening($Caisse, $Days)
     {
-
         $requete = $this->dao->prepare('SELECT * FROM TbleOuverture WHERE RefCaisse=:RefCaisse AND RefDays=:RefDays');
         $requete->bindValue(':RefCaisse', $Caisse, \PDO::PARAM_INT);
         $requete->bindValue(':RefDays', $Days, \PDO::PARAM_INT);
         $requete->execute();
         $data = $requete->fetch();
         return $data;
+    }
+    public function VerifProduit($caisse, $Produit)
+    {
+        $requete = $this->dao->prepare('SELECT * FROM TbleChmodProduit WHERE RefCaisse=:RefCaisse AND RefProduit=:RefProduit');
+        $requete->bindValue(':RefCaisse', $caisse, \PDO::PARAM_INT);
+        $requete->bindValue(':RefProduit', $Produit, \PDO::PARAM_INT);
+        $requete->execute();
+        $data = $requete->fetch();
+        return $data['RefCaisse'];
+    }
+
+    public function AddChmodProduit()
+    {
+        $requeteDelete = $this->dao->prepare('DELETE FROM TbleChmodProduit WHERE RefProduit=:RefProduit');
+        $requeteDelete->bindValue(':RefProduit', $_POST['RefProduit'], \PDO::PARAM_INT);
+        $requeteDelete->execute();
+        if (!empty($_POST['RefCaisse'])) {
+            foreach ($_POST['RefCaisse'] as $key => $value) {
+                $requeteInsert = $this->dao->prepare('INSERT INTO TbleChmodProduit(RefCaisse,RefProduit) VALUES(:RefCaisse,:RefProduit)');
+                $requeteInsert->bindValue(':RefCaisse', $value, \PDO::PARAM_INT);
+                $requeteInsert->bindValue(':RefProduit', $_POST['RefProduit'], \PDO::PARAM_INT);
+                $requeteInsert->execute();
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@
                               <th class="border-top-0">Statut</th>
                               <?php } ?>
                               <th class="border-top-0">Agence</th>
+                              <th class="border-top-0">Produit</th>
                               <th class="border-top-0">Operation</th>
                               <th class="border-top-0">Client</th>
                               <th class="border-top-0">Numero de Compte</th>
@@ -78,6 +79,7 @@
                               </td>
                               <?php } ?>
                               <td><?= $value['NameAgency']; ?></td>
+                              <td><?= $value['NameProduit']; ?></td>
                               <td><?= $value['NameType']; ?></td>
                               <td><?= $value['NameClient']; ?></td>
                               <td><?= $value['NumCompte']; ?></td>

@@ -34,7 +34,6 @@
                     <span>CAISSE</span>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
@@ -48,6 +47,7 @@
                                 <tr>
                                     <th class="border-top-0">AGENCE</th>
                                     <th class="border-top-0">CAISSE</th>
+                                    <th class="border-top-0">PRODUIT</th>
                                     <th class="border-top-0">OPERATION</th>
                                     <th class="border-top-0">CLIENT</th>
                                     <th class="border-top-0">N°COMPTE</th>
@@ -61,6 +61,7 @@
                                 <tr class="advance-table-row">
                                     <td> <?= $value['NameAgency']; ?></td>
                                     <td> <?= $value['NameCaisse']; ?></td>
+                                    <td> <?= $value['NameProduit']; ?></td>
                                     <td><?= $value['NameType']; ?></td>
                                     <td><?= $value['NameClient']; ?></td>
                                     <td><?= $value['NumCompte']; ?></td>

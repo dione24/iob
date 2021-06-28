@@ -13,8 +13,6 @@ class BielletageController extends \Library\BackController
         $this->page->addVar('Operation', $Operations);
         $Biellet = $this->managers->getManagerOf('Arreter')->GetDailyBielletage(date('Y-m-d'));
         $this->page->addVar('Biellet', $Biellet);
-        // $SommeVersement = $this->managers->getManagerOf('Bielletage')->SommeVersementCaissier(date('Y-m-d'));
-        // $SommeRetrait = $this->managers->getManagerOf('Bielletage')->SommeRetraitCaissier(date('Y-m-d'));
         $DailyVersement = $this->managers->getManagerOf('Bielletage')->DailyVersement();
         $this->page->addVar('DailyVersement', $DailyVersement);
         $UsersCaisse = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d'));
@@ -53,6 +51,7 @@ class BielletageController extends \Library\BackController
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
         $TypeAppro  = $this->managers->getManagerOf("Journal")->TypeAppro(); //Recuperation de la liste
         $this->page->addVar("TypeAppro", $TypeAppro); // Creation de la variable, ajout d'une variable a la vue
+
     }
     public function executeInvoice(\Library\HTTPRequest $request)
     {

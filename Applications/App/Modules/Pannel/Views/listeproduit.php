@@ -26,9 +26,46 @@
                                     class="btn btn-xs btn-danger"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');"><i
                                         class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs  btn-warning" data-toggle="modal"
+                                    data-target="#ChmodProduit-<?= $value['RefProduit']; ?>" data-whatever="@mdo"><i
+                                        class="fa fa-check"></i></a>
 
                             </td>
                         </tr>
+                        <div class="modal fade" id="ChmodProduit-<?= $value['RefProduit']; ?>" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLabel1">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <form role="form" method="post" action="">
+                                        <input type="hidden" class="form-control" name="RefProduit"
+                                            value="<?= $value['RefProduit']; ?>">
+                                        <div class="modal-body">
+                                            <?php foreach ($ListeCaisse as $key => $caisse) { ?>
+                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                <input id="checkbox-10" type="checkbox" name="RefCaisse[]" multiple=""
+                                                    value="<?= $caisse['RefCaisse']; ?>"
+                                                    <?php if ($produits[$caisse['RefCaisse']][$value['RefProduit']] == $caisse['RefCaisse']) { ?>
+                                                    checked="" <?php } ?> />
+                                                <label for="checkbox-10">
+                                                    <?= $caisse['NameCaisse'] . " | " . $caisse['NameAgency']; ?></label>
+                                            </div>
+                                            <?php } ?>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Valider</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -36,7 +73,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="addAgence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

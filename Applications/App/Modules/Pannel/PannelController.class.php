@@ -10,6 +10,7 @@ class PannelController extends \Library\BackController
         $ListeAgence  = $this->managers->getManagerOf("Pannel")->ListeAgence();
         $this->page->addVar("ListeAgence", $ListeAgence);
         $ListeCaisse  = $this->managers->getManagerOf("Pannel")->ListeCaisse();
+
         $ListeDays  = $this->managers->getManagerOf("Pannel")->ListeDays();
         foreach ($ListeCaisse as $key => $value) {
             foreach ($ListeDays as $key1 => $value1) {
@@ -85,17 +86,32 @@ class PannelController extends \Library\BackController
     public function executeListeProduit(\Library\HTTPRequest $request)
     {
         $this->page->addVar("titles", "Liste des Produits"); // Titre de la page
-        $ListeProduits  = $this->managers->getManagerOf("Pannel")->ListeProduit();
-        $this->page->addVar("ListeProduit", $ListeProduits);
         $ListeBanque  = $this->managers->getManagerOf("Pannel")->ListeBanque();
         $this->page->addVar("ListeBanque", $ListeBanque);
-        if ($request->method() == 'POST') {
+        $ListeCaisse  = $this->managers->getManagerOf("Pannel")->ListeCaisse();
+        $ListeProduits  = $this->managers->getManagerOf("Pannel")->ListeProduit();
+        foreach ($ListeCaisse as $key => $caisse) {
+            foreach ($ListeProduits as $clef => $produit) {
+                $produits[$caisse['RefCaisse']][$produit['RefProduit']] =
+                    $this->managers->getManagerOf('Pannel')->VerifProduit($caisse['RefCaisse'], $produit['RefProduit']);
+            }
+        }
+        $this->page->addVar("ListeProduit", $ListeProduits);
+        $this->page->addVar("ListeCaisse", $ListeCaisse);
+        $this->page->addVar("produits", $produits);
+        if ($request->method() == 'POST' && empty($request->postData('RefProduit'))) {
             $this->managers->getManagerOf("Pannel")->AddProduit($request);
             $_SESSION['message']['type'] = 'success';
             $_SESSION['message']['text'] = 'Ajout réussie !';
             $_SESSION['message']['number'] = 2;
             $this->app()->httpResponse()->redirect('/Pannel/Produit'); //Retour en arriere
 
+        } elseif ($request->method() == 'POST' && !empty($request->postData('RefProduit'))) {
+            $this->managers->getManagerOf("Pannel")->AddChmodProduit($request);
+            $_SESSION['message']['type'] = 'success';
+            $_SESSION['message']['text'] = 'Ajout réussie !';
+            $_SESSION['message']['number'] = 2;
+            $this->app()->httpResponse()->redirect('/Pannel/Produit'); //Retour en arriere
         }
     }
     public function executeDeleteProduit(\Library\HTTPRequest $request)
