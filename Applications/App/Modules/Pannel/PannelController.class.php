@@ -90,6 +90,7 @@ class PannelController extends \Library\BackController
         $this->page->addVar("ListeBanque", $ListeBanque);
         $ListeCaisse  = $this->managers->getManagerOf("Pannel")->ListeCaisse();
         $ListeProduits  = $this->managers->getManagerOf("Pannel")->ListeProduit();
+        $produits = array();
         foreach ($ListeCaisse as $key => $caisse) {
             foreach ($ListeProduits as $clef => $produit) {
                 $produits[$caisse['RefCaisse']][$produit['RefProduit']] =
