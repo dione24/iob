@@ -281,6 +281,7 @@
                         <div class="form-group">
                             <label class="control-label">Caisse</label>
                             <select class="form-control" name="RefCaisse" tabindex="1" required="">
+                                <option>Caisse</option>
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
                                         if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
                                     ?>
@@ -313,6 +314,7 @@
                         <div class="form-group">
                             <label class="control-label">Caisse</label>
                             <select class="form-control" name="RefCaisse" id="RefCaisse" tabindex="1" required="">
+                                <option>Caisse</option>
                                 <?php foreach ($CheckOuverture as $key => $Caisse) {
                                         if ($Caisse['caisse'] != $Caisse['RefCaisse']) {
                                     ?>

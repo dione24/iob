@@ -9,7 +9,6 @@ $(function () {
             data: 'Caisse=' + val,
             dataType: 'json',
             success: function (json) {
-
                 $.each(json, function (index, value) {
                     $liste.append('<option value="' + index + '">' + value + '</option>');
                 });
