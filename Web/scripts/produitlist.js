@@ -1,7 +1,7 @@
 $(function () {
     var $Caisse = $('#RefCaisse');
     var $liste = $('#RefProduit');
-    $Caisse.on('change', function () {
+    $Caisse.on('click', function () {
         var val = $(this).val();
         if (val != null) $liste.empty();
         $.ajax({
