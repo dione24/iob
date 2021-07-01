@@ -118,7 +118,7 @@
                                                       class="form-control ">
                                                   <input type="hidden" id="Fin" name="Fin" value="<?= $Fin; ?>"
                                                       class="form-control ">
-                                                  <input type="hidden" id="RefAgency" name="RefAgency"
+                                                  <input type="" id="RefAgency" name="RefAgency"
                                                       value="<?= $value['RefAgency']; ?>" class="form-control ">
                                               </div>
                                           </div>
