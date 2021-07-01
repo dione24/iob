@@ -103,7 +103,9 @@
                               <th class="border-top-0">Versement</th>
                               <th class="border-top-0">Retrait</th>
                               <th class="border-top-0">Solde Agence</th>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'ChefCaisse' or $_SESSION['statut'] == 'Caissier') { ?>
                               <th class="border-top-0">Action</th>
+                              <?php } ?>
 
                           </tr>
                       </thead>
@@ -116,6 +118,7 @@
                               <td><?= $value['SommeDepot']; ?></td>
                               <td><?= $value['SommeSortie']; ?></td>
                               <td><?= $value['ReserveActuelle']; ?></td>
+                              <?php if ($_SESSION['statut'] == 'admin' or $_SESSION['statut'] == 'ChefCaisse' or $_SESSION['statut'] == 'Caissier') { ?>
                               <td> <?php if (!empty($value['validate'])) { ?><a class="btn btn-success"><i
                                           class="fa  fa-lock"></i></a> <?php } else { ?>
                                   <form method="POST" action="/Arreter/reserve">
@@ -125,6 +128,7 @@
                                       <button type="submit" class="btn btn-danger"><i class="fa fa-unlock"></i></button>
                                   </form> <?php } ?>
                               </td>
+                              <?php } ?>
                           </tr>
                           <?php } ?>
                       </tbody>
