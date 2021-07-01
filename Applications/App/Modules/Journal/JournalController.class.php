@@ -25,7 +25,7 @@ class JournalController extends \Library\BackController
                 $this->page->addVar('Fin', $_GET['fin']);
                 $this->page->addVar('Value', $_GET['value']);
             } else {
-                $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+                $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
                 $this->page->addVar('Debut', $request->postData('Debut'));
                 $this->page->addVar('Fin', $request->postData('Fin'));
                 $this->page->addVar('Value', $request->postData('RefAgency'));
