@@ -316,7 +316,7 @@ class JournalManagerPDO extends JournalManager
         $requeteAgence->execute();
         $ListeCaisse = $requeteAgence->fetchAll();
         foreach ($ListeCaisse as $key => $value) {
-            $ListeCaisse[$key]['SoldeInitial'] =  $this->SoldeInitialCaisseGlobal($Date, $value['RefCaisse']);
+            $ListeCaisse[$key]['SoldeInitial'] =  $this->SoldeInitialCaisse($Date, $value['RefCaisse']);
             $ListeCaisse[$key]['SoldeInitialGlobal'] =  $this->SoldeInitialCaisseGlobal($Date, $value['RefCaisse']);
             $ListeCaisse[$key]['TotalAppro'] =  $this->TotalApproCaisse($Date, $value['RefCaisse']);
             $ListeCaisse[$key]['TotalVersement'] =  $this->SomnmeVersementCaisse($Date, $value['RefCaisse']);
