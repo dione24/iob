@@ -1,6 +1,7 @@
 $(function () {
     var $produit = $('#RefProduit');
     var $hidden = $('#hidden');
+    var $label = $('#label');
     $produit.on('click', function () {
         var val = $(this).val();
         $.ajax({
@@ -8,12 +9,12 @@ $(function () {
             data: 'produit=' + val,
             dataType: 'json',
             success: function (json) {
+                $hidden.attr("style", "");
                 if (json == 1) {
-                    $hidden.html('<div class="form-group has-error"><label class="control-label">Numéro de compte</label><input type="int" id="NumCompte" class="form-control" name="NumCompte" required=""></div>');
+                    $label.text("Numéro de compte");
                 }
                 if (json == 2) {
-                    $hidden.html('<div class="form-group has-error"><label class="control-label">Télephone</label><input type="int" id="NumCompte" class="form-control" name="NumCompte" required=""></div>');
-
+                    $label.text("Téléphone");
                 }
             }
         });
