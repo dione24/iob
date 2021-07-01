@@ -2,13 +2,13 @@
       <div class="col-md-12">
           <form method="POST" action="/Journal/index" id="formulaire">
               <div class="input-group">
-                  <div class="col-md-2">Caisse
-                      <select class="form-control" name="RefCaisse" tabindex="1" required="">
-                          <?php foreach ($UserCaisse as $key => $Caisse) {
+                  <div class="col-md-2">Agence
+                      <select class="form-control" name="RefAgency" tabindex="1" required="">
+                          <?php foreach ($UserAgence as $key => $Agence) {
                             ?>
-                          <option value="<?= $Caisse['RefCaisse']; ?>" <?php if ($Caisse['RefCaisse'] == $Value) { ?>
+                          <option value="<?= $Agence['RefAgency']; ?>" <?php if ($Agence['RefAgency'] == $Value) { ?>
                               selected="" <?php } ?>>
-                              <?= $Caisse['NameCaisse'] . " " . $Caisse['NameAgency']; ?></option>
+                              <?= $Agence['NameAgency']; ?></option>
                           <?php }   ?>
                       </select>
                   </div>
@@ -118,8 +118,8 @@
                                                       class="form-control ">
                                                   <input type="hidden" id="Fin" name="Fin" value="<?= $Fin; ?>"
                                                       class="form-control ">
-                                                  <input type="hidden" id="RefCaisse" name="RefCaisse"
-                                                      value="<?= $value['RefCaisse']; ?>" class="form-control ">
+                                                  <input type="hidden" id="RefAgency" name="RefAgency"
+                                                      value="<?= $value['RefAgency']; ?>" class="form-control ">
                                               </div>
                                           </div>
                                           <div class="modal-footer">

@@ -9,14 +9,16 @@ class JournalController extends \Library\BackController
         $this->page->addVar("titles", "Journal de Caisse"); // Titre de la page
         $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
-        $UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
-        $this->page->addVar("UserCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
+        //$UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
+        //  $this->page->addVar("UserCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
+        $Agence  = $this->managers->getManagerOf("Pannel")->UserAgence();
+        $this->page->addVar('UserAgence', $Agence);
         $this->page->addVar('Debut', $request->postData('Debut'));
         $this->page->addVar('Fin', $request->postData('Fin'));
-        $this->page->addVar('Value', $request->postData('RefCaisse'));
+        $this->page->addVar('Value', $request->postData('RefAgency'));
         $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal(NULL, NULL, NULL);
         $this->page->addVar('Biellet', $Biellet);
-        if (!empty($request->postData('RefCaisse')) or isset($_GET['value'])) {
+        if (!empty($request->postData('RefAgency')) or isset($_GET['value'])) {
             if (isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['value'])) {
                 $Operations = $this->managers->getManagerOf('Journal')->GetOperations($_GET['debut'], $_GET['fin'], $_GET['value']);
                 $this->page->addVar('Debut', $_GET['debut']);
@@ -26,17 +28,17 @@ class JournalController extends \Library\BackController
                 $Operations = $this->managers->getManagerOf('Journal')->GetOperations($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
                 $this->page->addVar('Debut', $request->postData('Debut'));
                 $this->page->addVar('Fin', $request->postData('Fin'));
-                $this->page->addVar('Value', $request->postData('RefCaisse'));
+                $this->page->addVar('Value', $request->postData('RefAgency'));
             }
             $this->page->addVar('Operations', $Operations);
-            $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             // $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
-            $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
             $Solde = $sommeVersementPeriode - $sommeRetraitPeriode;
             $this->page->addVar('Solde', $Solde);
-            $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             $this->page->addVar('Biellet', $Biellet);
         } else {
             $Operations = $this->managers->getManagerOf('Journal')->Operations();
