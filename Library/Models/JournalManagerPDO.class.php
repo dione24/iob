@@ -88,16 +88,56 @@ class JournalManagerPDO extends JournalManager
         }
     }
 
-    public function YesterdaySolde($debut = NULL, $fin = NULL, $caisse = NULL)
+
+    public function sommeVersementPeriodeAvecAppro($debut = NULL, $fin = NULL, $Agence = NULL)
     {
-        $Solde = $this->dao->prepare("SELECT Solde FROM TbleSolde WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleSolde WHERE RefCaisse=:RefCaisse AND DateSolde <:today)");
-        $Solde->bindValue(':RefCaisse', $caisse, \PDO::PARAM_INT);
+        if (!empty($debut) && !empty($fin) && !empty($Agence)) {
+            $requete = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse  INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleAgency.RefAgency=:Agence  AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3 )  ");
+            $requete->bindValue(':Agence', $Agence, \PDO::PARAM_INT);
+            $requete->execute();
+            $data = $requete->fetch();
+            return $data['TotalPeriodeVersement'];
+        } else {
+            $requete = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeVersement FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers  AND (TbleOperations.RefType=1 OR TbleOperations.RefType=3) ');
+            $requete->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
+            $requete->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $requete->execute();
+            $data = $requete->fetch();
+            return $data['TotalPeriodeVersement'];
+        }
+    }
+
+
+
+    public function sommeRetraitPeriodeAvecSortie($debut = NULL, $fin = NULL, $Agence = NULL)
+    {
+        if (!empty($debut) && !empty($fin) && !empty($Agence)) {
+            $SommeRetraitPeriode = $this->dao->prepare("SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse  INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND  date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'   AND TbleAgency.RefAgency=:Agence AND  (TbleOperations.RefType=2 OR  TbleOperations.RefType=4) ");
+            $SommeRetraitPeriode->bindValue(':Agence', $Agence, \PDO::PARAM_INT);
+            $SommeRetraitPeriode->execute();
+            $DataSomnmeRetrait = $SommeRetraitPeriode->fetch();
+            return $DataSomnmeRetrait['TotalPeriodeRetrait'];
+        } else {
+            $SommeRetraitPeriode = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalPeriodeRetrait FROM TbleOperations  INNER JOIN TbleChmod ON TbleChmod.RefCaisse=TbleOperations.RefCaisse  WHERE  TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleChmod.RefUsers=:RefUsers AND  (TbleOperations.RefType=2 OR TbleOperations.RefType=4)');
+            $SommeRetraitPeriode->bindValue(':jour', date('Y-m-d'), \PDO::PARAM_STR);
+            $SommeRetraitPeriode->bindValue(':RefUsers', $_SESSION['RefUsers'], \PDO::PARAM_INT);
+            $SommeRetraitPeriode->execute();
+            $DataSomnmeRetrait = $SommeRetraitPeriode->fetch();
+            return $DataSomnmeRetrait['TotalPeriodeRetrait'];
+        }
+    }
+
+
+    public function YesterdaySoldeAgence($debut = NULL, $fin = NULL, $Agence = NULL)
+    {
+        $Solde = $this->dao->prepare("SELECT SoldeCompte FROM TbleCompte WHERE DateSolde=(SELECT MAX(DateSolde) FROM TbleCompte WHERE RefAgency=:RefAgency AND DateSolde <:today)");
+        $Solde->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
         $Solde->bindValue(':today', $fin, \PDO::PARAM_STR);
         $Solde->execute();
         $data = $Solde->fetch();
-        return  $data['Solde'];
+        return  $data['SoldeCompte'];
     }
-    public function  Versement($debut = NULL, $fin = NULL, $caisse = NULL)
+    public function  Versement($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         $dixmille = 0;
         $cinqmille = 0;
@@ -112,9 +152,9 @@ class JournalManagerPDO extends JournalManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        if (!empty($debut) && !empty($fin) && !empty($caisse)) {
-            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND RefCaisse=:Caisse AND (RefType=1 OR RefType=3)  ");
-            $requete->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
+        if (!empty($debut) && !empty($fin) && !empty($Agence)) {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse  INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL  AND TbleAgency=:RefAgency AND (RefType=1 OR RefType=3)  ");
+            $requete->bindValue(':Agence', $Agence, \PDO::PARAM_INT);
             $requete->execute();
             $Versement = $requete->fetchAll();
             $VersementList = [];
@@ -167,7 +207,7 @@ class JournalManagerPDO extends JournalManager
         return $VersementList;
     }
 
-    public function  Retrait($debut = NULL, $fin = NULL, $caisse = NULL)
+    public function  Retrait($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         $dixmille = 0;
         $cinqmille = 0;
@@ -182,9 +222,9 @@ class JournalManagerPDO extends JournalManager
         $dix = 0;
         $cinq = 0;
         $un = 0;
-        if (!empty($debut) && !empty($fin) && !empty($caisse)) {
-            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND RefCaisse=:Caisse AND  (TbleOperations.RefType=2 OR TbleOperations.RefType=4) ");
-            $requete->bindValue(':Caisse', $caisse, \PDO::PARAM_INT);
+        if (!empty($debut) && !empty($fin) && !empty($Agence)) {
+            $requete = $this->dao->prepare("SELECT * FROM TbleOperations INNER JOIN TbleBilletage ON TbleBilletage.RefOperations=TbleOperations.RefOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse  INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE date(TbleOperations.Approve2_Time) BETWEEN '$debut' AND '$fin'  AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND TbleAgency=:RefAgency AND  (TbleOperations.RefType=2 OR TbleOperations.RefType=4) ");
+            $requete->bindValue(':Agence', $Agence, \PDO::PARAM_INT);
             $requete->execute();
             $retrait = $requete->fetchAll();
             $RetraitList = [];
@@ -235,11 +275,11 @@ class JournalManagerPDO extends JournalManager
         $RetraitList['un'] = $un;
         return $RetraitList;
     }
-    public function GetBielletageJournal($debut, $fin, $caisse)
+    public function GetBielletageJournal($debut, $fin, $Agence)
     {
 
-        $Versement = $this->Versement($debut, $fin, $caisse);
-        $Retrait = $this->Retrait($debut, $fin, $caisse);
+        $Versement = $this->Versement($debut, $fin, $Agence);
+        $Retrait = $this->Retrait($debut, $fin, $Agence);
         $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
         $Biellet['cinqmille'] = $Versement['cinqmille'] - $Retrait['cinqmille'];
         $Biellet['deuxmille'] = $Versement['deuxmille'] - $Retrait['deuxmille'];

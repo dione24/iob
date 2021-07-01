@@ -9,8 +9,6 @@ class JournalController extends \Library\BackController
         $this->page->addVar("titles", "Journal de Caisse"); // Titre de la page
         $Chmod  = $this->managers->getManagerOf("Bielletage")->CheckOuverture(); //Recuperation de la liste
         $this->page->addVar("CheckOuverture", $Chmod); // Creation de la variable, ajout d'une variable a la vue
-        //$UserCaisse  = $this->managers->getManagerOf("Journal")->UserCaisse(date('Y-m-d')); //Recuperation de la liste
-        //  $this->page->addVar("UserCaisse", $UserCaisse); // Creation de la variable, ajout d'une variable a la vue
         $Agence  = $this->managers->getManagerOf("Pannel")->UserAgence();
         $this->page->addVar('UserAgence', $Agence);
         $this->page->addVar('Debut', $request->postData('Debut'));
@@ -32,11 +30,16 @@ class JournalController extends \Library\BackController
             }
             $this->page->addVar('Operations', $Operations);
             $sommeVersementPeriode = $this->managers->getManagerOf('Journal')->sommeVersementPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
-            // $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySolde($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefCaisse'));
+            $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySoldeAgence($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
-            $Solde = $sommeVersementPeriode - $sommeRetraitPeriode;
+            $sommeVersementPeriodeAvecAppro = $this->managers->getManagerOf('Journal')->sommeVersementPeriodeAvecAppro($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
+            $this->page->addVar('sommeVersementPeriodeAvecAppro', $sommeVersementPeriodeAvecAppro);
+            $sommeRetraitPeriodeAvecSortie = $this->managers->getManagerOf('Journal')->sommeRetraitPeriodeAvecSortie($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
+            $this->page->addVar('sommeRetraitPeriodeAvecSortie', $sommeRetraitPeriodeAvecSortie);
+            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySoldeAgence($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
+            $Solde = ($Yesterday +  ($sommeVersementPeriodeAvecAppro - $sommeRetraitPeriodeAvecSortie));
             $this->page->addVar('Solde', $Solde);
             $Biellet = $this->managers->getManagerOf('Journal')->GetBielletageJournal($request->postData('Debut'), $request->postData('Fin'), $request->postData('RefAgency'));
             $this->page->addVar('Biellet', $Biellet);
@@ -47,8 +50,12 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriode', $sommeVersementPeriode);
             $sommeRetraitPeriode = $this->managers->getManagerOf('Journal')->sommeRetraitPeriode();
             $this->page->addVar('sommeRetraitPeriode', $sommeRetraitPeriode);
-            // $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
-            $Solde = (($sommeVersementPeriode - $sommeRetraitPeriode));
+            $sommeVersementPeriodeAvecAppro = $this->managers->getManagerOf('Journal')->sommeVersementPeriodeAvecAppro();
+            $this->page->addVar('sommeVersementPeriodeAvecAppro', $sommeVersementPeriodeAvecAppro);
+            $sommeRetraitPeriodeAvecSortie = $this->managers->getManagerOf('Journal')->sommeRetraitPeriodeAvecSortie();
+            $this->page->addVar('sommeRetraitPeriodeAvecSortie', $sommeRetraitPeriodeAvecSortie);
+            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySoldeAgence();
+            $Solde = ($Yesterday +  ($sommeVersementPeriodeAvecAppro - $sommeRetraitPeriodeAvecSortie));
             $this->page->addVar('Solde', $Solde);
         }
     }
