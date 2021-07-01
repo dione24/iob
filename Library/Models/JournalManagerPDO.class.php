@@ -108,7 +108,6 @@ class JournalManagerPDO extends JournalManager
     }
 
 
-
     public function sommeRetraitPeriodeAvecSortie($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($Agence)) {
