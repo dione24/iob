@@ -83,6 +83,8 @@ class JournalController extends \Library\BackController
             $Agence[$key]['TotalSortieAgence'] = $this->managers->getManagerOf("Journal")->TotalSortieAgence(date('Y-m-d'), $value['RefAgency']);
             $Agence[$key]['ReserveActuelle'] = $Agence[$key]['YesterdayReserve'] + $Agence[$key]['SommeDepot'] - $Agence[$key]['SommeSortie'] +
                 $Agence[$key]['TotalAppoAgence'] - $Agence[$key]['TotalSortieAgence'];
+            $Agence[$key]['DayReserve'] = $this->managers->getManagerOf("Journal")->YesterdayReserve($value['RefAgency']) -
+                $Agence[$key]['TotalAppoAgence'] = $this->managers->getManagerOf("Journal")->TotalApproAgence(date('Y-m-d'), $value['RefAgency']);
         }
         $this->page->addVar('Agence', $Agence);
     }
