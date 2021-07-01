@@ -276,7 +276,7 @@
             </div>
             <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                 <div class="row">
-                    <?php if ($_GET['id'] == 3) { ?>
+                    <?php if ($_GET['id'] == 3 or $_GET['id'] == 4) { ?>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">Caisse</label>
@@ -291,6 +291,7 @@
                             </select>
                         </div>
                     </div>
+                    <?php if ($_GET['id'] == 3) { ?>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">Type Appro</label>
@@ -302,6 +303,7 @@
                             </select>
                         </div>
                     </div>
+                    <?php } ?>
                     <div class="col-md-6">
                         <div class="form-group has-error">
                             <label class="control-label">Numéro de compte</label>
