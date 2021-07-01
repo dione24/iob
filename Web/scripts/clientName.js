@@ -1,7 +1,7 @@
 $(function () {
     var $NumCompte = $('#NumCompte');
     var $NameClient = $('#NameClient');
-    $NumCompte.on('change', function () {
+    $NumCompte.on('click', function () {
         var val = $(this).val();
         if (val != null) $NameClient.empty();
         $.ajax({
@@ -14,7 +14,7 @@ $(function () {
                 } else {
                     $NameClient.val('');
                 }
-                if ($NumCompte.val().length != 12) {
+                if ($NumCompte.val().length != 8) {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
