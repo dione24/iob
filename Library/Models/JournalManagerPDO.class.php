@@ -336,7 +336,7 @@ class JournalManagerPDO extends JournalManager
         return $result['TotalAppro'];
     }
 
-    public function TotalApproAgence($Date, $Agence)
+    public function TotalApproAgenceSansApproInitial($Date, $Agence)
     {
         $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleAgency.RefAgency=:RefAgency AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefType=3 AND TbleOperations.TypeAppro=2 ');
         $requeteSoldeInittial->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
@@ -345,6 +345,18 @@ class JournalManagerPDO extends JournalManager
         $result = $requeteSoldeInittial->fetch();
         return $result['TotalAppro'];
     }
+    public function TotalApproAgenceGlobal($Date, $Agence)
+    {
+        $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalAppro FROM TbleOperations INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency  WHERE TbleAgency.RefAgency=:RefAgency AND TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.RefType=3 ');
+        $requeteSoldeInittial->bindValue(':RefAgency', $Agence, \PDO::PARAM_INT);
+        $requeteSoldeInittial->bindValue(':jour', $Date, \PDO::PARAM_STR);
+        $requeteSoldeInittial->execute();
+        $result = $requeteSoldeInittial->fetch();
+        return $result['TotalAppro'];
+    }
+
+
+
 
     public function TotalSortieCaisse($Date, $Caisse)
     {

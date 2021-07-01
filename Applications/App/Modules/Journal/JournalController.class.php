@@ -79,11 +79,11 @@ class JournalController extends \Library\BackController
             $Agence[$key]['YesterdayReserve'] = $this->managers->getManagerOf("Journal")->YesterdayReserve($value['RefAgency']);
             $Agence[$key]['SommeDepot'] = $this->managers->getManagerOf("Journal")->SommeDepotAgence(date('Y-m-d'), $value['RefAgency']);
             $Agence[$key]['SommeSortie'] = $this->managers->getManagerOf("Journal")->SommeRetraitAgence(date('Y-m-d'), $value['RefAgency']);
-            $Agence[$key]['TotalAppoAgence'] = $this->managers->getManagerOf("Journal")->TotalApproAgence(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['TotalAppoAgenceSansApproInitial'] = $this->managers->getManagerOf("Journal")->TotalApproAgenceSansApproInitial(date('Y-m-d'), $value['RefAgency']);
             $Agence[$key]['TotalSortieAgence'] = $this->managers->getManagerOf("Journal")->TotalSortieAgence(date('Y-m-d'), $value['RefAgency']);
             $Agence[$key]['ReserveActuelle'] = $Agence[$key]['YesterdayReserve'] + $Agence[$key]['SommeDepot'] - $Agence[$key]['SommeSortie'] +
-                $Agence[$key]['TotalAppoAgence'] - $Agence[$key]['TotalSortieAgence'];
-            $Agence[$key]['DayReserve'] =  $this->managers->getManagerOf("Journal")->TotalApproAgence(date('Y-m-d'), $value['RefAgency']);
+                $Agence[$key]['TotalAppoAgenceSansApproInitial'] - $Agence[$key]['TotalSortieAgence'];
+            $Agence[$key]['DayReserve'] =  $Agence[$key]['YesterdayReserve'] - $this->managers->getManagerOf("Journal")->TotalApproAgenceGlobal(date('Y-m-d'), $value['RefAgency']);
         }
         $this->page->addVar('Agence', $Agence);
     }
