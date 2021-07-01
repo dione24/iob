@@ -239,9 +239,9 @@
     </script>
     <script src="/scripts/billetage.js"></script>
     <script src="/scripts/Checklogin.js"></script>
+    <script src="/scripts/clientName.js"></script>
     <script src="/scripts/produitlist.js"></script>
     <script src="/scripts/hidden.js"></script>
-    <script src="/scripts/clientName.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
