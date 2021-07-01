@@ -1,7 +1,7 @@
 $(function () {
     var $NumCompte = $('#NumCompte');
     var $NameClient = $('#NameClient');
-    $NumCompte.on('change', function () {
+    $NumCompte.on('click', function () {
         var val = $(this).val();
         if (val != null) $NameClient.empty();
         $.ajax({
