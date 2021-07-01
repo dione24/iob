@@ -53,7 +53,7 @@ class JournalController extends \Library\BackController
             $this->page->addVar('sommeVersementPeriodeAvecAppro', $sommeVersementPeriodeAvecAppro);
             $sommeRetraitPeriodeAvecSortie = $this->managers->getManagerOf('Journal')->sommeRetraitPeriodeAvecSortie();
             $this->page->addVar('sommeRetraitPeriodeAvecSortie', $sommeRetraitPeriodeAvecSortie);
-            $Yesterday = $this->managers->getManagerOf('Journal')->YesterdaySoldeAgence();
+            $Yesterday = $this->managers->getManagerOf('Bielletage')->YesterdaySolde();
             $Solde = ($Yesterday +  ($sommeVersementPeriodeAvecAppro - $sommeRetraitPeriodeAvecSortie));
             $this->page->addVar('Solde', $Solde);
         }
