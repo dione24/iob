@@ -101,7 +101,7 @@
                               <th class="border-top-0">Solde Reserve(J-1)</th>
                               <th class="border-top-0">Versement</th>
                               <th class="border-top-0">Retrait</th>
-                              <th class="border-top-0">Solde Reserve</th>
+                              <th class="border-top-0">Solde Disponible</th>
                               <th class="border-top-0">Action</th>
 
                           </tr>
