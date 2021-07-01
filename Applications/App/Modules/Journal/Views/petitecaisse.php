@@ -112,7 +112,7 @@
                           <tr>
                               <td><?= $value['NameAgency']; ?></td>
                               <td><?= $value['YesterdayReserve']; ?></td>
-                              <td><?= $value['YesterdayReserve'] - $value['TotalAppoAgence']; ?></td>
+                              <td><?= $value['DayReserve']; ?></td>
                               <td><?= $value['SommeDepot']; ?></td>
                               <td><?= $value['SommeSortie']; ?></td>
                               <td><?= $value['ReserveActuelle']; ?></td>
