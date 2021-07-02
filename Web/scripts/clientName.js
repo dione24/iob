@@ -14,20 +14,6 @@ $(function () {
                 } else {
                     $NameClient.val('');
                 }
-                if ($NumCompte.val().length != 8) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 4000
-                    });
-                    Toast.fire({
-                        type: 'warning',
-                        title: 'Le numero de compte est incorrect, Veuillez Réessayer.',
-                        number: 2
-                    });
-                }
-
             }
         });
     })
