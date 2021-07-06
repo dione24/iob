@@ -11,6 +11,7 @@
                         <tr>
                             <th class="border-top-0">ID</th>
                             <th class="border-top-0">Nom</th>
+                            <th class="border-top-0">Phone</th>
                             <th class="border-top-0">Actions</th>
                         </tr>
                     </thead>
@@ -19,6 +20,7 @@
                         <tr>
                             <td><?= $value['RefAgency']; ?></td>
                             <td><?= $value['NameAgency']; ?></td>
+                            <td><?= $value['TelAgence']; ?></td>
                             <td>
                                 <a href="/Pannel/Agence/delete/<?= $value['RefAgency']; ?>"
                                     class="btn btn-xs btn-danger"
@@ -46,6 +48,12 @@
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">Nom de L'agence </label>
                         <input type="text" class="form-control" name="NameAgency" id="recipient-name1">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Tel Agence </label>
+                        <input type="text" class="form-control" name="TelAgence" id="recipient-name1">
                     </div>
                 </div>
                 <div class="modal-footer">

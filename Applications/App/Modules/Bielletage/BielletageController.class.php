@@ -24,6 +24,13 @@ class BielletageController extends \Library\BackController
             $SommeVersement += $value['TotalVersement'];
             $SommeRetrait += $value['TotalRetrait'];
         }
+
+        $Agence  = $this->managers->getManagerOf("Pannel")->UserAgence(); //Recuperation de la liste
+        foreach ($Agence as $key => $value) {
+            $Agence[$key]['SommeDepot'] = $this->managers->getManagerOf("Journal")->SoldeInitialCaisse(date('Y-m-d'), $value['RefAgency']);
+            $Agence[$key]['YesterdayReserve'] = $this->managers->getManagerOf("Journal")->YesterdayReserve($value['RefAgency']);
+        }
+        $this->page->addVar('Agence', $Agence);
         $this->page->addVar('Solde', $Solde);
         $this->page->addVar('SommeVersement', $SommeVersement);
         $this->page->addVar('SommeRetrait', $SommeRetrait);

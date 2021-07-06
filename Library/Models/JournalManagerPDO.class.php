@@ -70,7 +70,6 @@ class JournalManagerPDO extends JournalManager
             return $DataSomnmeRetrait['TotalPeriodeRetrait'];
         }
     }
-
     public function sommeVersementPeriode($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($Agence)) {
@@ -89,7 +88,6 @@ class JournalManagerPDO extends JournalManager
         }
     }
 
-
     public function sommeVersementPeriodeAvecAppro($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($Agence)) {
@@ -107,8 +105,6 @@ class JournalManagerPDO extends JournalManager
             return $data['TotalPeriodeVersement'];
         }
     }
-
-
     public function sommeRetraitPeriodeAvecSortie($debut = NULL, $fin = NULL, $Agence = NULL)
     {
         if (!empty($debut) && !empty($fin) && !empty($Agence)) {
@@ -126,7 +122,6 @@ class JournalManagerPDO extends JournalManager
             return $DataSomnmeRetrait['TotalPeriodeRetrait'];
         }
     }
-
 
     public function YesterdaySoldeAgence($debut = NULL, $fin = NULL, $Agence = NULL)
     {
@@ -277,7 +272,6 @@ class JournalManagerPDO extends JournalManager
     }
     public function GetBielletageJournal($debut, $fin, $Agence)
     {
-
         $Versement = $this->Versement($debut, $fin, $Agence);
         $Retrait = $this->Retrait($debut, $fin, $Agence);
         $Biellet['dixmille'] = $Versement['dixmille'] - $Retrait['dixmille'];
@@ -337,7 +331,6 @@ class JournalManagerPDO extends JournalManager
         $result = $requeteSoldeInittial->fetch();
         return $result['SoldeCompte'];
     }
-
     public function SommeDepotAgence($Date, $Agence)
     {
         $requeteSUm = $this->dao->prepare('SELECT SUM(MontantVersement) AS TotalVersment FROM TbleOperations  INNER JOIN TbleCaisse ON TbleCaisse.RefCaisse=TbleOperations.RefCaisse INNER JOIN TbleAgency ON TbleAgency.RefAgency=TbleCaisse.RefAgency WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleAgency.RefAgency=:RefAgency AND (TbleOperations.RefType=1)');
@@ -356,7 +349,6 @@ class JournalManagerPDO extends JournalManager
         $data = $requeteSUm->fetch();
         return $data['TotalVersment'];
     }
-
     public function SoldeInitialCaisse($Date, $Caisse)
     {
         $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS SoldeInitial FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour AND TbleOperations.TypeAppro=1  AND TbleOperations.RefType=3 AND TbleOperations.RefCaisse=:RefCaisse ');
@@ -366,7 +358,6 @@ class JournalManagerPDO extends JournalManager
         $result = $requeteSoldeInittial->fetch();
         return $result['SoldeInitial'];
     }
-
     public function SoldeInitialCaisseGlobal($Date, $Caisse)
     {
         $requeteSoldeInittial = $this->dao->prepare('SELECT SUM(MontantVersement) AS SoldeInitial FROM TbleOperations  WHERE TbleOperations.Approve2_Id IS NOT NULL AND TbleOperations.Reset_Id IS NULL AND Approve2_Time=:jour  AND TbleOperations.RefType=3 AND TbleOperations.RefCaisse=:RefCaisse ');

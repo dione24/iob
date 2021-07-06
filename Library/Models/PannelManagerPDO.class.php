@@ -114,8 +114,9 @@ class PannelManagerPDO extends PannelManager
     }
     public function AddAgency()
     {
-        $requeteAddService = $this->dao->prepare("INSERT INTO TbleAgency(NameAgency) VALUES(:NameAgency)");
+        $requeteAddService = $this->dao->prepare("INSERT INTO TbleAgency(NameAgency,TelAgence) VALUES(:NameAgency,:TelAgence)");
         $requeteAddService->bindValue(':NameAgency', $_POST['NameAgency'], \PDO::PARAM_STR);
+        $requeteAddService->bindValue(':TelAgence', $_POST['TelAgence'], \PDO::PARAM_STR);
         $requeteAddService->execute();
     }
 

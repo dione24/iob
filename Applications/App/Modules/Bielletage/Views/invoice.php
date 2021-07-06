@@ -20,6 +20,7 @@
              <div class="row">
                  <div style="width: 48%;display: inline-block;vertical-align: top;">
                      <p>AGENCE : <?= $GetInvoice['NameAgency']; ?></p>
+                     <p>CONTACT : <?= $GetInvoice['TelAgence']; ?></p>
                      <p>REFERENCE :
                          <?= $GetInvoice['RefOperations'] . "" . $GetInvoice['NameAgency'] . "" . date('d-m-Y', strtotime($GetInvoice['Insert_Time'])); ?>
                      </p>
@@ -132,6 +133,7 @@
              <div class="row">
                  <div style="width: 48%;display: inline-block;vertical-align: top;">
                      <p>AGENCE : <?= $GetInvoice['NameAgency']; ?></p>
+                     <p>CONTACT : <?= $GetInvoice['TelAgence']; ?></p>
                      <p>REFERENCE :
                          <?= $GetInvoice['RefOperations'] . "" . $GetInvoice['NameAgency'] . "" . date('d-m-Y', strtotime($GetInvoice['Insert_Time'])); ?>
                      </p>
