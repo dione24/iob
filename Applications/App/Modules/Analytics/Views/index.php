@@ -17,10 +17,6 @@
                       <input type="text" value="<?= number_format($totalRetrait, 0, '.', ',');   ?>"
                           class="form-control" readonly>
                   </div>
-
-                  <div class="col-md-2">Commission
-                      <input type="text" value="<?= $Commission;  ?>" class="form-control" readonly>
-                  </div>
               </div>
           </form>
           <br />
@@ -60,15 +56,6 @@
                   </table>
               </div>
               <?php } ?>
-          </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="card">
-              <div class="card-heading">
-                  Analytics
-              </div>
-              <div class="card-body">
-              </div>
           </div>
       </div>
   </div>
